@@ -53,10 +53,9 @@ export default function AdminDashboard() {
       </div>
       
       <div className="stats">
-        <div className="stat"><small>전체 세션</small><b>{stats.total}</b><span>총 생성된 경기 세션</span></div>
-        <div className="stat"><small>공개 리포트</small><b>{stats.published}</b><span>QR 열람 가능</span></div>
-        <div className="stat"><small>준비 중</small><b>{stats.ready}</b><span>데이터 입력 대기</span></div>
-        <div className="stat"><small>만료</small><b>{stats.expired}</b><span>열람 기간 종료</span></div>
+        <Link href="/admin/sessions" className="stat" style={{textDecoration: 'none'}}><small>전체 세션</small><b>{stats.total}</b><span>총 생성된 경기 세션</span></Link>
+        <Link href="/admin/reports" className="stat" style={{textDecoration: 'none'}}><small>공개 리포트</small><b>{stats.published}</b><span>QR 열람 가능</span></Link>
+        <Link href="/admin/reports" className="stat" style={{textDecoration: 'none'}}><small>준비 중</small><b>{stats.ready}</b><span>데이터 입력 대기</span></Link>
       </div>
       
       <div className="content">
