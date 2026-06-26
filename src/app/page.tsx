@@ -617,14 +617,8 @@ export default function Page() {
   </footer>
 
   {/* ─── MOBILE MENU ─── */}
-  <div className="mobile-fab mobile-only" onClick={() => setIsMobileMenuOpen(true)}>
-    <IconMenu />
-  </div>
-  <div className={`mobile-menu-overlay mobile-only ${isMobileMenuOpen ? 'open' : ''}`}>
-    <div className="mobile-menu-close" onClick={() => setIsMobileMenuOpen(false)}>
-      <IconClose />
-    </div>
-    <nav className="mobile-nav-links">
+  <div className={`mobile-menu-container mobile-only ${isMobileMenuOpen ? 'open' : ''}`}>
+    <nav className="mobile-nav-links-fab">
       <a href="#features" onClick={() => setIsMobileMenuOpen(false)}>게임 특징</a>
       <a href="#reviews" onClick={() => setIsMobileMenuOpen(false)}>후기</a>
       <a href="#gallery" onClick={() => setIsMobileMenuOpen(false)}>매장 사진</a>
@@ -632,6 +626,9 @@ export default function Page() {
       <a href="#report" onClick={() => setIsMobileMenuOpen(false)}>QR 리포트</a>
       <a href="https://talk.naver.com/profile/w4cqwe" target="_blank" rel="noopener noreferrer" className="mobile-nav-cta">예약 문의</a>
     </nav>
+    <div className="mobile-fab" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+      {isMobileMenuOpen ? <IconClose /> : <IconMenu />}
+    </div>
   </div>
     </>
   );
