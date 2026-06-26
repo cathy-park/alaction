@@ -221,6 +221,10 @@ export default function MobileReport({ params }: { params: Promise<{ token: stri
             <circle cx="75" cy="75" r="54" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="1" strokeDasharray="2 4" />
           </svg>
           
+          <div style={{position: 'absolute', top: '50%', left: '-40px', right: '-40px', height: '1px', background: 'linear-gradient(90deg, transparent, rgba(255,53,205,0.5) 30%, rgba(32,199,255,0.5) 70%, transparent)', transform: 'translateY(-50%)'}}></div>
+          <div style={{position: 'absolute', top: '50%', left: '-10px', width: '4px', height: '4px', borderRadius: '50%', background: '#ff35cd', filter: 'blur(1px)', transform: 'translateY(-50%)', boxShadow: '0 0 10px #ff35cd, 0 0 20px #ff35cd'}}></div>
+          <div style={{position: 'absolute', top: '50%', right: '-10px', width: '4px', height: '4px', borderRadius: '50%', background: '#20c7ff', filter: 'blur(1px)', transform: 'translateY(-50%)', boxShadow: '0 0 10px #20c7ff, 0 0 20px #20c7ff'}}></div>
+
           <div style={{position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
             <small>RANK</small>
             <b>{result.rank}</b>
@@ -250,66 +254,86 @@ export default function MobileReport({ params }: { params: Promise<{ token: stri
         <div className="report-metrics">
           <div className="report-metric">
             <span>점수</span>
-            <b>{result.score}</b>
+            <div className="metric-val">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ff35cd" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="22" y1="12" x2="18" y2="12"/><line x1="6" y1="12" x2="2" y2="12"/><line x1="12" y1="6" x2="12" y2="2"/><line x1="12" y1="22" x2="12" y2="18"/></svg>
+              <b>{result.score}</b>
+            </div>
           </div>
           <div className="report-metric">
             <span>정확도</span>
-            <b style={{color: '#baff2d'}}>{result.accuracy}%</b>
+            <div className="metric-val">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#baff2d" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+              <b style={{color: '#baff2d'}}>{result.accuracy}%</b>
+            </div>
           </div>
           <div className="report-metric">
             <span>발사 수</span>
-            <b>{result.shots_fired}</b>
+            <div className="metric-val">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#20c7ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="7" y="5" width="10" height="16" rx="5" transform="rotate(-45 12 12)" /><line x1="4" y1="12" x2="8" y2="16" /></svg>
+              <b>{result.shots_fired}</b>
+            </div>
           </div>
           <div className="report-metric">
             <span>맞힌 수</span>
-            <b style={{color: '#20c7ff'}}>{result.hits}</b>
+            <div className="metric-val">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#20c7ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+              <b style={{color: '#20c7ff'}}>{result.hits}</b>
+            </div>
           </div>
           <div className="report-metric">
             <span>맞은 수</span>
-            <b style={{color: '#ff35cd'}}>{result.times_hit}</b>
+            <div className="metric-val">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ff35cd" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+              <b style={{color: '#ff35cd'}}>{result.times_hit}</b>
+            </div>
           </div>
           <div className="report-metric">
             <span>성향</span>
-            <b style={{color: '#ffe66b', fontSize: '24px', display: 'block', lineHeight: 1.2}}>
-              {report.play_style || (result.accuracy > 70 ? '🎯 정밀형 플레이' : '🔥 돌격형 플레이')}
-            </b>
+            <div className="metric-val">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ff35cd" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><path d="M12 12l8-8"/><polyline points="16 4 20 4 20 8"/></svg>
+              <b style={{color: '#ff35cd', fontSize: '16px'}}>
+                {report.play_style || (result.accuracy > 70 ? '정밀형 플레이' : '돌격형 플레이')}
+              </b>
+            </div>
           </div>
         </div>
 
         {strengthCard && (
-          <div style={{marginTop: '20px', padding: '18px', borderRadius: '20px', background: 'linear-gradient(135deg, rgba(32,199,255,0.1), rgba(32,199,255,0.02))', border: '1px solid rgba(32,199,255,0.2)'}}>
-            <div className="card-label" style={{color: '#20c7ff', marginBottom: '8px', fontSize: '13px', fontWeight: 900}}>
-              <span className="card-emoji" style={{marginRight: '6px'}}>⚡️</span>
-              <span>강점</span>
+          <div style={{marginTop: '20px', padding: '18px', borderRadius: '12px', background: 'rgba(32,199,255,0.05)', border: '1px solid rgba(32,199,255,0.15)'}}>
+            <div className="card-label" style={{display: 'flex', alignItems: 'center', color: '#20c7ff', marginBottom: '8px', fontSize: '13px', fontWeight: 900}}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="#20c7ff" stroke="none"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              <span style={{marginLeft: '6px'}}>강점</span>
             </div>
-            <div style={{color: '#dffdf9', fontSize: '13px', lineHeight: 1.6, wordBreak: 'keep-all'}}>
+            <div style={{color: '#7f788f', fontSize: '13px', lineHeight: 1.6, wordBreak: 'keep-all'}}>
               {strengthCard}
             </div>
           </div>
         )}
 
         {nextPlayCard && (
-          <div style={{marginTop: '12px', padding: '18px', borderRadius: '20px', background: 'linear-gradient(135deg, rgba(255,53,205,0.1), rgba(255,53,205,0.02))', border: '1px solid rgba(255,53,205,0.2)'}}>
-            <div className="card-label" style={{color: '#ff35cd', marginBottom: '8px', fontSize: '13px', fontWeight: 900}}>
-              <span className="card-emoji" style={{marginRight: '6px'}}>🎯</span>
-              <span>다음 플레이 포인트</span>
+          <div style={{marginTop: '12px', padding: '18px', borderRadius: '12px', background: 'rgba(255,53,205,0.05)', border: '1px solid rgba(255,53,205,0.15)'}}>
+            <div className="card-label" style={{display: 'flex', alignItems: 'center', color: '#ff35cd', marginBottom: '8px', fontSize: '13px', fontWeight: 900}}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ff35cd" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><path d="M12 12l8-8"/><polyline points="16 4 20 4 20 8"/></svg>
+              <span style={{marginLeft: '6px'}}>다음 플레이 포인트</span>
             </div>
-            <div style={{color: '#f8f5ff', fontSize: '13px', lineHeight: 1.6, wordBreak: 'keep-all'}}>
+            <div style={{color: '#7f788f', fontSize: '13px', lineHeight: 1.6, wordBreak: 'keep-all'}}>
               {nextPlayCard}
             </div>
           </div>
         )}
         
-        <div className="comment" style={{marginTop: '20px'}}>
-          {bottomComment || report.public_comment || `알액션에서 훌륭한 플레이를 보여주셨습니다! 정확도 ${result.accuracy}%를 기록하며 뛰어난 사격 솜씨를 증명했습니다.`}
+        <div style={{marginTop: '12px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '12px', padding: '18px', display: 'flex', gap: '10px'}}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#20c7ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{flexShrink: 0, marginTop: '2px'}}><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          <div style={{color: '#7f788f', fontSize: '13px', lineHeight: 1.55, wordBreak: 'keep-all'}}>
+            {bottomComment || report.public_comment || `알액션에서 훌륭한 플레이를 보여주셨습니다! 정확도 ${result.accuracy}%를 기록하며 뛰어난 사격 솜씨를 증명했습니다.`}
+          </div>
         </div>
         
         <a 
           href="https://m.booking.naver.com/booking/12/bizes/766721/items/4624099?area=pll&lang=ko&service-target=map-pc&startDateTime=2026-06-26T00%3A00%3A00%2B09%3A00&theme=place" 
           target="_blank" 
           rel="noopener noreferrer" 
-          className="btn primary" 
-          style={{width: '100%', marginTop: '24px', display: 'flex', height: '46px', justifyContent: 'center'}}
+          style={{width: '100%', marginTop: '24px', display: 'flex', alignItems: 'center', height: '52px', justifyContent: 'center', background: 'linear-gradient(90deg, #ff35cd, #20c7ff)', border: 'none', borderRadius: '16px', color: '#fff', fontSize: '16px', fontWeight: '700', textDecoration: 'none'}}
         >
           다시 예약하기
         </a>
@@ -362,13 +386,14 @@ export default function MobileReport({ params }: { params: Promise<{ token: stri
           margin-top: 24px;
         }
         .report-metric {
-          background: rgba(255,255,255,0.03);
-          border: 1px solid rgba(255,255,255,0.06);
-          border-radius: 16px;
-          padding: 20px;
+          background: rgba(255,255,255,0.02);
+          border: 1px solid rgba(255,255,255,0.05);
+          border-radius: 12px;
+          padding: 16px;
         }
-        .report-metric > span { display: block; color: #a49cb7; font-size: 11px; font-weight: 900; }
-        .report-metric > b { display: block; margin-top: 12px; font-size: 24px; letter-spacing: -.05em; color: #fff; }
+        .report-metric > span { display: block; color: #a49cb7; font-size: 11px; font-weight: 500; margin-bottom: 8px; }
+        .metric-val { display: flex; align-items: center; gap: 8px; }
+        .metric-val > b { font-size: 24px; letter-spacing: -.02em; color: #fff; line-height: 1; margin-top: 2px; }
         .comment {
           padding: 16px;
           border-radius: 20px;

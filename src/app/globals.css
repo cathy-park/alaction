@@ -795,7 +795,7 @@
       left: 0;
       right: 0;
       width: 100%;
-      animation: reportAutoScroll 10s ease-in-out infinite alternate;
+      animation: reportAutoScroll 12s cubic-bezier(0.4, 0, 0.2, 1) infinite;
       will-change: transform;
     }
     
@@ -806,11 +806,14 @@
     }
 
     @keyframes reportAutoScroll {
-      0% {
+      0%, 10% {
         transform: translateY(0);
       }
+      85%, 95% {
+        transform: translateY(calc(-100% + 844px));
+      }
       100% {
-        transform: translateY(calc(-100% + 712px));
+        transform: translateY(0);
       }
     }
 
