@@ -55,6 +55,30 @@ export default function MobileReport({ params }: { params: Promise<{ token: stri
   const result = report.shooting_results;
   const participant = report.participants;
 
+  const parseGPT = (text: string) => {
+    if (!text) return null;
+    const userSection = text.includes('[사용자 리포트 표시용]') ? text.split('[사용자 리포트 표시용]')[1] : text;
+    
+    const extract = (key: string) => {
+      const regex = new RegExp(`\\*\\*${key}:\\*\\*\\s*([^\\*]+)`);
+      const match = userSection.match(regex);
+      return match ? match[1].trim() : null;
+    };
+
+    const parsed = {
+      title: extract('제목'),
+      summary: extract('요약'),
+      badge: extract('성향 배지'),
+      strength: extract('강점 카드'),
+      nextPlay: extract('다음 플레이 카드'),
+      comment: extract('하단 공개 문구') || extract('관리자페이지 붙여넣기용 공개 문구')
+    };
+
+    return Object.values(parsed).some(v => v) ? parsed : null;
+  };
+
+  const parsed = parseGPT(result.gpt_analysis);
+
   return (
     <div style={{minHeight: '100vh', background: '#050508', padding: '14px', fontFamily: '-apple-system, BlinkMacSystemFont, "Pretendard", sans-serif'}}>
       <div className="screen" style={{maxWidth: '480px', margin: '0 auto'}}>
@@ -72,6 +96,21 @@ export default function MobileReport({ params }: { params: Promise<{ token: stri
           <h3>{participant.nickname}</h3>
           <p>{participant.team_name || 'NO TEAM'}</p>
         </div>
+
+        {parsed && parsed.badge && (
+          <div style={{textAlign: 'center', marginTop: '12px'}}>
+            <span style={{display: 'inline-block', padding: '6px 14px', background: 'rgba(255,53,205,0.15)', border: '1px solid rgba(255,53,205,0.4)', borderRadius: '99px', color: '#ff35cd', fontSize: '13px', fontWeight: 800, letterSpacing: '-0.02em'}}>
+              {parsed.badge}
+            </span>
+          </div>
+        )}
+
+        {parsed && parsed.title && (
+          <div style={{textAlign: 'center', marginTop: '24px', padding: '0 10px'}}>
+            <h4 style={{color: '#fff', fontSize: '20px', margin: '0 0 8px', wordBreak: 'keep-all'}}>{parsed.title}</h4>
+            <p style={{color: '#a49cb7', fontSize: '13px', lineHeight: 1.5, margin: 0, wordBreak: 'keep-all'}}>{parsed.summary}</p>
+          </div>
+        )}
         
         <div className="report-metrics">
           <div className="report-metric">
@@ -99,12 +138,34 @@ export default function MobileReport({ params }: { params: Promise<{ token: stri
             <b style={{color: '#ffe66b'}}>{result.accuracy > 70 ? '정밀형' : '돌격형'}</b>
           </div>
         </div>
+
+        {parsed && parsed.strength && (
+          <div style={{marginTop: '20px', padding: '18px', borderRadius: '20px', background: 'linear-gradient(135deg, rgba(32,199,255,0.1), rgba(32,199,255,0.02))', border: '1px solid rgba(32,199,255,0.2)'}}>
+            <div style={{color: '#20c7ff', fontSize: '12px', fontWeight: 900, marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '6px'}}>
+              <span style={{fontSize: '16px'}}>⚡️</span> 강점
+            </div>
+            <div style={{color: '#dffdf9', fontSize: '13px', lineHeight: 1.6, wordBreak: 'keep-all'}}>
+              {parsed.strength}
+            </div>
+          </div>
+        )}
+
+        {parsed && parsed.nextPlay && (
+          <div style={{marginTop: '12px', padding: '18px', borderRadius: '20px', background: 'linear-gradient(135deg, rgba(255,53,205,0.1), rgba(255,53,205,0.02))', border: '1px solid rgba(255,53,205,0.2)'}}>
+            <div style={{color: '#ff35cd', fontSize: '12px', fontWeight: 900, marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '6px'}}>
+              <span style={{fontSize: '16px'}}>🎯</span> 다음 플레이 포인트
+            </div>
+            <div style={{color: '#f8f5ff', fontSize: '13px', lineHeight: 1.6, wordBreak: 'keep-all'}}>
+              {parsed.nextPlay}
+            </div>
+          </div>
+        )}
         
-        <div className="comment">
-          {result.gpt_analysis || `알액션에서 훌륭한 플레이를 보여주셨습니다! 정확도 ${result.accuracy}%를 기록하며 뛰어난 사격 솜씨를 증명했습니다.`}
+        <div className="comment" style={{marginTop: '20px'}}>
+          {parsed?.comment || result.gpt_analysis || `알액션에서 훌륭한 플레이를 보여주셨습니다! 정확도 ${result.accuracy}%를 기록하며 뛰어난 사격 솜씨를 증명했습니다.`}
         </div>
         
-        <a href="/" className="btn primary" style={{width: '100%', marginTop: '18px', display: 'flex', height: '46px'}}>홈페이지로 이동</a>
+        <a href="/" className="btn primary" style={{width: '100%', marginTop: '24px', display: 'flex', height: '46px'}}>홈페이지로 이동</a>
       </div>
 
       <style dangerouslySetInnerHTML={{__html: `
@@ -120,7 +181,7 @@ export default function MobileReport({ params }: { params: Promise<{ token: stri
         .report-metric { min-height: 86px; padding: 14px; border-radius: 20px; background: rgba(255,255,255,.055); border: 1px solid rgba(255,255,255,.08); }
         .report-metric span { display: block; color: #a49cb7; font-size: 11px; font-weight: 900; }
         .report-metric b { display: block; margin-top: 12px; font-size: 24px; letter-spacing: -.05em; }
-        .comment { margin-top: 16px; padding: 16px; border-radius: 20px; background: rgba(56,255,228,.07); border: 1px solid rgba(56,255,228,.16); color: #dffdf9; font-size: 13px; line-height: 1.55; }
+        .comment { padding: 16px; border-radius: 20px; background: rgba(56,255,228,.07); border: 1px solid rgba(56,255,228,.16); color: #dffdf9; font-size: 13px; line-height: 1.55; word-break: keep-all; }
         .btn { height: 42px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 0 16px; border: 1px solid rgba(255,255,255,.12); border-radius: 999px; background: rgba(255,255,255,.055); color: #f8f5ff; font-weight: 1000; font-size: 13px; cursor: pointer; text-decoration: none; }
         .btn.primary { border: 0; background: linear-gradient(100deg,#ff35cd,#8b44ff 58%,#20c7ff); box-shadow: 0 0 30px rgba(255,53,205,.25); }
       `}} />
