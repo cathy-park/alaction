@@ -14,9 +14,18 @@ export default function MobileReport({ params }: { params: Promise<{ token: stri
   }, [token]);
 
   const fetchReport = async () => {
-    const { data: reportData } = await supabase.from('reports').select('*, sessions(*), participants(*), shooting_results(*)').eq('report_token', token).single();
+    const { data: reportData } = await supabase.from('reports').select('*').eq('report_token', token).single();
     if (reportData) {
-      setReport(reportData);
+      const { data: sData } = await supabase.from('sessions').select('*').eq('id', reportData.session_id).single();
+      const { data: pData } = await supabase.from('participants').select('*').eq('id', reportData.participant_id).single();
+      const { data: rData } = await supabase.from('shooting_results').select('*').eq('id', reportData.result_id).single();
+
+      setReport({
+        ...reportData,
+        sessions: sData || {},
+        participants: pData || {},
+        shooting_results: rData || {}
+      });
     }
     setLoading(false);
   };

@@ -24,14 +24,22 @@ export default function SessionReports({ params }: { params: Promise<{ id: strin
     const { data: sessionData } = await supabase.from('sessions').select('*').eq('id', sessionId).single();
     if (sessionData) setSession(sessionData);
 
-    const { data } = await supabase
-      .from('reports')
-      .select('*, participants(*), shooting_results(*)')
-      .eq('session_id', sessionId);
+    const { data: reportsData } = await supabase.from('reports').select('*').eq('session_id', sessionId);
     
-    if (data) {
-      setReports(data.map((r: any) => ({ ...r, url: `${origin}/report/${r.report_token}` })));
-      if (data.length > 0) setPreviewToken(data[0].report_token);
+    if (reportsData) {
+      const enhancedReports = [];
+      for (const r of reportsData) {
+        const { data: pData } = await supabase.from('participants').select('*').eq('id', r.participant_id).single();
+        const { data: sData } = await supabase.from('shooting_results').select('*').eq('id', r.result_id).single();
+        enhancedReports.push({
+          ...r,
+          participants: pData || {},
+          shooting_results: sData || {},
+          url: `${origin}/report/${r.report_token}`
+        });
+      }
+      setReports(enhancedReports);
+      if (enhancedReports.length > 0) setPreviewToken(enhancedReports[0].report_token);
     }
     setLoading(false);
   };
