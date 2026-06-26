@@ -481,7 +481,7 @@ export default function Page() {
     <div className="lightbox" id="lightbox" role="dialog" aria-modal="true">
       <button className="lb-btn lb-close" id="lbClose" aria-label="닫기">✕</button>
       <button className="lb-btn lb-prev" id="lbPrev" aria-label="이전">‹</button>
-      <img src alt="갤러리 이미지" id="lbImg" />
+      <img src="" alt="갤러리 이미지" id="lbImg" />
       <button className="lb-btn lb-next" id="lbNext" aria-label="다음">›</button>
     </div>
     {/* ─── PROGRAM ─── */}
