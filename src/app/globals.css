@@ -300,6 +300,8 @@
       position: relative;
       z-index: 50; /* 다른 데코레이션 레이어(z-index 2~3)보다 확실히 높게 설정하여 클릭이 덮이지 않도록 함 */
       pointer-events: auto !important;
+      transform: translate3d(0, 0, 10px); /* 3D 가속 버그로 인한 클릭 씹힘 방지 */
+      -webkit-transform: translate3d(0, 0, 10px);
     }
 
     /* 모바일 조정 */
@@ -369,6 +371,8 @@
       position: relative;
       z-index: 99999; /* 모든 버튼의 z-index를 최상위로 설정 */
       pointer-events: auto !important;
+      transform: translate3d(0, 0, 15px); /* 3D 가속 버그 방지 */
+      -webkit-transform: translate3d(0, 0, 15px);
       height:52px; padding:0 26px;
       display:inline-flex; align-items:center; justify-content:center; gap:8px;
       border-radius:999px; font-family:'Rajdhani',sans-serif;
@@ -376,7 +380,7 @@
       transition:transform .25s var(--ease), box-shadow .25s var(--ease);
       cursor:pointer; border:0;
     }
-    .btn:hover { transform:translateY(-2px); }
+    .btn:hover { transform: translate3d(0, -2px, 15px); }
     .btn-primary {
       background:linear-gradient(110deg,var(--pink),var(--purple) 55%,var(--blue));
       color:#fff;
