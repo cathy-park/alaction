@@ -112,39 +112,6 @@ export default function Page() {
           if(e.key==='ArrowRight') navigateLb(1);
         });
         lbImg.style.transition='opacity .15s';
-    
-        /* ─── Reviews Carousel Drag Scroll ─── */
-        const carousel = document.querySelector('.reviews-carousel') as HTMLElement | null;
-        if (carousel) {
-          let isDown = false;
-          let startX = 0;
-          let scrollLeft = 0;
-
-          const onMouseDown = (e: MouseEvent) => {
-            isDown = true;
-            carousel.classList.add('active');
-            startX = e.pageX - carousel.getBoundingClientRect().left;
-            scrollLeft = carousel.scrollLeft;
-          };
-          const onMouseLeave = () => { isDown = false; carousel.classList.remove('active'); };
-          const onMouseUp = () => { isDown = false; carousel.classList.remove('active'); };
-          const onMouseMove = (e: MouseEvent) => {
-            if (!isDown) return;
-            e.preventDefault();
-            const x = e.pageX - carousel.getBoundingClientRect().left;
-            carousel.scrollLeft = scrollLeft - (x - startX) * 1.5;
-          };
-          carousel.addEventListener('mousedown', onMouseDown);
-          carousel.addEventListener('mouseleave', onMouseLeave);
-          carousel.addEventListener('mouseup', onMouseUp);
-          carousel.addEventListener('mousemove', onMouseMove, { passive: false });
-
-          // Touch support
-          let touchStartX = 0;
-          let touchScrollLeft = 0;
-          carousel.addEventListener('touchstart', (e: TouchEvent) => { touchStartX = e.touches[0].pageX; touchScrollLeft = carousel.scrollLeft; }, { passive: true });
-          carousel.addEventListener('touchmove', (e: TouchEvent) => { const dx = e.touches[0].pageX - touchStartX; carousel.scrollLeft = touchScrollLeft - dx; }, { passive: true });
-        }
   }, []);
 
   return (
@@ -451,7 +418,6 @@ export default function Page() {
                 <h3>기업 워크샵 / 팀빌딩</h3>
                 <p>협동과 전략으로 팀워크를 높이는 몰입형 실내 액티비티.</p>
               </div>
-              <span className="program-arrow">↗</span>
             </div>
             <div className="program-item anim-fadein delay-1">
               <span className="program-num">02</span>
@@ -459,7 +425,6 @@ export default function Page() {
                 <h3>회식 / 친목 모임</h3>
                 <p>동호회, 친구 모임, 회식에서 부담 없이 즐기는 게임형 모임.</p>
               </div>
-              <span className="program-arrow">↗</span>
             </div>
             <div className="program-item anim-fadein delay-2">
               <span className="program-num">03</span>
@@ -467,7 +432,6 @@ export default function Page() {
                 <h3>학교·학원·청소년 활동</h3>
                 <p>청소년 체육 활동 및 특별 프로그램으로 활용 가능한 구성.</p>
               </div>
-              <span className="program-arrow">↗</span>
             </div>
             <div className="program-item anim-fadein delay-3">
               <span className="program-num">04</span>
@@ -475,7 +439,6 @@ export default function Page() {
                 <h3>생일파티 / 가족 모임</h3>
                 <p>특별한 날을 기억에 남는 액티비티로 만드는 파티형 프로그램.</p>
               </div>
-              <span className="program-arrow">↗</span>
             </div>
           </div>
         </div>
