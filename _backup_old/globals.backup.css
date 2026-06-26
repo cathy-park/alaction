@@ -926,7 +926,7 @@
     }
     @media(max-width:768px) {
       .nav-links { display:none; }
-      .hero-content { transform: translateY(-40px); }
+      .hero-content { transform: none; }
       .hero-sub { font-size: 15px !important; }
       .hero-bg-img.mobile-only { filter: brightness(0.45) saturate(1.1) !important; }
       .hero h1 { font-size:clamp(42px,11vw,80px); }
