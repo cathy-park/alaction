@@ -300,7 +300,6 @@
       position: relative;
       width: 100%; /* 너비 고정하여 타이핑 시 좌우 들썩거림(swaying) 방지 */
       z-index: 99999; /* 다른 모든 것보다 높게 설정 */
-      pointer-events: none; /* 컨테이너 자체는 클릭 무시 */
     }
 
     /* 모바일 조정 */
@@ -327,7 +326,6 @@
       font-size:12px; font-weight:700; font-family:'Rajdhani',sans-serif;
       letter-spacing:.12em; text-transform:uppercase; color:#BFBBCF;
       margin-bottom:20px; /* PC: 칩과 h1 간격 20px로 확보 (위로 띄움) */
-      pointer-events: none; /* 클릭 방해 차단 */
     }
     .spark {
       width:8px; height:8px; border-radius:50%;
@@ -341,7 +339,6 @@
       font-weight:900; line-height:.82; letter-spacing:-.08em;
       margin:5px 0 20px; max-width:1100px;
       color: #f8f5ff;
-      pointer-events: none; /* 클릭 방해 차단 */
     }
     .hero-section h1 .line2 {
       display:block;
@@ -357,7 +354,6 @@
       text-align: left;
       white-space: nowrap; /* PC에서는 강제로 한 줄로 표시 */
       min-height: 32px; /* 들썩거림 방지 */
-      pointer-events: none; /* 클릭 방해 차단 */
     }
     @media (max-width: 768px) {
       .hero-section .hero-sub {
@@ -376,10 +372,6 @@
       display:flex; justify-content:flex-start; gap:12px; flex-wrap:wrap;
       position: relative;
       z-index: 51;
-      pointer-events: auto; /* 여기는 클릭 허용 */
-    }
-    .hero-actions a {
-      pointer-events: auto !important;
     }
     .btn {
       position: relative;
@@ -669,8 +661,9 @@
       background:rgba(4,4,10,.93); backdrop-filter:blur(20px);
       display:flex; align-items:center; justify-content:center;
       opacity:0; transition:opacity .3s;
+      pointer-events: none; /* 보이지 않을 때는 클릭 무시 */
     }
-    .lightbox.open { opacity:1; }
+    .lightbox.open { opacity:1; pointer-events: auto; }
     .lightbox img {
       max-width:88vw; max-height:88vh; width:auto; height:auto;
       border-radius:16px; object-fit:contain;
