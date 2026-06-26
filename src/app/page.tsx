@@ -153,8 +153,9 @@ export default function Page() {
   <header className="nav" id="nav">
     <div className="wrap">
       <div className="nav-inner">
-        <a className="brand" href="#" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '4px' }}>
-          <img src="/logo.png" alt="ALACTION" style={{ width: '60px', objectFit: 'contain' }} />
+        <a className="brand" href="#">
+          <img src="/logo.png" alt="Logo" style={{ width: '32px', height: '32px', objectFit: 'contain' }} />
+          <span>R.ACTION</span>
         </a>
         <nav className="nav-links">
           <a href="#features">게임 특징</a>
