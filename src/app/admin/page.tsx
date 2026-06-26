@@ -18,7 +18,6 @@ export default function AdminDashboard() {
   }, []);
 
   const fetchDashboardData = async () => {
-    // Fetch counts from sessions and reports
     const { count: totalSessions } = await supabase.from('sessions').select('*', { count: 'exact', head: true });
     const { count: published } = await supabase.from('reports').select('*', { count: 'exact', head: true }).eq('report_status', 'published');
     const { count: ready } = await supabase.from('reports').select('*', { count: 'exact', head: true }).eq('report_status', 'ready');
@@ -41,74 +40,94 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-10">
       <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold font-['Orbitron']">DASHBOARD</h1>
-        <Link href="/admin/sessions/new" className="bg-[#FF2A9D] hover:bg-[#ff4db1] text-white px-6 py-2 rounded-full font-bold transition-colors">
-          새 경기 세션 만들기
+        <div>
+          <h1 className="text-3xl font-bold font-['Orbitron'] tracking-wide">SYSTEM OVERVIEW</h1>
+          <p className="text-[#9A91B4] text-sm mt-1">Real-time status of sessions and reports.</p>
+        </div>
+        <Link href="/admin/sessions/new" className="group relative inline-flex items-center justify-center overflow-hidden rounded-full p-4 px-8 font-medium text-white transition-all duration-300">
+          <span className="absolute inset-0 bg-gradient-to-r from-[#FF2A9D] to-[#8C3FFF] opacity-90 group-hover:opacity-100"></span>
+          <span className="absolute bottom-0 left-0 h-1/3 w-full bg-gradient-to-t from-white/20 to-transparent"></span>
+          <span className="relative font-bold shadow-black drop-shadow-md">새 경기 세션 생성 ⚡</span>
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.1)] rounded-2xl p-6">
-          <div className="text-sm text-[#BFBBCF] mb-2 font-bold uppercase tracking-wider">총 경기 세션</div>
-          <div className="text-4xl font-['Rajdhani'] font-bold text-white">{stats.total}</div>
+      {/* Stats Bento Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div className="bg-[rgba(255,255,255,0.02)] border border-[rgba(255,255,255,0.05)] rounded-[1.5rem] p-6 relative overflow-hidden group hover:border-[#FF2A9D]/30 transition-colors">
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#FF2A9D] to-transparent opacity-50" />
+          <h3 className="text-[#9A91B4] font-['Rajdhani'] uppercase tracking-widest text-xs font-bold mb-2">Total Sessions</h3>
+          <div className="font-['Rajdhani'] font-bold text-5xl text-transparent bg-clip-text bg-gradient-to-br from-white to-[#BFBBCF]">
+            {stats.total}
+          </div>
         </div>
-        <div className="bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.1)] rounded-2xl p-6">
-          <div className="text-sm text-[#BFBBCF] mb-2 font-bold uppercase tracking-wider">공개된 리포트</div>
-          <div className="text-4xl font-['Rajdhani'] font-bold text-[#20C6FF]">{stats.published}</div>
+        <div className="bg-[rgba(255,255,255,0.02)] border border-[rgba(255,255,255,0.05)] rounded-[1.5rem] p-6 relative overflow-hidden group hover:border-[#20C6FF]/30 transition-colors">
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#20C6FF] to-transparent opacity-50" />
+          <h3 className="text-[#9A91B4] font-['Rajdhani'] uppercase tracking-widest text-xs font-bold mb-2">Published Reports</h3>
+          <div className="font-['Rajdhani'] font-bold text-5xl text-transparent bg-clip-text bg-gradient-to-br from-[#20C6FF] to-[#0070FF]">
+            {stats.published}
+          </div>
         </div>
-        <div className="bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.1)] rounded-2xl p-6">
-          <div className="text-sm text-[#BFBBCF] mb-2 font-bold uppercase tracking-wider">준비 중 리포트</div>
-          <div className="text-4xl font-['Rajdhani'] font-bold text-[#B5FF2D]">{stats.ready}</div>
+        <div className="bg-[rgba(255,255,255,0.02)] border border-[rgba(255,255,255,0.05)] rounded-[1.5rem] p-6 relative overflow-hidden group hover:border-[#B5FF2D]/30 transition-colors">
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#B5FF2D] to-transparent opacity-50" />
+          <h3 className="text-[#9A91B4] font-['Rajdhani'] uppercase tracking-widest text-xs font-bold mb-2">Ready Reports</h3>
+          <div className="font-['Rajdhani'] font-bold text-5xl text-transparent bg-clip-text bg-gradient-to-br from-[#B5FF2D] to-[#20C6FF]">
+            {stats.ready}
+          </div>
         </div>
-        <div className="bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.1)] rounded-2xl p-6">
-          <div className="text-sm text-[#BFBBCF] mb-2 font-bold uppercase tracking-wider">만료된 리포트</div>
-          <div className="text-4xl font-['Rajdhani'] font-bold text-[#60597A]">{stats.expired}</div>
+        <div className="bg-[rgba(255,255,255,0.02)] border border-[rgba(255,255,255,0.05)] rounded-[1.5rem] p-6 relative overflow-hidden group hover:border-[#60597A]/50 transition-colors">
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#60597A] to-transparent opacity-50" />
+          <h3 className="text-[#9A91B4] font-['Rajdhani'] uppercase tracking-widest text-xs font-bold mb-2">Expired</h3>
+          <div className="font-['Rajdhani'] font-bold text-5xl text-[#60597A]">
+            {stats.expired}
+          </div>
         </div>
       </div>
 
-      <div>
-        <div className="flex justify-between items-center mb-4">
+      {/* Recent Sessions Table */}
+      <div className="bg-[rgba(255,255,255,0.02)] border border-[rgba(255,255,255,0.05)] rounded-[2rem] overflow-hidden backdrop-blur-md">
+        <div className="p-6 border-b border-[rgba(255,255,255,0.05)] flex justify-between items-center">
           <h2 className="text-xl font-bold font-['Orbitron']">RECENT SESSIONS</h2>
-          <Link href="/admin/sessions" className="text-sm text-[#20C6FF] hover:underline">세션 목록 보기</Link>
+          <Link href="/admin/sessions" className="text-sm font-['Rajdhani'] uppercase tracking-widest text-[#20C6FF] hover:text-white transition-colors">View All →</Link>
         </div>
-        <div className="bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.1)] rounded-2xl overflow-hidden">
+        
+        <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="border-b border-[rgba(255,255,255,0.1)] text-[#BFBBCF] text-sm">
-                <th className="p-4 font-normal">세션명</th>
-                <th className="p-4 font-normal">경기 일자</th>
-                <th className="p-4 font-normal">유형</th>
-                <th className="p-4 font-normal">상태</th>
-                <th className="p-4 font-normal"></th>
+              <tr className="bg-[rgba(0,0,0,0.2)] text-[#9A91B4] text-xs font-['Rajdhani'] uppercase tracking-wider">
+                <th className="p-4 font-bold">Session Name</th>
+                <th className="p-4 font-bold">Play Date</th>
+                <th className="p-4 font-bold">Type</th>
+                <th className="p-4 font-bold">Status</th>
+                <th className="p-4 font-bold text-right">Action</th>
               </tr>
             </thead>
             <tbody>
               {recentSessions.map(session => (
-                <tr key={session.id} className="border-b border-[rgba(255,255,255,0.05)] hover:bg-[rgba(255,255,255,0.02)] transition-colors">
-                  <td className="p-4 font-bold">{session.title}</td>
+                <tr key={session.id} className="border-b border-[rgba(255,255,255,0.02)] hover:bg-[rgba(255,255,255,0.02)] transition-colors">
+                  <td className="p-4 font-bold text-white">{session.title}</td>
                   <td className="p-4 text-[#BFBBCF]">{session.play_date}</td>
                   <td className="p-4 text-[#BFBBCF]">{session.program_type}</td>
                   <td className="p-4">
-                    <span className={`px-2 py-1 rounded text-xs font-bold ${
-                      session.status === 'published' ? 'bg-[#20C6FF]/20 text-[#20C6FF]' :
-                      session.status === 'ready' ? 'bg-[#B5FF2D]/20 text-[#B5FF2D]' :
-                      'bg-gray-500/20 text-gray-400'
+                    <span className={`px-3 py-1 rounded-full text-[10px] font-bold font-['Rajdhani'] tracking-widest uppercase border ${
+                      session.status === 'published' ? 'bg-[#20C6FF]/10 text-[#20C6FF] border-[#20C6FF]/30' :
+                      session.status === 'ready' ? 'bg-[#B5FF2D]/10 text-[#B5FF2D] border-[#B5FF2D]/30' :
+                      'bg-gray-500/10 text-gray-400 border-gray-500/30'
                     }`}>
-                      {session.status.toUpperCase()}
+                      {session.status}
                     </span>
                   </td>
                   <td className="p-4 text-right">
-                    <Link href={`/admin/sessions/${session.id}`} className="text-sm text-[#FF2A9D] hover:underline">
-                      상세 보기
+                    <Link href={`/admin/sessions/${session.id}`} className="text-sm font-bold text-[#FF2A9D] hover:text-white transition-colors">
+                      관리하기
                     </Link>
                   </td>
                 </tr>
               ))}
               {recentSessions.length === 0 && (
                 <tr>
-                  <td colSpan={5} className="p-8 text-center text-[#60597A]">최근 생성된 세션이 없습니다.</td>
+                  <td colSpan={5} className="p-8 text-center text-[#60597A] font-['Rajdhani'] uppercase tracking-widest">No sessions found.</td>
                 </tr>
               )}
             </tbody>

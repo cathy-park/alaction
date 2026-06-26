@@ -36,7 +36,6 @@ export default function SessionDetails({ params }: { params: Promise<{ id: strin
     if (participantsData) {
       setParticipants(participantsData);
       
-      // Fetch results
       const { data: resultsData } = await supabase.from('shooting_results').select('*').eq('session_id', sessionId);
       const resultsMap: Record<string, any> = {};
       if (resultsData) {
@@ -88,7 +87,7 @@ export default function SessionDetails({ params }: { params: Promise<{ id: strin
       }
     }
     alert('저장되었습니다.');
-    fetchSessionData(); // Refresh to get accuracy etc
+    fetchSessionData();
   };
 
   const generateReport = async (participantId: string) => {
@@ -114,86 +113,119 @@ export default function SessionDetails({ params }: { params: Promise<{ id: strin
     }
   };
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <div className="p-16 text-center text-[#FF2A9D] font-['Orbitron'] font-bold text-lg animate-pulse">LOADING DATA...</div>;
 
   return (
     <div className="space-y-8">
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <Link href="/admin/sessions" className="text-[#20C6FF] text-sm hover:underline mb-2 inline-block">← 목록으로 돌아가기</Link>
-          <h1 className="text-3xl font-bold font-['Orbitron']">{session?.title}</h1>
-          <p className="text-[#BFBBCF] mt-1">{session?.play_date} | {session?.program_type} | 상태: {session?.status}</p>
+          <Link href="/admin/sessions" className="text-[#20C6FF] text-xs font-bold uppercase tracking-widest hover:text-white transition-colors mb-2 inline-block">← Back to Sessions</Link>
+          <h1 className="text-3xl font-bold font-['Orbitron'] tracking-wide">{session?.title}</h1>
+          <div className="flex items-center gap-3 mt-2">
+            <span className="text-[#9A91B4] text-sm">{session?.play_date}</span>
+            <span className="w-1 h-1 bg-[#60597A] rounded-full"></span>
+            <span className="text-[#9A91B4] text-sm">{session?.program_type}</span>
+            <span className="w-1 h-1 bg-[#60597A] rounded-full"></span>
+            <span className={`text-xs font-bold font-['Rajdhani'] uppercase tracking-widest ${session?.status === 'published' ? 'text-[#20C6FF]' : session?.status === 'ready' ? 'text-[#B5FF2D]' : 'text-gray-400'}`}>STATUS: {session?.status}</span>
+          </div>
         </div>
         <div>
-          <Link href={`/admin/sessions/${sessionId}/reports`} className="bg-gradient-to-r from-[#FF2A9D] to-[#8C3FFF] hover:shadow-[0_0_20px_rgba(255,42,157,0.4)] text-white font-bold px-6 py-2 rounded-full transition-all">
-            QR 리포트 관리 & 다운로드
+          <Link href={`/admin/sessions/${sessionId}/reports`} className="group relative inline-flex items-center justify-center overflow-hidden rounded-full p-3 px-6 font-medium text-white transition-all duration-300 border border-[rgba(255,42,157,0.5)] bg-[rgba(255,42,157,0.1)] hover:bg-[rgba(255,42,157,0.3)] shadow-[0_0_15px_rgba(255,42,157,0.2)]">
+            <span className="relative font-bold font-['Rajdhani'] uppercase tracking-widest text-sm">QR Reports Management →</span>
           </Link>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 xl:grid-cols-4 gap-8">
         {/* Participants Column */}
-        <div className="lg:col-span-1 space-y-6">
-          <div className="bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.1)] rounded-2xl p-6">
-            <h2 className="text-xl font-bold font-['Orbitron'] mb-4 text-[#FF2A9D]">참여자 추가</h2>
+        <div className="xl:col-span-1 space-y-6">
+          <div className="bg-[rgba(255,255,255,0.02)] backdrop-blur-md border border-[rgba(255,255,255,0.05)] rounded-[1.5rem] p-6 relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#FF2A9D] to-transparent opacity-50" />
+            <h2 className="text-[#9A91B4] font-['Rajdhani'] uppercase tracking-widest text-xs font-bold mb-6 flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-[#FF2A9D] shadow-[0_0_8px_#FF2A9D]"></span> Add Participant
+            </h2>
+            
             <form onSubmit={handleAddParticipant} className="space-y-4">
-              <input type="text" placeholder="닉네임 (필수)" required value={newParticipant.nickname} onChange={e => setNewParticipant({...newParticipant, nickname: e.target.value})} className="w-full bg-[#04040a] border border-[#60597A] rounded-lg px-3 py-2 text-white" />
-              <input type="text" placeholder="팀명 (선택)" value={newParticipant.team_name} onChange={e => setNewParticipant({...newParticipant, team_name: e.target.value})} className="w-full bg-[#04040a] border border-[#60597A] rounded-lg px-3 py-2 text-white" />
-              <button type="submit" className="w-full bg-[#20C6FF] hover:bg-[#1bb3e6] text-[#04040a] font-bold py-2 rounded-lg">추가</button>
+              <div>
+                <input type="text" placeholder="Nickname (Required)" required value={newParticipant.nickname} onChange={e => setNewParticipant({...newParticipant, nickname: e.target.value})} className="w-full bg-[#070710] border border-[rgba(255,255,255,0.1)] rounded-xl px-4 py-3 text-white placeholder-[#60597A] focus:outline-none focus:border-[#FF2A9D] focus:shadow-[0_0_15px_rgba(255,42,157,0.2)] transition-all text-sm" />
+              </div>
+              <div>
+                <input type="text" placeholder="Team Name (Optional)" value={newParticipant.team_name} onChange={e => setNewParticipant({...newParticipant, team_name: e.target.value})} className="w-full bg-[#070710] border border-[rgba(255,255,255,0.1)] rounded-xl px-4 py-3 text-white placeholder-[#60597A] focus:outline-none focus:border-[#20C6FF] focus:shadow-[0_0_15px_rgba(32,198,255,0.2)] transition-all text-sm" />
+              </div>
+              <button type="submit" className="w-full bg-[#20C6FF] hover:bg-[#1bb3e6] text-[#04040a] font-bold font-['Rajdhani'] uppercase tracking-widest text-sm py-3 rounded-xl transition-colors shadow-[0_0_15px_rgba(32,198,255,0.3)]">
+                + Add Player
+              </button>
             </form>
           </div>
         </div>
 
         {/* Results Column */}
-        <div className="lg:col-span-2">
-          <div className="bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.1)] rounded-2xl p-6 overflow-x-auto">
-            <h2 className="text-xl font-bold font-['Orbitron'] mb-4 text-[#B5FF2D]">슈팅 결과 입력</h2>
-            <table className="w-full text-left border-collapse min-w-[600px]">
-              <thead>
-                <tr className="border-b border-[rgba(255,255,255,0.1)] text-[#BFBBCF] text-xs">
-                  <th className="p-2">닉네임(팀)</th>
-                  <th className="p-2 w-16">순위</th>
-                  <th className="p-2 w-20">점수</th>
-                  <th className="p-2 w-20">발사수</th>
-                  <th className="p-2 w-20">명중수</th>
-                  <th className="p-2 w-20">피격수</th>
-                  <th className="p-2 w-20">정확도</th>
-                  <th className="p-2">액션</th>
-                </tr>
-              </thead>
-              <tbody>
-                {participants.map(p => (
-                  <tr key={p.id} className="border-b border-[rgba(255,255,255,0.05)]">
-                    <td className="p-2">
-                      <div className="font-bold">{p.nickname}</div>
-                      <div className="text-[10px] text-[#BFBBCF]">{p.team_name}</div>
-                    </td>
-                    <td className="p-2">
-                      <input type="number" value={results[p.id]?.rank || ''} onChange={e => setResults({...results, [p.id]: {...results[p.id], rank: e.target.value}})} className="w-full bg-[#04040a] border border-[#60597A] rounded px-2 py-1 text-white text-sm" />
-                    </td>
-                    <td className="p-2">
-                      <input type="number" value={results[p.id]?.score || ''} onChange={e => setResults({...results, [p.id]: {...results[p.id], score: e.target.value}})} className="w-full bg-[#04040a] border border-[#60597A] rounded px-2 py-1 text-white text-sm" />
-                    </td>
-                    <td className="p-2">
-                      <input type="number" value={results[p.id]?.shots_fired || ''} onChange={e => setResults({...results, [p.id]: {...results[p.id], shots_fired: e.target.value}})} className="w-full bg-[#04040a] border border-[#60597A] rounded px-2 py-1 text-white text-sm" />
-                    </td>
-                    <td className="p-2">
-                      <input type="number" value={results[p.id]?.hits || ''} onChange={e => setResults({...results, [p.id]: {...results[p.id], hits: e.target.value}})} className="w-full bg-[#04040a] border border-[#60597A] rounded px-2 py-1 text-white text-sm" />
-                    </td>
-                    <td className="p-2">
-                      <input type="number" value={results[p.id]?.times_hit || ''} onChange={e => setResults({...results, [p.id]: {...results[p.id], times_hit: e.target.value}})} className="w-full bg-[#04040a] border border-[#60597A] rounded px-2 py-1 text-white text-sm" />
-                    </td>
-                    <td className="p-2 text-center text-sm font-bold text-[#FF2A9D]">
-                      {results[p.id]?.accuracy !== undefined ? `${results[p.id].accuracy}%` : '-'}
-                    </td>
-                    <td className="p-2 flex gap-2">
-                      <button onClick={() => handleSaveResult(p.id)} className="bg-[#60597A] hover:bg-[#8C3FFF] text-white text-xs px-2 py-1 rounded">저장</button>
-                      <button onClick={() => generateReport(p.id)} className="bg-[#FF2A9D] hover:bg-[#ff4db1] text-white text-xs px-2 py-1 rounded">리포트</button>
-                    </td>
+        <div className="xl:col-span-3">
+          <div className="bg-[rgba(255,255,255,0.02)] backdrop-blur-md border border-[rgba(255,255,255,0.05)] rounded-[2rem] p-6 relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#20C6FF] to-transparent opacity-50" />
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-[#9A91B4] font-['Rajdhani'] uppercase tracking-widest text-xs font-bold flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-[#20C6FF] shadow-[0_0_8px_#20C6FF]"></span> Shooting Results Input
+              </h2>
+            </div>
+            
+            <div className="overflow-x-auto pb-4 custom-scrollbar">
+              <table className="w-full text-left border-collapse min-w-[800px]">
+                <thead>
+                  <tr className="border-b border-[rgba(255,255,255,0.05)] text-[#9A91B4] text-xs font-['Rajdhani'] uppercase tracking-wider">
+                    <th className="p-3 font-bold w-[120px]">Player (Team)</th>
+                    <th className="p-3 font-bold w-[70px]">Rank</th>
+                    <th className="p-3 font-bold w-[90px]">Score</th>
+                    <th className="p-3 font-bold w-[80px]">Shots</th>
+                    <th className="p-3 font-bold w-[80px]">Hits</th>
+                    <th className="p-3 font-bold w-[80px]">Damaged</th>
+                    <th className="p-3 font-bold w-[90px] text-center">Accuracy</th>
+                    <th className="p-3 font-bold text-right">Actions</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {participants.map(p => (
+                    <tr key={p.id} className="border-b border-[rgba(255,255,255,0.02)] hover:bg-[rgba(255,255,255,0.02)] transition-colors">
+                      <td className="p-3">
+                        <div className="font-bold text-white text-sm">{p.nickname}</div>
+                        <div className="text-[10px] text-[#60597A] uppercase tracking-wider">{p.team_name || 'No Team'}</div>
+                      </td>
+                      <td className="p-3">
+                        <input type="number" placeholder="-" value={results[p.id]?.rank || ''} onChange={e => setResults({...results, [p.id]: {...results[p.id], rank: e.target.value}})} className="w-full bg-[#070710] border border-[rgba(255,255,255,0.1)] rounded-lg px-3 py-2 text-white text-sm text-center focus:outline-none focus:border-[#FF2A9D]" />
+                      </td>
+                      <td className="p-3">
+                        <input type="number" placeholder="0" value={results[p.id]?.score || ''} onChange={e => setResults({...results, [p.id]: {...results[p.id], score: e.target.value}})} className="w-full bg-[#070710] border border-[rgba(255,255,255,0.1)] rounded-lg px-3 py-2 text-white text-sm text-center focus:outline-none focus:border-[#FF2A9D]" />
+                      </td>
+                      <td className="p-3">
+                        <input type="number" placeholder="0" value={results[p.id]?.shots_fired || ''} onChange={e => setResults({...results, [p.id]: {...results[p.id], shots_fired: e.target.value}})} className="w-full bg-[#070710] border border-[rgba(255,255,255,0.1)] rounded-lg px-3 py-2 text-white text-sm text-center focus:outline-none focus:border-[#20C6FF]" />
+                      </td>
+                      <td className="p-3">
+                        <input type="number" placeholder="0" value={results[p.id]?.hits || ''} onChange={e => setResults({...results, [p.id]: {...results[p.id], hits: e.target.value}})} className="w-full bg-[#070710] border border-[rgba(255,255,255,0.1)] rounded-lg px-3 py-2 text-white text-sm text-center focus:outline-none focus:border-[#20C6FF]" />
+                      </td>
+                      <td className="p-3">
+                        <input type="number" placeholder="0" value={results[p.id]?.times_hit || ''} onChange={e => setResults({...results, [p.id]: {...results[p.id], times_hit: e.target.value}})} className="w-full bg-[#070710] border border-[rgba(255,255,255,0.1)] rounded-lg px-3 py-2 text-white text-sm text-center focus:outline-none focus:border-[#8C3FFF]" />
+                      </td>
+                      <td className="p-3 text-center">
+                        <span className="font-['Orbitron'] font-bold text-[#B5FF2D] text-lg drop-shadow-[0_0_8px_rgba(181,255,45,0.4)]">
+                          {results[p.id]?.accuracy !== undefined ? `${results[p.id].accuracy}%` : '-'}
+                        </span>
+                      </td>
+                      <td className="p-3 text-right">
+                        <div className="flex gap-2 justify-end">
+                          <button onClick={() => handleSaveResult(p.id)} className="border border-[rgba(255,255,255,0.1)] hover:border-[#20C6FF] text-[#BFBBCF] hover:text-[#20C6FF] text-xs font-bold px-3 py-2 rounded-lg transition-colors">SAVE</button>
+                          <button onClick={() => generateReport(p.id)} className="bg-[rgba(255,42,157,0.1)] border border-[rgba(255,42,157,0.3)] hover:bg-[rgba(255,42,157,0.2)] text-[#FF2A9D] text-xs font-bold px-3 py-2 rounded-lg transition-colors">ISSUE QR</button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                  {participants.length === 0 && (
+                    <tr>
+                      <td colSpan={8} className="p-12 text-center text-[#60597A] font-['Rajdhani'] uppercase tracking-widest text-sm">No players added yet.</td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
