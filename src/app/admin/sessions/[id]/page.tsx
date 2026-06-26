@@ -218,8 +218,8 @@ export default function SessionDetails({ params }: { params: Promise<{ id: strin
           <p>이 세션의 참가자를 추가하고 리포트를 발급/관리합니다.</p>
         </div>
         {/* 세션 공개/비공개 토글 */}
-        <div style={{display:'flex', alignItems:'center', gap:'12px', marginTop:'16px', padding:'14px 18px', background:'rgba(255,255,255,0.03)', borderRadius:'12px', border:'1px solid rgba(255,255,255,0.1)'}}>
-          <span style={{fontSize:'13px', color:'var(--admin-muted)', flexShrink:0}}>세션 공개 상태</span>
+        <div style={{display:'flex', alignItems:'center', gap:'12px', padding:'14px 18px', background:'rgba(255,255,255,0.03)', borderRadius:'12px', border:'1px solid rgba(255,255,255,0.1)'}}>
+          <span style={{fontSize:'13px', color:'var(--admin-muted)', flexShrink:0}}>세션 상태</span>
           <div style={{display:'flex', gap:'8px', marginLeft:'auto'}}>
             <button onClick={() => handleToggleSessionStatus('private')} style={{padding:'5px 14px', borderRadius:'99px', fontSize:'12px', fontWeight:700, cursor:'pointer', border:'1px solid',
               background: sessionStatus !== 'published' ? 'rgba(255,255,255,0.12)' : 'transparent',
