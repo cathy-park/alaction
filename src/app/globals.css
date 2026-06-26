@@ -323,7 +323,7 @@
       backdrop-filter:blur(10px);
       font-size:12px; font-weight:700; font-family:'Rajdhani',sans-serif;
       letter-spacing:.12em; text-transform:uppercase; color:#BFBBCF;
-      margin-bottom:26px;
+      margin-bottom:8px;
     }
     .spark {
       width:8px; height:8px; border-radius:50%;
@@ -335,7 +335,7 @@
       font-family:'Orbitron',sans-serif;
       font-size:clamp(72px,10vw,156px);
       font-weight:900; line-height:.82; letter-spacing:-.08em;
-      margin:24px auto 20px; max-width:1100px;
+      margin:8px auto 20px; max-width:1100px;
       color: #f8f5ff;
     }
     .hero-section h1 .line2 {
