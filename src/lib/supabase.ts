@@ -102,6 +102,23 @@ class MockSupabase {
           }
         };
         return chain;
+      },
+      delete: () => {
+        let tableData = getTable();
+        let eqField: string, eqVal: any;
+        let chain = {
+          eq: (field: string, val: any) => {
+            eqField = field;
+            eqVal = val;
+            return chain;
+          },
+          then: (resolve: any) => {
+            tableData = tableData.filter((item: any) => item[eqField] !== eqVal);
+            saveTable(tableData);
+            resolve({ error: null });
+          }
+        };
+        return chain;
       }
     };
   }
