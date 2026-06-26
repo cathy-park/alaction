@@ -346,15 +346,17 @@
     }
     @keyframes gradShift { to { background-position:200% center; } }
     .hero-section .hero-sub {
-      max-width:720px; margin:0 auto 36px;
+      max-width:100%; margin:28px 0 36px 0;
       color: rgba(248,245,255,0.72); font-size:18px; line-height:1.75;
+      text-align: left;
     }
     .hero-sub {
-      max-width:640px; margin:28px auto 36px;
+      max-width:100%; margin:28px 0 36px 0;
       color:var(--muted); font-size:17px; line-height:1.8;
+      text-align: left;
     }
     .hero-actions {
-      display:flex; justify-content:center; gap:12px; flex-wrap:wrap;
+      display:flex; justify-content:flex-start; gap:12px; flex-wrap:wrap;
     }
     .btn {
       height:52px; padding:0 26px;
@@ -942,7 +944,7 @@
     @media(max-width:480px) {
       .wrap { padding:0 18px; }
       .btn { height:46px; padding:0 20px; font-size:13px; }
-      .hero-actions { flex-direction:column; align-items:center; }
+      .hero-actions { flex-direction:column; align-items:flex-start; }
       .review-card { flex:0 0 290px; }
     }
 
