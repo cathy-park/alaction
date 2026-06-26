@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
+import Link from 'next/link';
 
 export default function AllReports() {
   const [reports, setReports] = useState<any[]>([]);
@@ -105,13 +106,14 @@ export default function AllReports() {
                     <td><div style={{width: '100px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'}}>{r.report_token}</div></td>
                     <td>
                       <div className="actions">
+                        <Link href={`/admin/sessions/${r.session_id}/participant/${r.participant_id}`} className="btn">관리/수정</Link>
                         <button onClick={() => setPreviewToken(r.report_token)} className="btn">미리보기</button>
                         {r.report_status !== 'published' ? (
                           <button onClick={() => updateStatus(r.id, 'published')} className="btn primary">공개</button>
                         ) : (
                           <button onClick={() => updateStatus(r.id, 'ready')} className="btn">숨기기</button>
                         )}
-                        <a href={r.url} target="_blank" rel="noreferrer" className="btn cyan">URL</a>
+                        <button onClick={() => { navigator.clipboard.writeText(r.url); alert('복사되었습니다.'); }} className="btn cyan">URL 복사</button>
                       </div>
                     </td>
                   </tr>

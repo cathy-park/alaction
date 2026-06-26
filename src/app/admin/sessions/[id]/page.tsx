@@ -39,7 +39,7 @@ export default function SessionDetails({ params }: { params: Promise<{ id: strin
       const { data: resultsData } = await supabase.from('shooting_results').select('*').eq('session_id', sessionId);
       const resultsMap: Record<string, any> = {};
       if (resultsData) {
-        resultsData.forEach(r => {
+        resultsData.forEach((r: any) => {
           resultsMap[r.participant_id] = r;
         });
       }
@@ -133,29 +133,6 @@ export default function SessionDetails({ params }: { params: Promise<{ id: strin
     await supabase.from('participants').update({ [field]: value }).eq('id', participantId);
   };
 
-  const handleGPTInput = (participantId: string, text: string) => {
-    let updatedResult = { ...results[participantId], gpt_analysis: text };
-
-    const extractNum = (regex: RegExp) => {
-      const match = text.match(regex);
-      return match ? parseInt(match[1].replace(/,/g, ''), 10) : null;
-    };
-
-    const shots = extractNum(/발사\s*수[\s:]*([\d,]+)/) || extractNum(/발사\s*([\d,]+)회/);
-    const hits = extractNum(/맞힌\s*수[\s:]*([\d,]+)/) || extractNum(/([\d,]+)회를\s*명중/);
-    const timesHit = extractNum(/맞은\s*수[\s:]*([\d,]+)/) || extractNum(/맞은\s*수\s*([\d,]+)회/);
-    const score = extractNum(/점수[\s:]*([\d,]+)/) || extractNum(/([\d,]+)점/);
-    const rank = extractNum(/랭킹[\s:]*([\d,]+)/) || extractNum(/([\d,]+)위/);
-
-    if (shots !== null) updatedResult.shots_fired = shots;
-    if (hits !== null) updatedResult.hits = hits;
-    if (timesHit !== null) updatedResult.times_hit = timesHit;
-    if (score !== null) updatedResult.score = score;
-    if (rank !== null) updatedResult.rank = rank;
-
-    setResults({ ...results, [participantId]: updatedResult });
-  };
-
   if (loading) return <div style={{color: 'var(--admin-p)', textAlign: 'center', padding: '40px'}}>LOADING DATA...</div>;
 
   return (
@@ -195,9 +172,6 @@ export default function SessionDetails({ params }: { params: Promise<{ id: strin
                 <h3>참여자별 슈팅 기록</h3>
                 <p>정확도는 맞힌 수 ÷ 발사 수 × 100으로 자동 계산합니다.</p>
               </div>
-              <a href="https://chatgpt.com/g/g-6a3e1bce607c8191b135e06eafc9cff9-alaegsyeon-syuting-ripoteu-bunseog-doumi" target="_blank" rel="noreferrer" className="btn cyan" style={{textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '13px', fontWeight: 800}}>
-                <span>🤖 분석 도우미(GPT) 열기</span>
-              </a>
             </div>
             <div className="card-body" style={{overflowX: 'auto'}}>
               <table style={{minWidth: '1000px'}}>
@@ -211,7 +185,6 @@ export default function SessionDetails({ params }: { params: Promise<{ id: strin
                     <th>맞힌 수</th>
                     <th>맞은 수</th>
                     <th>정확도</th>
-                    <th>GPT 코멘트</th>
                     <th>상태/관리</th>
                   </tr>
                 </thead>
@@ -226,11 +199,10 @@ export default function SessionDetails({ params }: { params: Promise<{ id: strin
                       <td><input type="number" placeholder="0" value={results[p.id]?.hits || ''} onChange={e => setResults({...results, [p.id]: {...results[p.id], hits: e.target.value}})} style={{width: '60px'}} /></td>
                       <td><input type="number" placeholder="0" value={results[p.id]?.times_hit || ''} onChange={e => setResults({...results, [p.id]: {...results[p.id], times_hit: e.target.value}})} style={{width: '60px'}} /></td>
                       <td className="calc" style={{width: '60px'}}>{results[p.id]?.accuracy !== undefined ? `${results[p.id].accuracy}%` : '-'}</td>
-                      <td><textarea placeholder="GPT 분석문 복붙 시 자동 입력" value={results[p.id]?.gpt_analysis || ''} onChange={e => handleGPTInput(p.id, e.target.value)} style={{width: '180px', height: '42px', padding: '6px', fontSize: '12px', resize: 'vertical', background: 'rgba(255,255,255,0.05)', border: '1px solid var(--admin-line)', borderRadius: '8px', color: '#fff'}} /></td>
                       <td>
                         <div className="actions">
                           <button onClick={() => handleSaveResult(p.id)} className="btn">저장</button>
-                          <button onClick={() => generateReport(p.id)} className="btn cyan">발급</button>
+                          <Link href={`/admin/sessions/${sessionId}/participant/${p.id}`} className="btn cyan" style={{textDecoration: 'none'}}>리포트 관리</Link>
                           <button onClick={() => handleDeleteParticipant(p.id)} className="btn" style={{color: '#ff5f7a', borderColor: 'rgba(255,95,122,0.3)'}}>삭제</button>
                         </div>
                       </td>

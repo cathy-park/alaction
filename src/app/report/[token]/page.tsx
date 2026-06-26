@@ -55,29 +55,28 @@ export default function MobileReport({ params }: { params: Promise<{ token: stri
   const result = report.shooting_results;
   const participant = report.participants;
 
-  const parseGPT = (text: string) => {
-    if (!text) return null;
-    const userSection = text.includes('[사용자 리포트 표시용]') ? text.split('[사용자 리포트 표시용]')[1] : text;
-    
-    const extract = (key: string) => {
-      const regex = new RegExp(`\\*\\*${key}:\\*\\*\\s*([^\\*]+)`);
-      const match = userSection.match(regex);
-      return match ? match[1].trim() : null;
-    };
+  const styleBadge = report.style_badge;
+  const displayTitle = report.display_title;
+  const displaySummary = report.display_summary;
+  const strengthCard = report.strength_card;
+  const nextPlayCard = report.next_play_card;
+  const bottomComment = report.bottom_comment;
 
-    const parsed = {
-      title: extract('제목'),
-      summary: extract('요약'),
-      badge: extract('성향 배지'),
-      strength: extract('강점 카드'),
-      nextPlay: extract('다음 플레이 카드'),
-      comment: extract('하단 공개 문구') || extract('관리자페이지 붙여넣기용 공개 문구')
-    };
-
-    return Object.values(parsed).some(v => v) ? parsed : null;
-  };
-
-  const parsed = parseGPT(result.gpt_analysis);
+  if (report.report_status !== 'published') {
+    return (
+      <div style={{minHeight: '100vh', background: '#050508', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px', fontFamily: '-apple-system, BlinkMacSystemFont, "Pretendard", sans-serif'}}>
+        <div style={{textAlign: 'center'}}>
+          <div style={{width: '64px', height: '64px', background: 'rgba(255,255,255,0.05)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px'}}>
+            <span style={{fontSize: '24px'}}>⏳</span>
+          </div>
+          <h2 style={{color: '#fff', fontSize: '20px', marginBottom: '8px'}}>리포트 준비 중입니다</h2>
+          <p style={{color: 'var(--admin-muted)', fontSize: '14px', lineHeight: 1.5}}>
+            관리자가 경기 결과를 분석하고 있습니다.<br/>잠시 후 다시 접속해 주세요.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div style={{minHeight: '100vh', background: '#050508', padding: '14px', fontFamily: '-apple-system, BlinkMacSystemFont, "Pretendard", sans-serif'}}>
@@ -97,18 +96,18 @@ export default function MobileReport({ params }: { params: Promise<{ token: stri
           <p>{participant.team_name || 'NO TEAM'}</p>
         </div>
 
-        {parsed && parsed.badge && (
+        {styleBadge && (
           <div style={{textAlign: 'center', marginTop: '12px'}}>
             <span style={{display: 'inline-block', padding: '6px 14px', background: 'rgba(255,53,205,0.15)', border: '1px solid rgba(255,53,205,0.4)', borderRadius: '99px', color: '#ff35cd', fontSize: '13px', fontWeight: 800, letterSpacing: '-0.02em'}}>
-              {parsed.badge}
+              {styleBadge}
             </span>
           </div>
         )}
 
-        {parsed && parsed.title && (
+        {displayTitle && (
           <div style={{textAlign: 'center', marginTop: '24px', padding: '0 10px'}}>
-            <h4 style={{color: '#fff', fontSize: '20px', margin: '0 0 8px', wordBreak: 'keep-all'}}>{parsed.title}</h4>
-            <p style={{color: '#a49cb7', fontSize: '13px', lineHeight: 1.5, margin: 0, wordBreak: 'keep-all'}}>{parsed.summary}</p>
+            <h4 style={{color: '#fff', fontSize: '20px', margin: '0 0 8px', wordBreak: 'keep-all'}}>{displayTitle}</h4>
+            <p style={{color: '#a49cb7', fontSize: '13px', lineHeight: 1.5, margin: 0, wordBreak: 'keep-all'}}>{displaySummary}</p>
           </div>
         )}
         
@@ -135,37 +134,37 @@ export default function MobileReport({ params }: { params: Promise<{ token: stri
           </div>
           <div className="report-metric">
             <span>성향</span>
-            <b style={{color: '#ffe66b'}}>{result.accuracy > 70 ? '정밀형' : '돌격형'}</b>
+            <b style={{color: '#ffe66b'}}>{report.play_style || (result.accuracy > 70 ? '정밀형' : '돌격형')}</b>
           </div>
         </div>
 
-        {parsed && parsed.strength && (
+        {strengthCard && (
           <div style={{marginTop: '20px', padding: '18px', borderRadius: '20px', background: 'linear-gradient(135deg, rgba(32,199,255,0.1), rgba(32,199,255,0.02))', border: '1px solid rgba(32,199,255,0.2)'}}>
             <div style={{color: '#20c7ff', fontSize: '12px', fontWeight: 900, marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '6px'}}>
               <span style={{fontSize: '16px'}}>⚡️</span> 강점
             </div>
             <div style={{color: '#dffdf9', fontSize: '13px', lineHeight: 1.6, wordBreak: 'keep-all'}}>
-              {parsed.strength}
+              {strengthCard}
             </div>
           </div>
         )}
 
-        {parsed && parsed.nextPlay && (
+        {nextPlayCard && (
           <div style={{marginTop: '12px', padding: '18px', borderRadius: '20px', background: 'linear-gradient(135deg, rgba(255,53,205,0.1), rgba(255,53,205,0.02))', border: '1px solid rgba(255,53,205,0.2)'}}>
             <div style={{color: '#ff35cd', fontSize: '12px', fontWeight: 900, marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '6px'}}>
               <span style={{fontSize: '16px'}}>🎯</span> 다음 플레이 포인트
             </div>
             <div style={{color: '#f8f5ff', fontSize: '13px', lineHeight: 1.6, wordBreak: 'keep-all'}}>
-              {parsed.nextPlay}
+              {nextPlayCard}
             </div>
           </div>
         )}
         
         <div className="comment" style={{marginTop: '20px'}}>
-          {parsed?.comment || result.gpt_analysis || `알액션에서 훌륭한 플레이를 보여주셨습니다! 정확도 ${result.accuracy}%를 기록하며 뛰어난 사격 솜씨를 증명했습니다.`}
+          {bottomComment || report.public_comment || `알액션에서 훌륭한 플레이를 보여주셨습니다! 정확도 ${result.accuracy}%를 기록하며 뛰어난 사격 솜씨를 증명했습니다.`}
         </div>
         
-        <a href="/" className="btn primary" style={{width: '100%', marginTop: '24px', display: 'flex', height: '46px'}}>홈페이지로 이동</a>
+        <a href="/" className="btn primary" style={{width: '100%', marginTop: '24px', display: 'flex', height: '46px', justifyContent: 'center'}}>다시 예약하기</a>
       </div>
 
       <style dangerouslySetInnerHTML={{__html: `
