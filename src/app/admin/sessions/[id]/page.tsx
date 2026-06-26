@@ -114,6 +114,48 @@ export default function SessionDetails({ params }: { params: Promise<{ id: strin
     }
   };
 
+  const handleDeleteParticipant = async (participantId: string) => {
+    if (!confirm('이 참여자와 관련된 기록 및 리포트가 모두 삭제됩니다. 계속하시겠습니까?')) return;
+    
+    await supabase.from('reports').delete().eq('participant_id', participantId);
+    await supabase.from('shooting_results').delete().eq('participant_id', participantId);
+    await supabase.from('participants').delete().eq('id', participantId);
+    
+    setParticipants(participants.filter(p => p.id !== participantId));
+    const newResults = { ...results };
+    delete newResults[participantId];
+    setResults(newResults);
+  };
+
+  const handleUpdateParticipant = async (participantId: string, field: string, value: string) => {
+    const updated = participants.map(p => p.id === participantId ? { ...p, [field]: value } : p);
+    setParticipants(updated);
+    await supabase.from('participants').update({ [field]: value }).eq('id', participantId);
+  };
+
+  const handleGPTInput = (participantId: string, text: string) => {
+    let updatedResult = { ...results[participantId], gpt_analysis: text };
+
+    const extractNum = (regex: RegExp) => {
+      const match = text.match(regex);
+      return match ? parseInt(match[1].replace(/,/g, ''), 10) : null;
+    };
+
+    const shots = extractNum(/발사\s*수[\s:]*([\d,]+)/) || extractNum(/발사\s*([\d,]+)회/);
+    const hits = extractNum(/맞힌\s*수[\s:]*([\d,]+)/) || extractNum(/([\d,]+)회를\s*명중/);
+    const timesHit = extractNum(/맞은\s*수[\s:]*([\d,]+)/);
+    const score = extractNum(/점수[\s:]*([\d,]+)/) || extractNum(/([\d,]+)점을\s*달성/);
+    const rank = extractNum(/랭킹[\s:]*([\d,]+)/) || extractNum(/([\d,]+)위/);
+
+    if (shots !== null) updatedResult.shots_fired = shots;
+    if (hits !== null) updatedResult.hits = hits;
+    if (timesHit !== null) updatedResult.times_hit = timesHit;
+    if (score !== null) updatedResult.score = score;
+    if (rank !== null) updatedResult.rank = rank;
+
+    setResults({ ...results, [participantId]: updatedResult });
+  };
+
   if (loading) return <div style={{color: 'var(--admin-p)', textAlign: 'center', padding: '40px'}}>LOADING DATA...</div>;
 
   return (
@@ -157,8 +199,8 @@ export default function SessionDetails({ params }: { params: Promise<{ id: strin
                 <span>🤖 분석 도우미(GPT) 열기</span>
               </a>
             </div>
-            <div className="card-body">
-              <table>
+            <div className="card-body" style={{overflowX: 'auto'}}>
+              <table style={{minWidth: '1000px'}}>
                 <thead>
                   <tr>
                     <th>닉네임</th>
@@ -176,19 +218,20 @@ export default function SessionDetails({ params }: { params: Promise<{ id: strin
                 <tbody>
                   {participants.map(p => (
                     <tr key={p.id}>
-                      <td>{p.nickname}</td>
-                      <td>{p.team_name || '-'}</td>
+                      <td><input type="text" value={p.nickname} onChange={e => handleUpdateParticipant(p.id, 'nickname', e.target.value)} style={{width: '90px', padding: '4px'}} /></td>
+                      <td><input type="text" value={p.team_name || ''} onChange={e => handleUpdateParticipant(p.id, 'team_name', e.target.value)} style={{width: '80px', padding: '4px'}} placeholder="-" /></td>
                       <td><input type="number" placeholder="1" value={results[p.id]?.rank || ''} onChange={e => setResults({...results, [p.id]: {...results[p.id], rank: e.target.value}})} style={{width: '50px'}} /></td>
                       <td><input type="number" placeholder="0" value={results[p.id]?.score || ''} onChange={e => setResults({...results, [p.id]: {...results[p.id], score: e.target.value}})} style={{width: '60px'}} /></td>
                       <td><input type="number" placeholder="0" value={results[p.id]?.shots_fired || ''} onChange={e => setResults({...results, [p.id]: {...results[p.id], shots_fired: e.target.value}})} style={{width: '60px'}} /></td>
                       <td><input type="number" placeholder="0" value={results[p.id]?.hits || ''} onChange={e => setResults({...results, [p.id]: {...results[p.id], hits: e.target.value}})} style={{width: '60px'}} /></td>
                       <td><input type="number" placeholder="0" value={results[p.id]?.times_hit || ''} onChange={e => setResults({...results, [p.id]: {...results[p.id], times_hit: e.target.value}})} style={{width: '60px'}} /></td>
                       <td className="calc" style={{width: '60px'}}>{results[p.id]?.accuracy !== undefined ? `${results[p.id].accuracy}%` : '-'}</td>
-                      <td><textarea placeholder="GPT 코멘트 복사/붙여넣기" value={results[p.id]?.gpt_analysis || ''} onChange={e => setResults({...results, [p.id]: {...results[p.id], gpt_analysis: e.target.value}})} style={{width: '180px', height: '42px', padding: '6px', fontSize: '12px', resize: 'vertical', background: 'rgba(255,255,255,0.05)', border: '1px solid var(--admin-line)', borderRadius: '8px', color: '#fff'}} /></td>
+                      <td><textarea placeholder="GPT 분석문 복붙 시 자동 입력" value={results[p.id]?.gpt_analysis || ''} onChange={e => handleGPTInput(p.id, e.target.value)} style={{width: '180px', height: '42px', padding: '6px', fontSize: '12px', resize: 'vertical', background: 'rgba(255,255,255,0.05)', border: '1px solid var(--admin-line)', borderRadius: '8px', color: '#fff'}} /></td>
                       <td>
                         <div className="actions">
                           <button onClick={() => handleSaveResult(p.id)} className="btn">저장</button>
                           <button onClick={() => generateReport(p.id)} className="btn cyan">발급</button>
+                          <button onClick={() => handleDeleteParticipant(p.id)} className="btn" style={{color: '#ff5f7a', borderColor: 'rgba(255,95,122,0.3)'}}>삭제</button>
                         </div>
                       </td>
                     </tr>

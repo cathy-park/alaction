@@ -64,6 +64,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <Link href="/admin" className={pathname === '/admin' ? 'active' : ''}>대시보드</Link>
             <Link href="/admin/sessions/new" className={pathname === '/admin/sessions/new' ? 'active' : ''}>세션 생성</Link>
             <Link href="/admin/sessions" className={pathname === '/admin/sessions' ? 'active' : ''}>세션 목록</Link>
+            <Link href="/admin/reports" className={pathname === '/admin/reports' ? 'active' : ''}>리포트 통합 관리</Link>
             <button onClick={handleLogout} className="text-left bg-transparent border-0 text-[#ff9aa9] font-bold text-sm hover:text-[#ff5f7a] cursor-pointer" style={{padding: '0 13px', height: '46px', display: 'flex', alignItems: 'center', marginTop: '16px'}}>로그아웃</button>
           </nav>
 
