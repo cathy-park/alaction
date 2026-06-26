@@ -50,19 +50,18 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   return (
     <div className="admin-wrapper">
       <div className="app">
-        <aside>
-          <div className="brand" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '8px' }}>
-            <img src="/logo.png" alt="ALACTION" style={{ width: '120px', objectFit: 'contain' }} />
+        <aside style={{ zIndex: 50, position: 'relative' }}>
+          <div className="brand" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '6px', marginBottom: '40px' }}>
+            <img src="/logo.png" alt="ALACTION" style={{ width: '90px', height: 'auto', objectFit: 'contain' }} />
             <span style={{ color: 'var(--admin-muted)', fontSize: '11px', fontWeight: 800, paddingLeft: '4px' }}>QR Report Admin</span>
           </div>
           
           <div className="nav-title">관리 메뉴</div>
-          <nav className="nav">
-            <Link href="/admin/login" className={pathname === '/admin/login' ? 'active' : ''}>관리자 로그인 페이지</Link>
-            <Link href="/admin" className={pathname === '/admin' ? 'active' : ''}>로그인 후 대시보드</Link>
-            <Link href="/admin/sessions/new" className={pathname === '/admin/sessions/new' ? 'active' : ''}>세션 생성</Link>
-            <Link href="/admin/sessions" className={pathname === '/admin/sessions' ? 'active' : ''}>세션 목록</Link>
-            <button onClick={handleLogout} className="text-left bg-transparent border-0 text-[#ff9aa9] font-bold text-sm hover:text-[#ff5f7a] cursor-pointer" style={{padding: '0 13px', minHeight: '46px', display: 'flex', alignItems: 'center'}}>로그아웃</button>
+          <nav className="nav" style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <Link href="/admin" className={pathname === '/admin' ? 'active' : ''} style={{ display: 'flex', alignItems: 'center', height: '46px', padding: '0 13px', zIndex: 60, position: 'relative' }}>대시보드</Link>
+            <Link href="/admin/sessions/new" className={pathname === '/admin/sessions/new' ? 'active' : ''} style={{ display: 'flex', alignItems: 'center', height: '46px', padding: '0 13px', zIndex: 60, position: 'relative' }}>세션 생성</Link>
+            <Link href="/admin/sessions" className={pathname === '/admin/sessions' ? 'active' : ''} style={{ display: 'flex', alignItems: 'center', height: '46px', padding: '0 13px', zIndex: 60, position: 'relative' }}>세션 목록</Link>
+            <button onClick={handleLogout} className="text-left bg-transparent border-0 text-[#ff9aa9] font-bold text-sm hover:text-[#ff5f7a] cursor-pointer" style={{padding: '0 13px', height: '46px', display: 'flex', alignItems: 'center', zIndex: 60, position: 'relative', marginTop: '16px'}}>로그아웃</button>
           </nav>
 
           <div className="help">
