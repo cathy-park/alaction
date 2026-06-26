@@ -144,8 +144,9 @@ export default function Page() {
   <main>
     {/* ─── HERO ─── */}
     <section className="hero-section">
-      {/* Layer 1: 전체 배경 (단일 파일) + Ken Burns + Flicker(in CSS) */}
-      <img id="heroBg" className="hero-bg-img" src="/hero.png" alt="알액션 레이저 아레나" />
+      {/* Layer 1: PC용 단일 배경, 모바일용 원경 배경 */}
+      <img id="heroBg" className="hero-bg-img pc-only" src="/hero.png" alt="알액션 레이저 아레나" />
+      <img className="hero-bg-img mobile-only" src="/hero_bg.png" alt="알액션 배경" />
       
       {/* Layer 2: 순수 CSS 연기 파티클 + 부유하는 불티 (Option A) */}
       <div id="particles" className="css-smoke-wrap" aria-hidden="true">
@@ -159,6 +160,7 @@ export default function Page() {
         <div className="spark-particle s4" />
         <div className="spark-particle s5" />
       </div>
+      <img className="hero-woman-img mobile-only" src="/hero_woman.png" alt="알액션" />
 
       {/* Layer 3: Scanline (Option D) & Vignette Pulse (Option E) */}
       <div className="hero-scanline" aria-hidden="true" />
