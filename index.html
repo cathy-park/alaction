@@ -361,6 +361,13 @@
     .reviews-carousel {
       display:flex; gap:16px; overflow-x:auto; scroll-snap-type:x mandatory;
       padding-bottom:20px; scroll-padding-left:28px;
+      cursor: grab;
+      user-select: none;
+    }
+    .reviews-carousel.active {
+      scroll-snap-type: none;
+      scroll-behavior: auto;
+      cursor: grabbing;
     }
     .reviews-carousel::-webkit-scrollbar { height:4px; }
     .reviews-carousel::-webkit-scrollbar-track { background:rgba(255,255,255,.05); border-radius:99px; }
@@ -625,6 +632,9 @@
       .gallery-grid { grid-template-columns:1fr 1fr; grid-template-rows:auto; gap:8px; }
       .g1,.g2,.g3,.g4,.g5,.g6,.g7,.g8 { grid-column:auto; grid-row:auto; }
       .reviews-featured { grid-template-columns:1fr; }
+      .reviews-featured .review-card.featured { grid-row: auto !important; }
+      .reviews-carousel { flex-direction: column; overflow-x: visible; scroll-snap-type: none; gap: 16px; cursor: default; }
+      .reviews-carousel .review-card { flex: 0 0 auto !important; width: 100% !important; }
       .footer-grid { grid-template-columns:1fr; gap:28px; }
       .report-metrics { grid-template-columns:repeat(2,1fr); }
       .bento-card { min-height:200px; }
@@ -648,9 +658,9 @@
         </a>
         <nav class="nav-links">
           <a href="#features">게임 특징</a>
-          <a href="#program">프로그램</a>
           <a href="#reviews">후기</a>
           <a href="#gallery">매장 사진</a>
+          <a href="#program">프로그램</a>
           <a href="#report">QR 리포트</a>
         </nav>
         <a class="nav-cta" href="#contact">예약 문의</a>
@@ -1174,6 +1184,34 @@
       if(e.key==='ArrowRight') navigateLb(1);
     });
     lbImg.style.transition='opacity .15s';
+
+    /* ─── Reviews Carousel Drag Scroll ─── */
+    const carousel = document.querySelector('.reviews-carousel');
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    carousel.addEventListener('mousedown', (e) => {
+      isDown = true;
+      carousel.classList.add('active');
+      startX = e.pageX - carousel.offsetLeft;
+      scrollLeft = carousel.scrollLeft;
+    });
+    carousel.addEventListener('mouseleave', () => {
+      isDown = false;
+      carousel.classList.remove('active');
+    });
+    carousel.addEventListener('mouseup', () => {
+      isDown = false;
+      carousel.classList.remove('active');
+    });
+    carousel.addEventListener('mousemove', (e) => {
+      if(!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - carousel.offsetLeft;
+      const walk = (x - startX) * 1.5;
+      carousel.scrollLeft = scrollLeft - walk;
+    });
   </script>
 </body>
 </html>
