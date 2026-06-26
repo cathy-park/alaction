@@ -445,14 +445,16 @@ export default function Page() {
       </div>
     </section>
     {/* ─── QR REPORT ─── */}
-    <section id="report">
+    <section id="report" className="report-preview-section">
       <div className="wrap">
-        <div className="report-inner">
-          <div className="phone-mockup anim-scale">
-            <div className="phone-notch" />
-            <div className="phone-screen">
-              <div className="scroll-img-wrap">
-                <img src="/report.png" alt="리포트 예시" />
+        <div className="report-preview-layout">
+          <div className="report-preview-phone-area">
+            <div className="phone-mockup anim-scale">
+              <div className="phone-notch" />
+              <div className="phone-screen">
+                <div className="report-scroll-content">
+                  <img src="/report.png" alt="리포트 예시" />
+                </div>
               </div>
             </div>
           </div>
