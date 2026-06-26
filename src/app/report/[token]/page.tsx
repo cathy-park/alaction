@@ -44,10 +44,135 @@ export default function MobileReport({ params }: { params: Promise<{ token: stri
 
   if (report.report_status !== 'published') {
     return (
-      <div style={{minHeight: '100vh', background: '#050508', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-        <div style={{textAlign: 'center', padding: '40px'}}>
-          <h1 style={{color: '#20c7ff', fontSize: '30px', margin: '0 0 10px'}}>STAND BY</h1>
-          <p style={{color: '#a49cb7'}}>아직 리포트가 공개되지 않았습니다.</p>
+      <div style={{minHeight: '100vh', background: '#050508', color: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '32px 24px', fontFamily: '-apple-system, BlinkMacSystemFont, "Pretendard", sans-serif', overflow: 'hidden', position: 'relative'}}>
+        <style>{`
+          @keyframes spinSlow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+          }
+          @keyframes spinReverse {
+            from { transform: rotate(360deg); }
+            to { transform: rotate(0deg); }
+          }
+          @keyframes pulseGlow {
+            0%, 100% { opacity: 0.7; filter: blur(12px); }
+            50% { opacity: 1; filter: blur(16px); }
+          }
+          @keyframes blinkDot {
+            0%, 100% { opacity: 0.2; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+          }
+          .connecting-line {
+            position: absolute;
+            top: 24px; bottom: 24px; left: 11px;
+            width: 2px;
+            background: linear-gradient(to bottom, #ff35cd 0%, #20c7ff 50%, rgba(255,255,255,0.1) 80%);
+            z-index: 0;
+          }
+        `}</style>
+        
+        {/* Background ambient glow */}
+        <div style={{position: 'absolute', top: '-10%', right: '-10%', width: '300px', height: '300px', background: 'rgba(32,199,255,0.15)', filter: 'blur(100px)', borderRadius: '50%', zIndex: 0}}></div>
+        <div style={{position: 'absolute', bottom: '-10%', left: '-10%', width: '300px', height: '300px', background: 'rgba(255,53,205,0.1)', filter: 'blur(100px)', borderRadius: '50%', zIndex: 0}}></div>
+
+        <div style={{position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', maxWidth: '340px'}}>
+          {/* Circular progress */}
+          <div style={{position: 'relative', width: '220px', height: '220px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '40px'}}>
+            
+            {/* Corner crosshairs */}
+            <div style={{position: 'absolute', top: '14px', left: '14px', width: '6px', height: '6px', borderTop: '1px solid rgba(255,255,255,0.2)', borderLeft: '1px solid rgba(255,255,255,0.2)'}}></div>
+            <div style={{position: 'absolute', top: '14px', right: '14px', width: '6px', height: '6px', borderTop: '1px solid rgba(255,255,255,0.2)', borderRight: '1px solid rgba(255,255,255,0.2)'}}></div>
+            <div style={{position: 'absolute', bottom: '14px', left: '14px', width: '6px', height: '6px', borderBottom: '1px solid rgba(255,255,255,0.2)', borderLeft: '1px solid rgba(255,255,255,0.2)'}}></div>
+            <div style={{position: 'absolute', bottom: '14px', right: '14px', width: '6px', height: '6px', borderBottom: '1px solid rgba(255,255,255,0.2)', borderRight: '1px solid rgba(255,255,255,0.2)'}}></div>
+
+            {/* Glowing rings */}
+            <svg width="220" height="220" viewBox="0 0 220 220" style={{position: 'absolute', inset: 0, overflow: 'visible', animation: 'spinSlow 12s linear infinite'}}>
+              <defs>
+                <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#ff35cd" />
+                  <stop offset="100%" stopColor="#20c7ff" />
+                </linearGradient>
+                <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                  <feGaussianBlur stdDeviation="8" result="blur" />
+                  <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                </filter>
+              </defs>
+              <circle cx="110" cy="110" r="88" fill="none" stroke="url(#ringGrad)" strokeWidth="6" filter="url(#glow)" opacity="0.7" style={{animation: 'pulseGlow 2s ease-in-out infinite alternate'}}/>
+              <circle cx="110" cy="110" r="88" fill="none" stroke="url(#ringGrad)" strokeWidth="3" />
+            </svg>
+
+            {/* Inner dashed ring */}
+            <svg width="220" height="220" viewBox="0 0 220 220" style={{position: 'absolute', inset: 0, animation: 'spinReverse 20s linear infinite'}}>
+              <circle cx="110" cy="110" r="70" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="1" strokeDasharray="2 6" />
+              <circle cx="110" cy="110" r="70" fill="none" stroke="#20c7ff" strokeWidth="2" strokeDasharray="2 6" strokeDashoffset="100" opacity="0.8" style={{strokeDasharray: '40 200'}}/>
+            </svg>
+
+            {/* Cross lines (faint) */}
+            <div style={{position: 'absolute', inset: '0', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+              <div style={{width: '200px', height: '1px', background: 'rgba(255,255,255,0.05)'}}></div>
+            </div>
+            <div style={{position: 'absolute', inset: '0', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+              <div style={{width: '1px', height: '200px', background: 'rgba(255,255,255,0.05)'}}></div>
+            </div>
+
+            <div style={{textAlign: 'center', zIndex: 1, transform: 'translateY(2px)'}}>
+              <div style={{fontSize: '38px', fontWeight: '800', margin: '0', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', gap: '2px', fontFamily: '"Rajdhani", sans-serif'}}>
+                68<span style={{fontSize: '18px', marginBottom: '8px', color: '#fff'}} >%</span>
+              </div>
+              <div style={{color: '#20c7ff', fontSize: '13px', fontWeight: '600', letterSpacing: '0.05em'}}>분석 중</div>
+            </div>
+          </div>
+
+          {/* Title block */}
+          <div style={{textAlign: 'center', marginBottom: '36px', width: '100%'}}>
+            <h1 style={{fontSize: '28px', fontWeight: '800', margin: '0 0 16px', background: 'linear-gradient(90deg, #ff35cd, #20c7ff)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', letterSpacing: '-0.02em'}}>리포트 준비 중</h1>
+            <p style={{color: '#e2dbea', fontSize: '15px', margin: '0 0 8px', fontWeight: '500', wordBreak: 'keep-all'}}>게임 데이터를 분석하고 있어요</p>
+            <p style={{color: '#7f788f', fontSize: '13px', margin: '0', wordBreak: 'keep-all'}}>리포트가 완성되면 QR로 바로 확인할 수 있습니다.</p>
+          </div>
+
+          {/* Steps block */}
+          <div style={{width: '100%', position: 'relative', paddingLeft: '4px'}}>
+            <div className="connecting-line"></div>
+            
+            {/* Step 1 */}
+            <div style={{display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '20px', position: 'relative', zIndex: 1}}>
+              <div style={{width: '24px', height: '24px', borderRadius: '50%', background: '#ff35cd', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 0 12px rgba(255,53,205,0.6)', flexShrink: 0}}>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              </div>
+              <div style={{flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 18px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,53,205,0.25)', borderRadius: '12px'}}>
+                <span style={{color: '#fff', fontSize: '14px', fontWeight: '500'}}>1. 데이터 수집</span>
+                <span style={{color: '#ff35cd', fontSize: '13px', fontWeight: '600'}}>완료</span>
+              </div>
+            </div>
+            
+            {/* Step 2 */}
+            <div style={{display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '20px', position: 'relative', zIndex: 1}}>
+              <div style={{width: '24px', height: '24px', borderRadius: '50%', background: '#20c7ff', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 0 12px rgba(32,199,255,0.6)', flexShrink: 0}}>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              </div>
+              <div style={{flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 18px', background: 'rgba(32,199,255,0.03)', border: '1px solid rgba(32,199,255,0.25)', borderRadius: '12px'}}>
+                <span style={{color: '#fff', fontSize: '14px', fontWeight: '500'}}>2. 결과 분석</span>
+                <span style={{color: '#20c7ff', fontSize: '13px', fontWeight: '600'}}>진행 중</span>
+              </div>
+            </div>
+            
+            {/* Step 3 */}
+            <div style={{display: 'flex', alignItems: 'center', gap: '16px', position: 'relative', zIndex: 1}}>
+              <div style={{width: '24px', height: '24px', borderRadius: '50%', background: '#0a0a0f', border: '2px solid rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0}}>
+              </div>
+              <div style={{flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 18px', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '12px'}}>
+                <span style={{color: '#7f788f', fontSize: '14px', fontWeight: '500'}}>3. 리포트 생성</span>
+                <span style={{color: '#5b546e', fontSize: '13px', fontWeight: '600'}}>대기 중</span>
+              </div>
+            </div>
+          </div>
+
+          <div style={{marginTop: '40px', display: 'flex', gap: '8px'}}>
+            <div style={{width: '4px', height: '4px', borderRadius: '50%', background: '#ff35cd', animation: 'blinkDot 1.5s infinite 0s'}}></div>
+            <div style={{width: '4px', height: '4px', borderRadius: '50%', background: '#fff', animation: 'blinkDot 1.5s infinite 0.3s'}}></div>
+            <div style={{width: '4px', height: '4px', borderRadius: '50%', background: '#20c7ff', animation: 'blinkDot 1.5s infinite 0.6s'}}></div>
+          </div>
+          <div style={{marginTop: '16px', color: '#5b546e', fontSize: '13px'}}>잠시 후 다시 확인해주세요</div>
         </div>
       </div>
     );
