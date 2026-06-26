@@ -29,13 +29,11 @@ export default function Page() {
         /* ─── Hero parallax ─── */
         /* ─── Hero parallax ─── */
         const heroBg = document.getElementById('heroBg');
-        const heroWoman = document.getElementById('heroWoman');
         const particles = document.getElementById('particles');
         
         window.addEventListener('scroll',()=>{
           const y = window.scrollY;
           if (heroBg) heroBg.style.transform = `translateY(${y * 0.35}px)`;
-          if (heroWoman) heroWoman.style.transform = `translateY(${y * 0.15}px)`;
           if (particles) particles.style.transform = `translateY(${y * 0.25}px)`;
         },{passive:true});
     
@@ -48,7 +46,6 @@ export default function Page() {
           const dy = (clientY/innerHeight - 0.5)*8;
           
           if (heroBg) heroBg.style.transform = `translate(${dx}px,${dy}px) translateY(${window.scrollY*0.35}px)`;
-          if (heroWoman) heroWoman.style.transform = `translate(${dx*-1.5}px,${dy*-1.5}px) translateY(${window.scrollY*0.15}px)`;
           if (particles) particles.style.transform = `translate(${dx*2}px,${dy*2}px) translateY(${window.scrollY*0.25}px)`;
         });
     
@@ -147,10 +144,10 @@ export default function Page() {
   <main>
     {/* ─── HERO ─── */}
     <section className="hero-section">
-      {/* Layer 1: 원경 배경 */}
-      <img id="heroBg" className="hero-bg-img" src="/hero_bg.png" alt="알액션 배경" />
+      {/* Layer 1: 전체 배경 (단일 파일) + Ken Burns + Flicker(in CSS) */}
+      <img id="heroBg" className="hero-bg-img" src="/hero.png" alt="알액션 레이저 아레나" />
       
-      {/* Layer 2: 순수 CSS 연기 파티클 + 부유하는 불티 */}
+      {/* Layer 2: 순수 CSS 연기 파티클 + 부유하는 불티 (Option A) */}
       <div id="particles" className="css-smoke-wrap" aria-hidden="true">
         <div className="smoke-particle p1" />
         <div className="smoke-particle p2" />
@@ -163,8 +160,9 @@ export default function Page() {
         <div className="spark-particle s5" />
       </div>
 
-      {/* Layer 3: 근경 인물 */}
-      <img id="heroWoman" className="hero-woman-img" src="/hero_woman.png" alt="알액션 레이저 아레나" />
+      {/* Layer 3: Scanline (Option D) & Vignette Pulse (Option E) */}
+      <div className="hero-scanline" aria-hidden="true" />
+      <div className="hero-vignette" aria-hidden="true" />
 
       {/* Layer 3: 텍스트/버튼 */}
       <div className="wrap hero-content">
