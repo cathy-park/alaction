@@ -73,6 +73,7 @@ export default function SessionReports({ params }: { params: Promise<{ id: strin
         <div className="actions">
           <button onClick={() => updateSessionStatus('ready')} className="btn cyan">전체 준비 중</button>
           <button onClick={() => updateSessionStatus('published')} className="btn primary">전체 공개</button>
+          <button onClick={() => updateSessionStatus('private')} className="btn" style={{borderColor: 'rgba(255,255,255,0.2)'}}>전체 비공개</button>
         </div>
       </div>
 

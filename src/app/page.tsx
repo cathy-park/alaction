@@ -138,14 +138,9 @@ export default function Page() {
   <main>
     {/* ─── HERO ─── */}
     <section className="hero">
-      <div className="hero-bg" id="heroBg">
-        <div className="smoke-wrap">
-          <div className="smoke s1"></div>
-          <div className="smoke s2"></div>
-          <div className="smoke s3"></div>
-        </div>
-        <img src="/hero.png" alt="알액션 히어로 이미지" />
-      </div>
+      <div className="hero-bg" id="heroBg"></div>
+      <img src="/hero.png" alt="알액션 히어로 이미지" className="hero-image" />
+      <div className="hero-smoke"></div>
       <div className="wrap hero-content">
         <div className="hero-badge">
           <i className="spark" />
