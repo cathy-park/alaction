@@ -181,7 +181,7 @@ export default function SessionDetails({ params }: { params: Promise<{ id: strin
                       <td><input type="number" placeholder="0" value={results[p.id]?.hits || ''} onChange={e => setResults({...results, [p.id]: {...results[p.id], hits: e.target.value}})} style={{width: '60px'}} /></td>
                       <td><input type="number" placeholder="0" value={results[p.id]?.times_hit || ''} onChange={e => setResults({...results, [p.id]: {...results[p.id], times_hit: e.target.value}})} style={{width: '60px'}} /></td>
                       <td className="calc" style={{width: '60px'}}>{results[p.id]?.accuracy !== undefined ? `${results[p.id].accuracy}%` : '-'}</td>
-                      <td><input type="text" placeholder="GPT 코멘트 입력" value={results[p.id]?.gpt_analysis || ''} onChange={e => setResults({...results, [p.id]: {...results[p.id], gpt_analysis: e.target.value}})} style={{width: '120px'}} /></td>
+                      <td><textarea placeholder="GPT 코멘트 복사/붙여넣기" value={results[p.id]?.gpt_analysis || ''} onChange={e => setResults({...results, [p.id]: {...results[p.id], gpt_analysis: e.target.value}})} style={{width: '180px', height: '42px', padding: '6px', fontSize: '12px', resize: 'vertical', background: 'rgba(255,255,255,0.05)', border: '1px solid var(--admin-line)', borderRadius: '8px', color: '#fff'}} /></td>
                       <td>
                         <div className="actions">
                           <button onClick={() => handleSaveResult(p.id)} className="btn">저장</button>
