@@ -139,8 +139,8 @@ export default function Page() {
     {/* ─── HERO ─── */}
     <section className="hero-section">
       <div className="hero-bg-layer"></div>
-      <img className="hero-smoke-layer" src="/images/hero_smoke.png" alt="" aria-hidden="true" />
-      <img className="hero-woman-layer" src="/images/hero_woman.png" alt="레이저 장비를 든 알액션 모델" />
+      <img className="hero-smoke-layer" src="/hero_smoke.png" alt="" aria-hidden="true" />
+      <img className="hero-woman-layer" src="/hero_woman.png" alt="레이저 장비를 든 알액션 모델" />
       <div className="wrap hero-content">
         <div className="hero-badge">
           <i className="spark" />
