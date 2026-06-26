@@ -169,6 +169,7 @@ export default function Page() {
               <a href="#features">게임 특징</a>
               <a href="#reviews">후기</a>
               <a href="#gallery">매장 사진</a>
+              <a href="#shorts">숏폼 클립</a>
               <a href="#program">프로그램</a>
               <a href="#report">QR 리포트</a>
             </nav>
