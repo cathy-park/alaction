@@ -181,7 +181,7 @@ export default function ParticipantReportEdit({ params }: { params: Promise<{ id
 
   return (
     <section id="report-detail" style={{paddingBottom: '100px'}}>
-      <div className="section-title">
+      <div className="section-title" style={{marginTop: 0}}>
         <div>
           <Link href={`/admin/sessions/${sessionId}`} style={{color: 'var(--admin-muted)', fontSize: '13px', textDecoration: 'none', marginBottom: '8px', display: 'inline-block'}}>← 참가자 목록으로</Link>
           <h2>리포트 생성 / 수정 상세</h2>
@@ -297,13 +297,23 @@ export default function ParticipantReportEdit({ params }: { params: Promise<{ id
         </div>
 
         {/* Right Column - Live Preview */}
-        <div style={{width: '420px', flexShrink: 0, position: 'sticky', top: '40px'}}>
-          <div className="section-title" style={{marginTop: 0}}>
+        <div style={{width: '375px', flexShrink: 0, position: 'sticky', top: '24px'}}>
+          <div className="section-title" style={{marginTop: 0, marginBottom: '12px'}}>
             <h2 style={{fontSize: '18px'}}>실시간 리포트 미리보기</h2>
           </div>
           
-          <div className="phone" style={{borderRadius: '32px', overflow: 'hidden', border: '1px solid rgba(255,255,255,.08)', height: '700px', overflowY: 'auto', background: '#050508'}}>
-            <div style={{minHeight: '100%', padding: '14px', fontFamily: '-apple-system, BlinkMacSystemFont, "Pretendard", sans-serif'}}>
+          <div className="phone" style={{
+            borderRadius: '36px', 
+            overflow: 'hidden', 
+            border: '6px solid #1a1a24', 
+            boxShadow: '0 0 0 1px rgba(255,255,255,0.1), 0 20px 40px rgba(0,0,0,0.4)',
+            width: '100%',
+            height: '812px',
+            maxHeight: 'calc(100vh - 280px)',
+            overflowY: 'auto', 
+            background: '#050508'
+          }}>
+            <div style={{minHeight: '100%', padding: '14px', fontFamily: '-apple-system, BlinkMacSystemFont, "Pretendard", sans-serif', '&::-webkit-scrollbar': {display: 'none'} } as React.CSSProperties}>
               <div className="screen" style={{minHeight: '590px', borderRadius: '32px', padding: '22px', background: 'linear-gradient(180deg,#0a0818,#17102a)', border: '1px solid rgba(255,255,255,.08)'}}>
                 <div style={{display: 'flex', justifyContent: 'space-between', color: '#fff', fontWeight: 1000, fontSize: '13px', letterSpacing: '.1em'}}>
                   <span>ALACTION</span><span>QR</span>

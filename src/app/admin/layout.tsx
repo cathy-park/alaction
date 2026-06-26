@@ -67,12 +67,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <Link href="/admin/reports" className={pathname === '/admin/reports' ? 'active' : ''}>리포트 통합 관리</Link>
             <button onClick={handleLogout} className="text-left bg-transparent border-0 text-[#ff9aa9] font-bold text-sm hover:text-[#ff5f7a] cursor-pointer" style={{padding: '0 13px', height: '46px', display: 'flex', alignItems: 'center', marginTop: '16px'}}>로그아웃</button>
           </nav>
-
-          <div className="help">
-            <b>1차 MVP 범위</b>
-            <p>수동 입력 기반으로 랭킹, 점수, 발사 수, 맞힌 수, 맞은 수, 정확도만 관리합니다.</p>
-            <Link href="/admin/sessions" className="btn cyan" style={{display: 'inline-flex', width: '100%'}}>세션 목록 가기</Link>
-          </div>
         </aside>
 
         <main>
