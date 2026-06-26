@@ -479,36 +479,24 @@ export default function Page() {
               <div className="short-card">
                 <div className="short-video-wrap">
                   <div className="short-video-inner">
-                    <iframe loading="lazy" width="393" height="699" title="NAVER Clip" src="https://m.naver.com/shorts/?mediaId=DACEEAC6844654AA49BB5B6D9C178BE30775&serviceType=MOMENT&mediaType=VOD&recType=CLIP_SEARCH&panelType=vs_place&entryPoint=https%253A%252F%252Fpcmap.place.naver.com%252Fplace%252F1297342503%252Fphoto%253FfilterType%253D%2525ED%252581%2525B4%2525EB%2525A6%2525BD%2523&recId=%7B%22type%22%3A%22INFO_TAG%22%2C%22order%22%3A%22RELATED%22%2C%22filter%22%3A%22LOW_QUALITY_LEVEL_3%22%2C%22query%22%3A%22place_1297342503%22%2C%22seedIndex%22%3A6%7D&enableReverse=true&clickNsc=mapv5.place&clickArea=pht.clip&oembed=true" frameBorder="0" allow="autoplay; clipboard-write; web-share" allowFullScreen></iframe>
+                    <iframe referrerPolicy="no-referrer" width="393" height="699" title="NAVER Clip 1" src="https://m.naver.com/shorts/?mediaId=DACEEAC6844654AA49BB5B6D9C178BE30775&serviceType=MOMENT&mediaType=VOD&recType=CLIP_SEARCH&panelType=vs_place&entryPoint=https%253A%252F%252Fpcmap.place.naver.com%252Fplace%252F1297342503%252Fphoto%253FfilterType%253D%2525ED%252581%2525B4%2525EB%2525A6%2525BD%2523&recId=%7B%22type%22%3A%22INFO_TAG%22%2C%22order%22%3A%22RELATED%22%2C%22filter%22%3A%22LOW_QUALITY_LEVEL_3%22%2C%22query%22%3A%22place_1297342503%22%2C%22seedIndex%22%3A6%7D&enableReverse=true&clickNsc=mapv5.place&clickArea=pht.clip&oembed=true&embed=true" frameBorder="0" allow="autoplay; clipboard-write; web-share" allowFullScreen></iframe>
                   </div>
-                </div>
-                <div className="short-info">
-                  <div className="short-label">✦ READY ✦</div>
-                  <h3 className="short-title">장비 착용 & 입장</h3>
                 </div>
               </div>
               
               <div className="short-card">
                 <div className="short-video-wrap">
                   <div className="short-video-inner">
-                    <iframe loading="lazy" width="393" height="699" title="NAVER Clip" src="https://m.naver.com/shorts/?mediaId=4A01FA33A7ACA9BBAB8E4BB787E326D1CC69&serviceType=CLIP&mediaType=VOD&recType=CLIP_SEARCH&panelType=vs_place&entryPoint=https%253A%252F%252Fpcmap.place.naver.com%252Fplace%252F1297342503%252Fphoto%253FfilterType%253D%2525ED%252581%2525B4%2525EB%2525A6%2525BD%2523&recId=%7B%22type%22%3A%22INFO_TAG%22%2C%22order%22%3A%22RELATED%22%2C%22filter%22%3A%22LOW_QUALITY_LEVEL_3%22%2C%22query%22%3A%22place_1297342503%22%2C%22seedIndex%22%3A3%7D&enableReverse=true&clickNsc=mapv5.place&clickArea=pht.clip&oembed=true" frameBorder="0" allow="autoplay; clipboard-write; web-share" allowFullScreen></iframe>
+                    <iframe referrerPolicy="no-referrer" width="393" height="699" title="NAVER Clip 2" src="https://m.naver.com/shorts/?mediaId=4A01FA33A7ACA9BBAB8E4BB787E326D1CC69&serviceType=CLIP&mediaType=VOD&recType=CLIP_SEARCH&panelType=vs_place&entryPoint=https%253A%252F%252Fpcmap.place.naver.com%252Fplace%252F1297342503%252Fphoto%253FfilterType%253D%2525ED%252581%2525B4%2525EB%2525A6%2525BD%2523&recId=%7B%22type%22%3A%22INFO_TAG%22%2C%22order%22%3A%22RELATED%22%2C%22filter%22%3A%22LOW_QUALITY_LEVEL_3%22%2C%22query%22%3A%22place_1297342503%22%2C%22seedIndex%22%3A3%7D&enableReverse=true&clickNsc=mapv5.place&clickArea=pht.clip&oembed=true&embed=true" frameBorder="0" allow="autoplay; clipboard-write; web-share" allowFullScreen></iframe>
                   </div>
-                </div>
-                <div className="short-info">
-                  <div className="short-label">✦ BATTLE ✦</div>
-                  <h3 className="short-title">팀 배틀 플레이</h3>
                 </div>
               </div>
               
               <div className="short-card">
                 <div className="short-video-wrap">
                   <div className="short-video-inner">
-                    <iframe loading="lazy" width="393" height="699" title="NAVER Clip" src="https://m.naver.com/shorts/?mediaId=DACEEAC6844654AA49BB5B6D9C178BE30775&serviceType=MOMENT&mediaType=VOD&recType=CLIP_SEARCH&panelType=vs_place&entryPoint=https%253A%252F%252Fpcmap.place.naver.com%252Fplace%252F1297342503%252Fphoto%253FfilterType%253D%2525ED%252581%2525B4%2525EB%2525A6%2525BD%2523&recId=%7B%22type%22%3A%22INFO_TAG%22%2C%22order%22%3A%22RELATED%22%2C%22filter%22%3A%22LOW_QUALITY_LEVEL_3%22%2C%22query%22%3A%22place_1297342503%22%2C%22seedIndex%22%3A6%7D&enableReverse=true&clickNsc=mapv5.place&clickArea=pht.clip&oembed=true" frameBorder="0" allow="autoplay; clipboard-write; web-share" allowFullScreen></iframe>
+                    <iframe referrerPolicy="no-referrer" width="393" height="699" title="NAVER Clip 3" src="https://m.naver.com/shorts/?mediaId=DACEEAC6844654AA49BB5B6D9C178BE30775&serviceType=MOMENT&mediaType=VOD&recType=CLIP_SEARCH&panelType=vs_place&entryPoint=https%253A%252F%252Fpcmap.place.naver.com%252Fplace%252F1297342503%252Fphoto%253FfilterType%253D%2525ED%252581%2525B4%2525EB%2525A6%2525BD%2523&recId=%7B%22type%22%3A%22INFO_TAG%22%2C%22order%22%3A%22RELATED%22%2C%22filter%22%3A%22LOW_QUALITY_LEVEL_3%22%2C%22query%22%3A%22place_1297342503%22%2C%22seedIndex%22%3A6%7D&enableReverse=true&clickNsc=mapv5.place&clickArea=pht.clip&oembed=true&embed=true" frameBorder="0" allow="autoplay; clipboard-write; web-share" allowFullScreen></iframe>
                   </div>
-                </div>
-                <div className="short-info">
-                  <div className="short-label">✦ REPORT ✦</div>
-                  <h3 className="short-title">QR 결과 확인</h3>
                 </div>
               </div>
             </div>
