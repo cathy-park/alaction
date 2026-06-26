@@ -5,21 +5,21 @@ class MockSupabase {
   auth = {
     signInWithPassword: async ({ email, password }: any) => {
       if (email === 'admin@admin.com' && password === 'admin') {
-        localStorage.setItem('supabase.auth.token', 'mock-token');
+        sessionStorage.setItem('supabase.auth.token', 'mock-token');
         return { data: { session: { user: { email } } }, error: null };
       }
       return { data: null, error: { message: 'Invalid credentials. Use admin@admin.com / admin' } };
     },
     getSession: async () => {
       if (typeof window === 'undefined') return { data: { session: null } };
-      const token = localStorage.getItem('supabase.auth.token');
+      const token = sessionStorage.getItem('supabase.auth.token');
       return { data: { session: token ? { user: {} } : null } };
     },
     onAuthStateChange: (callback: any) => {
       return { subscription: { unsubscribe: () => {} } };
     },
     signOut: async () => {
-      localStorage.removeItem('supabase.auth.token');
+      sessionStorage.removeItem('supabase.auth.token');
       window.location.href = '/admin/login';
     }
   };

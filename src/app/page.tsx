@@ -154,7 +154,7 @@ export default function Page() {
     <div className="wrap">
       <div className="nav-inner">
         <a className="brand" href="#" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '4px' }}>
-          <img src="/logo.png" alt="ALACTION" style={{ width: '84px', objectFit: 'contain' }} />
+          <img src="/logo.png" alt="ALACTION" style={{ width: '60px', objectFit: 'contain' }} />
         </a>
         <nav className="nav-links">
           <a href="#features">게임 특징</a>
