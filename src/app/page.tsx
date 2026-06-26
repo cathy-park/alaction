@@ -23,13 +23,25 @@ const IconClose = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" heigh
 const TypewriterText = ({ text }: { text: string }) => {
   const [displayedText, setDisplayedText] = useState('');
   useEffect(() => {
-    let i = 0;
-    const interval = setInterval(() => {
-      setDisplayedText(text.slice(0, i + 1));
-      i++;
-      if (i === text.length) clearInterval(interval);
-    }, 50);
-    return () => clearInterval(interval);
+    let interval: NodeJS.Timeout;
+    let timeout: NodeJS.Timeout;
+    const startTyping = () => {
+      setDisplayedText('');
+      let i = 0;
+      interval = setInterval(() => {
+        setDisplayedText(text.slice(0, i + 1));
+        i++;
+        if (i === text.length) {
+          clearInterval(interval);
+          timeout = setTimeout(startTyping, 3000);
+        }
+      }, 50);
+    };
+    startTyping();
+    return () => {
+      clearInterval(interval);
+      clearTimeout(timeout);
+    };
   }, [text]);
   return <span>{displayedText}<span style={{animation: 'blink 1s step-end infinite', borderRight: '2px solid var(--blue)', paddingRight: '2px', marginLeft: '2px'}}>&nbsp;</span></span>;
 };

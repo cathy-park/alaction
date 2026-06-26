@@ -307,8 +307,8 @@
       .hero-woman-img { 
         width: 250vw !important; 
         right: auto !important; 
-        left: 50% !important; 
-        transform: translateX(-72%) !important; 
+        left: 25vw !important; 
+        transform: scaleX(-1) !important; 
         bottom: 0 !important; 
         top: auto !important; 
         opacity: 0.85; 
