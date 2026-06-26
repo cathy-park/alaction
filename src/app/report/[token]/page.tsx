@@ -32,6 +32,42 @@ export default function MobileReport({ params }: { params: Promise<{ token: stri
     setLoading(false);
   };
 
+  // ─── 이미지 저장 핸들러 ───────────────────────────────────────────
+  const handleSaveImage = async () => {
+    if (!reportRef.current) return;
+    const el = reportRef.current;
+
+    try {
+      // 1) 폰트가 완전히 로드될 때까지 대기
+      await document.fonts.ready;
+
+      // 2) 캡처 전 is-exporting 클래스 부착 (저장용 CSS 적용)
+      el.classList.add('is-exporting');
+
+      // 3) html2canvas 캡처 (useCORS: true, allowTaint: true 추가)
+      const canvas = await html2canvas(el, {
+        backgroundColor: '#050508',
+        scale: 3,
+        useCORS: true,
+        allowTaint: true,
+        logging: false,
+      });
+
+      // 4) 클래스 제거 (원래 화면으로 복귀)
+      el.classList.remove('is-exporting');
+
+      // 5) 다운로드
+      const url = canvas.toDataURL('image/png');
+      const link = document.createElement('a');
+      link.download = `ALACTION_REPORT_${participant.nickname}.png`;
+      link.href = url;
+      link.click();
+    } catch (e) {
+      reportRef.current?.classList.remove('is-exporting');
+      alert('이미지 저장에 실패했습니다.');
+    }
+  };
+
   if (loading) return <div style={{minHeight: '100vh', background: '#050508', color: '#ff35cd', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>LOADING...</div>;
 
   if (!report) return (
@@ -63,22 +99,6 @@ export default function MobileReport({ params }: { params: Promise<{ token: stri
   const strengthCard = report.strength_card;
   const nextPlayCard = report.next_play_card;
   const bottomComment = report.bottom_comment;
-
-  if (report.report_status !== 'published') {
-    return (
-      <div style={{minHeight: '100vh', background: '#050508', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px', fontFamily: '-apple-system, BlinkMacSystemFont, "Pretendard", sans-serif'}}>
-        <div style={{textAlign: 'center'}}>
-          <div style={{width: '64px', height: '64px', background: 'rgba(255,255,255,0.05)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px'}}>
-            <span style={{fontSize: '24px'}}>⏳</span>
-          </div>
-          <h2 style={{color: '#fff', fontSize: '20px', marginBottom: '8px'}}>리포트 준비 중입니다</h2>
-          <p style={{color: 'var(--admin-muted)', fontSize: '14px', lineHeight: 1.5}}>
-            관리자가 경기 결과를 분석하고 있습니다.<br/>잠시 후 다시 접속해 주세요.
-          </p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div style={{minHeight: '100vh', background: '#050508', padding: '14px', fontFamily: '-apple-system, BlinkMacSystemFont, "Pretendard", sans-serif'}}>
@@ -142,8 +162,10 @@ export default function MobileReport({ params }: { params: Promise<{ token: stri
 
         {strengthCard && (
           <div style={{marginTop: '20px', padding: '18px', borderRadius: '20px', background: 'linear-gradient(135deg, rgba(32,199,255,0.1), rgba(32,199,255,0.02))', border: '1px solid rgba(32,199,255,0.2)'}}>
-            <div style={{color: '#20c7ff', fontSize: '12px', fontWeight: 900, marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '6px'}}>
-              <span style={{fontSize: '16px'}}>⚡️</span> 강점
+            {/* 이모지를 별도 span으로 분리 → baseline 밀림 방지 */}
+            <div className="card-label" style={{color: '#20c7ff'}}>
+              <span className="card-emoji" aria-hidden="true">⚡️</span>
+              <span>강점</span>
             </div>
             <div style={{color: '#dffdf9', fontSize: '13px', lineHeight: 1.6, wordBreak: 'keep-all'}}>
               {strengthCard}
@@ -153,8 +175,10 @@ export default function MobileReport({ params }: { params: Promise<{ token: stri
 
         {nextPlayCard && (
           <div style={{marginTop: '12px', padding: '18px', borderRadius: '20px', background: 'linear-gradient(135deg, rgba(255,53,205,0.1), rgba(255,53,205,0.02))', border: '1px solid rgba(255,53,205,0.2)'}}>
-            <div style={{color: '#ff35cd', fontSize: '12px', fontWeight: 900, marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '6px'}}>
-              <span style={{fontSize: '16px'}}>🎯</span> 다음 플레이 포인트
+            {/* 이모지를 별도 span으로 분리 → baseline 밀림 방지 */}
+            <div className="card-label" style={{color: '#ff35cd'}}>
+              <span className="card-emoji" aria-hidden="true">🎯</span>
+              <span>다음 플레이 포인트</span>
             </div>
             <div style={{color: '#f8f5ff', fontSize: '13px', lineHeight: 1.6, wordBreak: 'keep-all'}}>
               {nextPlayCard}
@@ -167,37 +191,148 @@ export default function MobileReport({ params }: { params: Promise<{ token: stri
         </div>
         
         <a href="/" className="btn primary" style={{width: '100%', marginTop: '24px', display: 'flex', height: '46px', justifyContent: 'center'}}>다시 예약하기</a>
-        <button onClick={async () => {
-          if (!reportRef.current) return;
-          try {
-            const canvas = await html2canvas(reportRef.current, { backgroundColor: '#050508', scale: 2 });
-            const url = canvas.toDataURL('image/png');
-            const link = document.createElement('a');
-            link.download = `ALACTION_REPORT_${participant.nickname}.png`;
-            link.href = url;
-            link.click();
-          } catch (e) {
-            alert('이미지 저장에 실패했습니다.');
-          }
-        }} className="btn cyan" style={{width: '100%', marginTop: '12px', display: 'flex', height: '46px', justifyContent: 'center'}}>이미지 저장하기</button>
+        <button
+          onClick={handleSaveImage}
+          className="btn cyan"
+          style={{width: '100%', marginTop: '12px', display: 'flex', height: '46px', justifyContent: 'center'}}
+        >
+          이미지 저장하기
+        </button>
       </div>
 
       <style dangerouslySetInnerHTML={{__html: `
-        .screen { min-height: 590px; border-radius: 32px; padding: 22px; background: linear-gradient(180deg,#0a0818,#17102a); border: 1px solid rgba(255,255,255,.08); }
-        .report-logo { display: flex; justify-content: space-between; color: #fff; font-weight: 1000; font-size: 13px; letter-spacing: .1em; }
-        .rank { width: 150px; height: 150px; margin: 34px auto 20px; display: flex; align-items: center; justify-content: center; flex-direction: column; border-radius: 50%; border: 1px solid rgba(255,53,205,.55); background: radial-gradient(circle,rgba(255,53,205,.18),rgba(255,255,255,.03)); box-shadow: 0 0 50px rgba(255,53,205,.25); }
+        .screen {
+          min-height: 590px;
+          border-radius: 32px;
+          padding: 22px;
+          background: linear-gradient(180deg, #0a0818, #17102a);
+          border: 1px solid rgba(255,255,255,.08);
+        }
+        .report-logo {
+          display: flex;
+          justify-content: space-between;
+          color: #fff;
+          font-weight: 1000;
+          font-size: 13px;
+          letter-spacing: .1em;
+        }
+        .rank {
+          width: 150px; height: 150px;
+          margin: 34px auto 20px;
+          display: flex; align-items: center; justify-content: center; flex-direction: column;
+          border-radius: 50%;
+          border: 1px solid rgba(255,53,205,.55);
+          background: radial-gradient(circle, rgba(255,53,205,.18), rgba(255,255,255,.03));
+          box-shadow: 0 0 50px rgba(255,53,205,.25);
+        }
         .rank small { color: #a49cb7; font-size: 12px; font-weight: 1000; }
         .rank b { font-size: 58px; color: #fff; }
         .report-title { text-align: center; color: #fff; }
         .report-title h3 { margin: 0; font-size: 24px; letter-spacing: -.055em; }
         .report-title p { margin: 8px 0 0; color: #a49cb7; line-height: 1.5; font-size: 13px; }
-        .report-metrics { display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; margin-top: 24px; }
-        .report-metric { min-height: 86px; padding: 14px; border-radius: 20px; background: rgba(255,255,255,.055); border: 1px solid rgba(255,255,255,.08); }
+        .report-metrics {
+          display: grid;
+          grid-template-columns: repeat(2,1fr);
+          gap: 10px;
+          margin-top: 24px;
+        }
+        .report-metric {
+          min-height: 86px;
+          padding: 14px;
+          border-radius: 20px;
+          background: rgba(255,255,255,.055);
+          border: 1px solid rgba(255,255,255,.08);
+        }
         .report-metric span { display: block; color: #a49cb7; font-size: 11px; font-weight: 900; }
         .report-metric b { display: block; margin-top: 12px; font-size: 24px; letter-spacing: -.05em; }
-        .comment { padding: 16px; border-radius: 20px; background: rgba(56,255,228,.07); border: 1px solid rgba(56,255,228,.16); color: #dffdf9; font-size: 13px; line-height: 1.55; word-break: keep-all; }
-        .btn { height: 42px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 0 16px; border: 1px solid rgba(255,255,255,.12); border-radius: 999px; background: rgba(255,255,255,.055); color: #f8f5ff; font-weight: 1000; font-size: 13px; cursor: pointer; text-decoration: none; }
-        .btn.primary { border: 0; background: linear-gradient(100deg,#ff35cd,#8b44ff 58%,#20c7ff); box-shadow: 0 0 30px rgba(255,53,205,.25); }
+        .comment {
+          padding: 16px;
+          border-radius: 20px;
+          background: rgba(56,255,228,.07);
+          border: 1px solid rgba(56,255,228,.16);
+          color: #dffdf9;
+          font-size: 13px;
+          line-height: 1.55;
+          word-break: keep-all;
+        }
+        .btn {
+          height: 42px;
+          display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+          padding: 0 16px;
+          border: 1px solid rgba(255,255,255,.12);
+          border-radius: 999px;
+          background: rgba(255,255,255,.055);
+          color: #f8f5ff;
+          font-weight: 1000;
+          font-size: 13px;
+          cursor: pointer;
+          text-decoration: none;
+        }
+        .btn.primary {
+          border: 0;
+          background: linear-gradient(100deg, #ff35cd, #8b44ff 58%, #20c7ff);
+          box-shadow: 0 0 30px rgba(255,53,205,.25);
+        }
+        .btn.cyan {
+          border-color: rgba(32,199,255,.3);
+          color: #20c7ff;
+        }
+
+        /* ─── 카드 라벨 (이모지 + 텍스트 정렬) ─── */
+        .card-label {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          font-size: 12px;
+          font-weight: 900;
+          margin-bottom: 6px;
+          line-height: 1;
+        }
+        .card-emoji {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 15px;
+          line-height: 1;
+          /* 이모지 전용 font-family로 시스템 이모지 강제 적용 */
+          font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+          /* 상하 baseline 보정 */
+          position: relative;
+          top: 0;
+          vertical-align: middle;
+        }
+
+        /* ─── 이미지 저장 전용 CSS (is-exporting) ─── */
+        .is-exporting {
+          /* flex 자식 정렬이 캡처 시 깨지는 것 방지 */
+          display: block !important;
+        }
+        .is-exporting .card-label {
+          /* 캡처 시 line-height 고정 */
+          line-height: 1.2 !important;
+          align-items: flex-start !important;
+        }
+        .is-exporting .card-emoji {
+          /* html2canvas에서 vertical-align 오작동 방지 */
+          vertical-align: top !important;
+          top: 1px !important;
+          font-size: 14px !important;
+        }
+        .is-exporting .report-metric {
+          /* flex 대신 block으로 캡처 안정화 */
+          display: block !important;
+        }
+        .is-exporting .rank {
+          /* 캡처 시 flexbox 높이 보정 */
+          display: flex !important;
+          line-height: 1 !important;
+        }
+        .is-exporting .report-logo,
+        .is-exporting .report-metrics,
+        .is-exporting .report-title {
+          /* 그리드/플렉스 캡처 시 높이 안정화 */
+          overflow: visible !important;
+        }
       `}} />
     </div>
   );

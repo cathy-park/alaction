@@ -122,18 +122,29 @@
       overflow: hidden;
       isolation: isolate;
       background: #050508;
-      display: flex; flex-direction: column; justify-content: center;
-      padding: 130px 0 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .hero-bg-layer {
       position: absolute;
       inset: 0;
       z-index: 0;
-      background-image: url("/images/hero_bg.png");
+      background-image: url("/hero_bg.png");
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
+    }
+
+    .hero-bg-layer::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 45% 45%, rgba(0,0,0,0.08), rgba(0,0,0,0.62) 70%),
+        linear-gradient(90deg, rgba(5,5,8,0.58), rgba(5,5,8,0.18), rgba(5,5,8,0.42));
+      pointer-events: none;
     }
 
     .hero-smoke-layer {
@@ -144,11 +155,10 @@
       height: 100%;
       object-fit: cover;
       pointer-events: none;
-      opacity: 0.48;
+      opacity: 0.46;
       mix-blend-mode: screen;
-      filter: blur(0.2px);
-      transform: scale(1.04);
-      animation: heroSmokeMove 36s ease-in-out infinite alternate;
+      transform: scale(1.05);
+      animation: heroSmokeMove 42s ease-in-out infinite alternate;
       will-change: transform, opacity;
     }
 
@@ -211,20 +221,25 @@
       animation:blink 1.6s ease-in-out infinite;
     }
     @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
-    .hero h1 {
+    .hero-section h1 {
       font-family:'Orbitron',sans-serif;
-      font-size:clamp(52px,8.5vw,120px);
-      font-weight:900; line-height:.9; letter-spacing:-.02em;
-      margin:0 auto 10px; max-width:1100px;
+      font-size:clamp(72px,10vw,156px);
+      font-weight:900; line-height:.82; letter-spacing:-.08em;
+      margin:24px auto 20px; max-width:1100px;
+      color: #f8f5ff;
     }
-    .hero h1 .line2 {
+    .hero-section h1 .line2 {
       display:block;
-      background:linear-gradient(100deg,#fff 10%,var(--pink) 42%,var(--purple) 68%,var(--blue) 100%);
-      -webkit-background-clip:text; color:transparent;
+      background: linear-gradient(90deg, #ffffff 0%, #ff35cd 48%, #20c7ff 100%);
+      -webkit-background-clip:text; background-clip: text; color:transparent;
       background-size:200% auto;
       animation:gradShift 5s linear infinite;
     }
     @keyframes gradShift { to { background-position:200% center; } }
+    .hero-section .hero-sub {
+      max-width:720px; margin:0 auto 36px;
+      color: rgba(248,245,255,0.72); font-size:18px; line-height:1.75;
+    }
     .hero-sub {
       max-width:640px; margin:28px auto 36px;
       color:var(--muted); font-size:17px; line-height:1.8;
