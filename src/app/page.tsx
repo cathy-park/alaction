@@ -137,7 +137,7 @@ export default function Page() {
           <a href="#program">프로그램</a>
           <a href="#report">QR 리포트</a>
         </nav>
-        <a className="nav-cta" href="#contact">예약 문의</a>
+        <a className="nav-cta" href="https://talk.naver.com/profile/w4cqwe" target="_blank" rel="noopener noreferrer">예약 문의</a>
       </div>
     </div>
   </header>
@@ -178,7 +178,7 @@ export default function Page() {
           실내 레이저 슈팅으로 경험하는 팀 배틀. 날씨 상관없이 최고 강도의 액티비티를 즐기고,<br />QR 리포트로 내 플레이 기록을 확인하세요.
         </p>
         <div className="hero-actions">
-          <a className="btn btn-primary" href="#contact">
+          <a className="btn btn-primary" href="https://m.booking.naver.com/booking/12/bizes/766721/items/4624099?area=pll&lang=ko&service-target=map-pc&startDateTime=2026-06-26T00%3A00%3A00%2B09%3A00&theme=place" target="_blank" rel="noopener noreferrer">
             <span>지금 예약하기</span>
           </a>
           <a className="btn btn-ghost" href="#features">게임 특징 보기</a>
@@ -492,7 +492,7 @@ export default function Page() {
             <div className="section-label anim-fadein">Group Program</div>
             <h2 className="section-title anim-fadein delay-1">단체 활동에 강한<br /><span style={{background: 'linear-gradient(90deg,var(--pink),var(--blue))', WebkitBackgroundClip: 'text', color: 'transparent'}}>실내 콘텐츠</span></h2>
             <p className="section-desc anim-fadein delay-2" style={{marginTop: 16}}>짧은 시간 안에 분위기를 풀고, 자연스럽게 협업과 경쟁을 경험할 수 있는 프로그램으로 구성합니다.</p>
-            <a className="btn btn-primary anim-fadein delay-3" href="#contact" style={{marginTop: 32, width: 'max-content'}}>
+            <a className="btn btn-primary anim-fadein delay-3" href="https://talk.naver.com/profile/w4cqwe" target="_blank" rel="noopener noreferrer" style={{marginTop: 32, width: 'max-content'}}>
               <span>단체 문의하기</span>
             </a>
           </div>
@@ -568,9 +568,9 @@ export default function Page() {
         <h2 className="anim-fadein delay-1">방문 예약과<br />단체 문의를 지금 바로.</h2>
         <p className="anim-fadein delay-2">네이버 예약, 전화 문의, 길찾기 버튼은 실제 운영 링크로 연결됩니다.</p>
         <div className="cta-actions anim-fadein delay-3">
-          <a className="btn btn-primary" href="#"><IconCalendar /><span>네이버 예약</span></a>
-          <a className="btn btn-ghost" href="tel:031-000-0000"><IconPhone />전화 문의</a>
-          <a className="btn btn-ghost" href="#"><IconMap />길찾기</a>
+          <a className="btn btn-primary" href="https://m.booking.naver.com/booking/12/bizes/766721/items/4624099?area=pll&lang=ko&service-target=map-pc&startDateTime=2026-06-26T00%3A00%3A00%2B09%3A00&theme=place" target="_blank" rel="noopener noreferrer"><IconCalendar /><span>네이버 예약</span></a>
+          <a className="btn btn-ghost" href="https://talk.naver.com/profile/w4cqwe" target="_blank" rel="noopener noreferrer"><IconPhone />톡톡 문의</a>
+          <a className="btn btn-ghost" href="https://naver.me/xIFpW5pv" target="_blank" rel="noopener noreferrer"><IconMap />길찾기</a>
         </div>
       </div>
     </section>
@@ -585,9 +585,9 @@ export default function Page() {
         </div>
         <div className="footer-col">
           <h4>방문 안내</h4>
-          <a href="#">찾아오는 길</a>
-          <a href="#">운영 시간</a>
-          <a href="#">주차 안내</a>
+          <a href="https://naver.me/xIFpW5pv" target="_blank" rel="noopener noreferrer">찾아오는 길</a>
+          <a href="https://naver.me/xIFpW5pv" target="_blank" rel="noopener noreferrer">운영 시간</a>
+          <a href="https://naver.me/xIFpW5pv" target="_blank" rel="noopener noreferrer">주차 안내</a>
         </div>
         <div className="footer-col">
           <h4>운영 시간</h4>
