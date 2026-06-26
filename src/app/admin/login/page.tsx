@@ -34,7 +34,7 @@ export default function AdminLogin() {
       <div className="card" style={{maxWidth: '400px', width: '100%'}}>
         <div className="card-head" style={{justifyContent: 'center', borderBottom: '0'}}>
           <div className="brand" style={{marginBottom: 0}}>
-            <i className="mark"></i>
+            <img src="/logo.png" alt="Logo" style={{width: '34px', height: '34px', objectFit: 'contain'}} />
             <div>
               <b>ALACTION</b>
               <span>Admin Authentication</span>

@@ -51,9 +51,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     <div className="admin-wrapper">
       <div className="app">
         <aside style={{ zIndex: 50, position: 'relative' }}>
-          <div className="brand" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '6px', marginBottom: '40px' }}>
-            <img src="/logo.png" alt="ALACTION" style={{ width: '90px', height: 'auto', objectFit: 'contain' }} />
-            <span style={{ color: 'var(--admin-muted)', fontSize: '11px', fontWeight: 800, paddingLeft: '4px' }}>QR Report Admin</span>
+          <div className="brand" style={{ marginBottom: '40px' }}>
+            <img src="/logo.png" alt="Logo" style={{width: '34px', height: '34px', objectFit: 'contain'}} />
+            <div>
+              <b>ALACTION</b>
+              <span>QR Report Admin</span>
+            </div>
           </div>
           
           <div className="nav-title">관리 메뉴</div>
