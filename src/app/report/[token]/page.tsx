@@ -2,7 +2,6 @@
 
 import { useEffect, useState, use, useRef } from 'react';
 import { supabase } from '@/lib/supabase';
-import html2canvas from 'html2canvas';
 
 export default function MobileReport({ params }: { params: Promise<{ token: string }> }) {
   const resolvedParams = use(params);
@@ -30,44 +29,6 @@ export default function MobileReport({ params }: { params: Promise<{ token: stri
       });
     }
     setLoading(false);
-  };
-
-  // ─── 이미지 저장 핸들러 ───────────────────────────────────────────
-  const handleSaveImage = async () => {
-    if (!reportRef.current) return;
-
-    try {
-      await document.fonts.ready;
-      setLoading(true);
-
-      const srcCanvas = await html2canvas(reportRef.current, {
-        scale: 2,
-        useCORS: true,
-        backgroundColor: '#0a0818',
-        scrollY: -window.scrollY
-      });
-
-      const OFFSET_Y = -(35 * 2);
-      const dstCanvas = document.createElement('canvas');
-      dstCanvas.width = srcCanvas.width;
-      dstCanvas.height = srcCanvas.height;
-      const ctx = dstCanvas.getContext('2d')!;
-      
-      ctx.fillStyle = '#0a0818';
-      ctx.fillRect(0, 0, dstCanvas.width, dstCanvas.height);
-      ctx.drawImage(srcCanvas, 0, OFFSET_Y);
-
-      const dataUrl = dstCanvas.toDataURL('image/jpeg', 0.95);
-      const link = document.createElement('a');
-      link.download = `alaction-report-${report.shooting_results.rank}위.jpg`;
-      link.href = dataUrl;
-      link.click();
-
-    } catch (e) {
-      alert('이미지 저장에 실패했습니다.');
-    } finally {
-      setLoading(false);
-    }
   };
 
   if (loading) return <div style={{minHeight: '100vh', background: '#050508', color: '#ff35cd', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>LOADING...</div>;
@@ -195,14 +156,15 @@ export default function MobileReport({ params }: { params: Promise<{ token: stri
           {bottomComment || report.public_comment || `알액션에서 훌륭한 플레이를 보여주셨습니다! 정확도 ${result.accuracy}%를 기록하며 뛰어난 사격 솜씨를 증명했습니다.`}
         </div>
         
-        <a href="/" className="btn primary" style={{width: '100%', marginTop: '24px', display: 'flex', height: '46px', justifyContent: 'center'}}>다시 예약하기</a>
-        <button
-          onClick={handleSaveImage}
-          className="btn cyan"
-          style={{width: '100%', marginTop: '12px', display: 'flex', height: '46px', justifyContent: 'center'}}
+        <a 
+          href="https://m.booking.naver.com/booking/12/bizes/766721/items/4624099?area=pll&lang=ko&service-target=map-pc&startDateTime=2026-06-26T00%3A00%3A00%2B09%3A00&theme=place" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          className="btn primary" 
+          style={{width: '100%', marginTop: '24px', display: 'flex', height: '46px', justifyContent: 'center'}}
         >
-          이미지 저장하기
-        </button>
+          다시 예약하기
+        </a>
       </div>
 
       <style dangerouslySetInnerHTML={{__html: `
