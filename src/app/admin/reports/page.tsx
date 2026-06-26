@@ -149,7 +149,7 @@ export default function AllReports() {
   if (loading) return <div style={{color: 'var(--admin-p)', textAlign: 'center', padding: '40px'}}>LOADING DATA...</div>;
 
   return (
-    <section id="reports">
+    <div id="reports" className="admin-page-content">
       <div className="section-title">
         <div>
           <h2>전체 리포트 / QR 관리</h2>
@@ -256,6 +256,6 @@ export default function AllReports() {
           )}
         </div>
       </div>
-    </section>
+    </div>
   );
 }

@@ -31,7 +31,7 @@ export default function SessionsList() {
   });
 
   return (
-    <section id="sessions-list">
+    <div id="sessions-list" className="admin-page-content">
       <div className="section-title">
         <div>
           <h2>경기 세션 목록</h2>
@@ -112,6 +112,6 @@ export default function SessionsList() {
           )}
         </div>
       </div>
-    </section>
+    </div>
   );
 }

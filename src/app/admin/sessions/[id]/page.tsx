@@ -191,7 +191,7 @@ export default function SessionDetails({ params }: { params: Promise<{ id: strin
   if (loading) return <div style={{color: 'var(--admin-p)', textAlign: 'center', padding: '40px'}}>LOADING DATA...</div>;
 
   return (
-    <section id="results">
+    <div id="results" className="admin-page-content">
       <div className="section-title">
         <div>
           <Link href="/admin/sessions" style={{color: 'var(--admin-muted)', fontSize: '13px', textDecoration: 'none', display: 'inline-block'}}>← 세션 목록으로</Link>
@@ -310,6 +310,6 @@ export default function SessionDetails({ params }: { params: Promise<{ id: strin
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 }

@@ -40,7 +40,7 @@ export default function AdminDashboard() {
   };
 
   return (
-    <section id="dashboard">
+    <div id="dashboard" className="admin-page-content">
       <div className="top">
         <div>
           <div className="kicker">Admin Dashboard</div>
@@ -112,6 +112,6 @@ export default function AdminDashboard() {
         
 
       </div>
-    </section>
+    </div>
   );
 }

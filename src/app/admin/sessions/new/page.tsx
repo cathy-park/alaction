@@ -35,7 +35,7 @@ export default function NewSession() {
   };
 
   return (
-    <section id="session">
+    <div id="session" className="admin-page-content">
       <div className="section-title">
         <div>
           <h2>경기 세션 생성</h2>
@@ -81,6 +81,6 @@ export default function NewSession() {
           </div>
         </div>
       </form>
-    </section>
+    </div>
   );
 }

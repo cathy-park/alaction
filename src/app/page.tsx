@@ -19,6 +19,21 @@ const IconBlog = () => <svg xmlns="http://www.w3.org/2000/svg" width="16" height
 const IconMenu = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" /></svg>;
 const IconClose = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M18 6L6 18M6 6l12 12" /></svg>;
 
+
+const TypewriterText = ({ text }: { text: string }) => {
+  const [displayedText, setDisplayedText] = useState('');
+  useEffect(() => {
+    let i = 0;
+    const interval = setInterval(() => {
+      setDisplayedText(text.slice(0, i + 1));
+      i++;
+      if (i === text.length) clearInterval(interval);
+    }, 50);
+    return () => clearInterval(interval);
+  }, [text]);
+  return <span>{displayedText}<span style={{animation: 'blink 1s step-end infinite', borderRight: '2px solid var(--blue)', paddingRight: '2px', marginLeft: '2px'}}>&nbsp;</span></span>;
+};
+
 export default function Page() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   useEffect(() => {
@@ -179,9 +194,7 @@ export default function Page() {
           ENTER THE<br />
           <span className="line2">ARENA</span>
         </h1>
-        <p className="hero-sub">
-          실내 레이저 슈팅으로 경험하는 팀 배틀. 날씨 상관없이 최고 강도의 액티비티를 즐기고,<br />QR 리포트로 내 플레이 기록을 확인하세요.
-        </p>
+        <div className="hero-sub"><TypewriterText text="실내 레이저 슈팅으로 경험하는 팀 배틀. 날씨 상관없이 최고 강도의 액티비티를 즐기고, QR 리포트로 내 플레이 기록을 확인하세요." /></div>
         <div className="hero-actions">
           <a className="btn btn-primary" href="https://m.booking.naver.com/booking/12/bizes/766721/items/4624099?area=pll&lang=ko&service-target=map-pc&startDateTime=2026-06-26T00%3A00%3A00%2B09%3A00&theme=place" target="_blank" rel="noopener noreferrer">
             <span>지금 예약하기</span>
