@@ -298,7 +298,8 @@
     /* ── Layer 4: 텍스트 콘텐츠 ── */
     .hero-content {
       position: relative;
-      z-index: 4;
+      z-index: 50; /* 다른 데코레이션 레이어(z-index 2~3)보다 확실히 높게 설정하여 클릭이 덮이지 않도록 함 */
+      pointer-events: auto !important;
     }
 
     /* 모바일 조정 */
@@ -357,6 +358,11 @@
     }
     .hero-actions {
       display:flex; justify-content:flex-start; gap:12px; flex-wrap:wrap;
+      position: relative;
+      z-index: 51;
+    }
+    .hero-actions a {
+      pointer-events: auto !important;
     }
     .btn {
       height:52px; padding:0 26px;
