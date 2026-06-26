@@ -1,13 +1,15 @@
 'use client';
 
-import { useEffect, useState, use } from 'react';
+import { useEffect, useState, use, useRef } from 'react';
 import { supabase } from '@/lib/supabase';
+import html2canvas from 'html2canvas';
 
 export default function MobileReport({ params }: { params: Promise<{ token: string }> }) {
   const resolvedParams = use(params);
   const token = resolvedParams.token;
   const [report, setReport] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const reportRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     fetchReport();
@@ -80,7 +82,7 @@ export default function MobileReport({ params }: { params: Promise<{ token: stri
 
   return (
     <div style={{minHeight: '100vh', background: '#050508', padding: '14px', fontFamily: '-apple-system, BlinkMacSystemFont, "Pretendard", sans-serif'}}>
-      <div className="screen" style={{maxWidth: '480px', margin: '0 auto'}}>
+      <div className="screen" ref={reportRef} style={{maxWidth: '480px', margin: '0 auto'}}>
         <div className="report-logo">
           <span>ALACTION</span>
           <span>QR</span>
@@ -165,6 +167,19 @@ export default function MobileReport({ params }: { params: Promise<{ token: stri
         </div>
         
         <a href="/" className="btn primary" style={{width: '100%', marginTop: '24px', display: 'flex', height: '46px', justifyContent: 'center'}}>다시 예약하기</a>
+        <button onClick={async () => {
+          if (!reportRef.current) return;
+          try {
+            const canvas = await html2canvas(reportRef.current, { backgroundColor: '#050508', scale: 2 });
+            const url = canvas.toDataURL('image/png');
+            const link = document.createElement('a');
+            link.download = `ALACTION_REPORT_${participant.nickname}.png`;
+            link.href = url;
+            link.click();
+          } catch (e) {
+            alert('이미지 저장에 실패했습니다.');
+          }
+        }} className="btn cyan" style={{width: '100%', marginTop: '12px', display: 'flex', height: '46px', justifyContent: 'center'}}>이미지 저장하기</button>
       </div>
 
       <style dangerouslySetInnerHTML={{__html: `

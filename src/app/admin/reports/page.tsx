@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
 import Link from 'next/link';
 
+import { QRCodeCanvas } from 'qrcode.react';
+
 export default function AllReports() {
   const [reports, setReports] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -33,9 +35,7 @@ export default function AllReports() {
           url: `${origin}/report/${r.report_token}`
         });
       }
-      // Sort by latest created_at ideally, but Mock DB might not support it easily, so just reverse it
       enhancedReports.reverse();
-      
       setReports(enhancedReports);
       if (enhancedReports.length > 0) setPreviewToken(enhancedReports[0].report_token);
     }
@@ -44,8 +44,39 @@ export default function AllReports() {
 
   const updateStatus = async (reportId: string, newStatus: string) => {
     const { error } = await supabase.from('reports').update({ report_status: newStatus }).eq('id', reportId);
-    if (!error) {
-      fetchReports();
+    if (!error) fetchReports();
+  };
+
+  const handleDownloadQR = (id: string, nickname: string) => {
+    const canvas = document.getElementById(`qr-${id}`) as HTMLCanvasElement;
+    if (canvas) {
+      const pngUrl = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+      const downloadLink = document.createElement("a");
+      downloadLink.href = pngUrl;
+      downloadLink.download = `ALACTION_QR_${nickname}.png`;
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+    }
+  };
+
+  const handlePrintQR = (id: string, nickname: string) => {
+    const canvas = document.getElementById(`qr-${id}`) as HTMLCanvasElement;
+    if (canvas) {
+      const pngUrl = canvas.toDataURL("image/png");
+      const printWindow = window.open('', '_blank');
+      if (printWindow) {
+        printWindow.document.write(`
+          <html>
+            <head><title>QR 인쇄 - ${nickname}</title></head>
+            <body style="display:flex; flex-direction:column; justify-content:center; align-items:center; height:100vh; margin:0; font-family:sans-serif;">
+              <h2 style="margin-bottom: 20px;">${nickname}님의 리포트 QR</h2>
+              <img src="${pngUrl}" style="width:300px; height:300px;" onload="window.print();window.close();" />
+            </body>
+          </html>
+        `);
+        printWindow.document.close();
+      }
     }
   };
 
@@ -76,7 +107,6 @@ export default function AllReports() {
                   <th>닉네임</th>
                   <th>상태</th>
                   <th>QR 코드</th>
-                  <th>URL 토큰</th>
                   <th>관리</th>
                 </tr>
               </thead>
@@ -98,12 +128,17 @@ export default function AllReports() {
                     </td>
                     <td>
                       {r.url ? (
-                        <div style={{width: '60px', height: '60px', background: '#fff', padding: '4px', borderRadius: '4px'}}>
-                          <img src={`https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${encodeURIComponent(r.url)}`} alt="QR" style={{width: '100%', height: '100%', objectFit: 'contain'}} />
+                        <div style={{display: 'flex', gap: '12px', alignItems: 'center'}}>
+                          <div style={{width: '60px', height: '60px', background: '#fff', padding: '4px', borderRadius: '4px'}}>
+                            <QRCodeCanvas value={r.url} size={52} id={`qr-${r.id}`} style={{width: '100%', height: '100%'}} />
+                          </div>
+                          <div style={{display: 'flex', flexDirection: 'column', gap: '4px'}}>
+                            <button onClick={() => handleDownloadQR(r.id, r.participants?.nickname || '사용자')} className="btn" style={{height: '24px', fontSize: '11px', padding: '0 8px'}}>저장</button>
+                            <button onClick={() => handlePrintQR(r.id, r.participants?.nickname || '사용자')} className="btn" style={{height: '24px', fontSize: '11px', padding: '0 8px'}}>인쇄</button>
+                          </div>
                         </div>
                       ) : '-'}
                     </td>
-                    <td><div style={{width: '100px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'}}>{r.report_token}</div></td>
                     <td>
                       <div className="actions">
                         <Link href={`/admin/sessions/${r.session_id}/participant/${r.participant_id}`} className="btn">관리/수정</Link>
@@ -120,7 +155,7 @@ export default function AllReports() {
                 ))}
                 {reports.length === 0 && (
                   <tr>
-                    <td colSpan={6} style={{textAlign: 'center', color: 'var(--admin-muted)'}}>발급된 리포트가 없습니다.</td>
+                    <td colSpan={5} style={{textAlign: 'center', color: 'var(--admin-muted)'}}>발급된 리포트가 없습니다.</td>
                   </tr>
                 )}
               </tbody>

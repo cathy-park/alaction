@@ -71,7 +71,7 @@ aside {
 .help b { display: block; margin-bottom: 8px; }
 .help p { margin: 0 0 14px; color: var(--admin-muted); line-height: 1.55; font-size: 13px; }
 
-main { padding: 24px 26px 60px; min-width: 0; }
+main { padding: 40px 26px 60px; min-width: 0; }
 .top { min-height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 18px; border: 1px solid var(--admin-line); border-radius: 26px; padding: 16px 18px 16px 24px; background: rgba(255,255,255,.045); backdrop-filter: blur(20px); }
 .kicker { color: var(--admin-c); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; font-weight: 1000; }
 .top h1 { margin: 4px 0 0; font-size: 25px; letter-spacing: -.055em; }
@@ -92,7 +92,7 @@ main { padding: 24px 26px 60px; min-width: 0; }
 .stat b { position: relative; display: block; margin-top: 22px; font-size: 42px; letter-spacing: -.07em; }
 .stat span { position: relative; color: #cec7dc; font-size: 13px; font-weight: 800; }
 
-.section-title { margin: 34px 0 16px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.section-title { margin: 0 0 16px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
 .section-title h2 { margin: 0; font-size: 28px; letter-spacing: -.06em; }
 .section-title p { margin: 6px 0 0; color: var(--admin-muted); font-size: 14px; }
 .card { border: 1px solid var(--admin-line); border-radius: 30px; background: rgba(255,255,255,.045); box-shadow: 0 28px 90px rgba(0,0,0,.2); overflow: hidden; margin-bottom: 18px; }

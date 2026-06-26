@@ -13,6 +13,9 @@ export default function SessionDetails({ params }: { params: Promise<{ id: strin
   const [participants, setParticipants] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const [isEditingSession, setIsEditingSession] = useState(false);
+  const [editSessionTitle, setEditSessionTitle] = useState('');
+
   // Participant Form
   const [newParticipant, setNewParticipant] = useState({
     nickname: '',
@@ -133,6 +136,32 @@ export default function SessionDetails({ params }: { params: Promise<{ id: strin
     await supabase.from('participants').update({ [field]: value }).eq('id', participantId);
   };
 
+  const handleUpdateSessionTitle = async () => {
+    if (!editSessionTitle.trim()) return;
+    const { error } = await supabase.from('sessions').update({ title: editSessionTitle }).eq('id', sessionId);
+    if (!error) {
+      setSession({ ...session, title: editSessionTitle });
+      setIsEditingSession(false);
+    } else {
+      alert('세션 이름 수정에 실패했습니다.');
+    }
+  };
+
+  const handleDeleteSession = async () => {
+    if (!confirm('이 세션과 관련된 모든 참가자, 기록, 리포트가 삭제됩니다. 계속하시겠습니까?')) return;
+    
+    const { data: pList } = await supabase.from('participants').select('id').eq('session_id', sessionId);
+    if (pList && pList.length > 0) {
+      const pIds = pList.map(p => p.id);
+      await supabase.from('reports').delete().in('participant_id', pIds);
+      await supabase.from('shooting_results').delete().in('participant_id', pIds);
+      await supabase.from('participants').delete().eq('session_id', sessionId);
+    }
+    
+    await supabase.from('sessions').delete().eq('id', sessionId);
+    router.push('/admin/sessions');
+  };
+
   if (loading) return <div style={{color: 'var(--admin-p)', textAlign: 'center', padding: '40px'}}>LOADING DATA...</div>;
 
   return (
@@ -140,13 +169,27 @@ export default function SessionDetails({ params }: { params: Promise<{ id: strin
       <div className="section-title">
         <div>
           <Link href="/admin/sessions" style={{color: 'var(--admin-muted)', fontSize: '13px', textDecoration: 'none', marginBottom: '8px', display: 'inline-block'}}>← 세션 목록으로</Link>
-          <h2>경기 세션 상세 관리</h2>
-          <p>[{session?.title}] 의 참가자를 추가하고 결과를 입력합니다.</p>
+          {isEditingSession ? (
+            <div style={{display: 'flex', gap: '8px', alignItems: 'center', marginTop: '4px'}}>
+              <input type="text" value={editSessionTitle} onChange={e => setEditSessionTitle(e.target.value)} style={{fontSize: '24px', fontWeight: 'bold', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', padding: '4px 12px', borderRadius: '8px', width: '300px'}} />
+              <button onClick={handleUpdateSessionTitle} className="btn primary" style={{height: '38px'}}>저장</button>
+              <button onClick={() => setIsEditingSession(false)} className="btn" style={{height: '38px'}}>취소</button>
+            </div>
+          ) : (
+            <div style={{display: 'flex', gap: '16px', alignItems: 'center'}}>
+              <h2 style={{margin: '4px 0 0'}}>{session?.title}</h2>
+              <div style={{display: 'flex', gap: '8px', marginTop: '4px'}}>
+                <button onClick={() => { setEditSessionTitle(session?.title || ''); setIsEditingSession(true); }} className="btn" style={{height: '28px', fontSize: '11px', padding: '0 10px'}}>이름 수정</button>
+                <button onClick={handleDeleteSession} className="btn" style={{height: '28px', fontSize: '11px', padding: '0 10px', color: '#ff5f7a', borderColor: 'rgba(255,95,122,0.3)'}}>세션 삭제</button>
+              </div>
+            </div>
+          )}
+          <p>이 세션의 참가자를 추가하고 리포트를 발급/관리합니다.</p>
         </div>
       </div>
 
       <div className="result-layout">
-        <div style={{display: 'flex', flexDirection: 'column', gap: '18px'}}>
+        <div style={{display: 'flex', flexDirection: 'column', gap: '18px', width: '100%'}}>
           <form className="card" onSubmit={handleAddParticipant}>
             <div className="card-head">
               <div>
@@ -189,25 +232,27 @@ export default function SessionDetails({ params }: { params: Promise<{ id: strin
                   </tr>
                 </thead>
                 <tbody>
-                  {participants.map(p => (
+                  {participants.map(p => {
+                    const r = results[p.id] || {};
+                    return (
                     <tr key={p.id}>
-                      <td><input type="text" value={p.nickname} onChange={e => handleUpdateParticipant(p.id, 'nickname', e.target.value)} style={{width: '90px', padding: '4px'}} /></td>
-                      <td><input type="text" value={p.team_name || ''} onChange={e => handleUpdateParticipant(p.id, 'team_name', e.target.value)} style={{width: '80px', padding: '4px'}} placeholder="-" /></td>
-                      <td><input type="number" placeholder="1" value={results[p.id]?.rank || ''} onChange={e => setResults({...results, [p.id]: {...results[p.id], rank: e.target.value}})} style={{width: '50px'}} /></td>
-                      <td><input type="number" placeholder="0" value={results[p.id]?.score || ''} onChange={e => setResults({...results, [p.id]: {...results[p.id], score: e.target.value}})} style={{width: '60px'}} /></td>
-                      <td><input type="number" placeholder="0" value={results[p.id]?.shots_fired || ''} onChange={e => setResults({...results, [p.id]: {...results[p.id], shots_fired: e.target.value}})} style={{width: '60px'}} /></td>
-                      <td><input type="number" placeholder="0" value={results[p.id]?.hits || ''} onChange={e => setResults({...results, [p.id]: {...results[p.id], hits: e.target.value}})} style={{width: '60px'}} /></td>
-                      <td><input type="number" placeholder="0" value={results[p.id]?.times_hit || ''} onChange={e => setResults({...results, [p.id]: {...results[p.id], times_hit: e.target.value}})} style={{width: '60px'}} /></td>
-                      <td className="calc" style={{width: '60px'}}>{results[p.id]?.accuracy !== undefined ? `${results[p.id].accuracy}%` : '-'}</td>
+                      <td><input type="text" value={p.nickname || ''} onChange={e => handleUpdateParticipant(p.id, 'nickname', e.target.value)} /></td>
+                      <td><input type="text" value={p.team_name || ''} onChange={e => handleUpdateParticipant(p.id, 'team_name', e.target.value)} /></td>
+                      <td><input type="number" placeholder="순위" value={r.rank || ''} onChange={e => handleUpdateResult(p.id, 'rank', e.target.value)} /></td>
+                      <td><input type="number" placeholder="0" value={r.score || ''} onChange={e => handleUpdateResult(p.id, 'score', e.target.value)} /></td>
+                      <td><input type="number" placeholder="0" value={r.shots_fired || ''} onChange={e => handleUpdateResult(p.id, 'shots_fired', e.target.value)} /></td>
+                      <td><input type="number" placeholder="0" value={r.hits || ''} onChange={e => handleUpdateResult(p.id, 'hits', e.target.value)} /></td>
+                      <td><input type="number" placeholder="0" value={r.times_hit || ''} onChange={e => handleUpdateResult(p.id, 'times_hit', e.target.value)} /></td>
+                      <td style={{fontWeight: 900, color: 'var(--admin-c)'}}>{r.accuracy ? `${r.accuracy}%` : '-'}</td>
                       <td>
-                        <div className="actions">
-                          <button onClick={() => handleSaveResult(p.id)} className="btn">저장</button>
-                          <Link href={`/admin/sessions/${sessionId}/participant/${p.id}`} className="btn cyan" style={{textDecoration: 'none'}}>리포트 관리</Link>
-                          <button onClick={() => handleDeleteParticipant(p.id)} className="btn" style={{color: '#ff5f7a', borderColor: 'rgba(255,95,122,0.3)'}}>삭제</button>
+                        <div className="actions" style={{flexWrap: 'nowrap'}}>
+                          <button onClick={() => saveResult(p.id)} className="btn">저장</button>
+                          <Link href={`/admin/sessions/${sessionId}/participant/${p.id}`} className="btn cyan">리포트 관리</Link>
+                          <button onClick={() => handleDeleteParticipant(p.id)} className="btn red">삭제</button>
                         </div>
                       </td>
                     </tr>
-                  ))}
+                  )})}
                   {participants.length === 0 && (
                     <tr>
                       <td colSpan={9} style={{textAlign: 'center', color: 'var(--admin-muted)'}}>등록된 참가자가 없습니다.</td>
@@ -219,20 +264,6 @@ export default function SessionDetails({ params }: { params: Promise<{ id: strin
             </div>
           </div>
         </div>
-
-        <aside className="qr-panel">
-          <div className="kicker">QR Generator</div>
-          <h2 style={{margin: '8px 0 4px', fontSize: '25px', letterSpacing: '-.055em'}}>리포트 QR 발급</h2>
-          <p style={{margin: 0, color: 'var(--admin-muted)', lineHeight: '1.6', fontSize: '14px'}}>고유 토큰 URL을 생성하고 QR 이미지로 다운로드합니다.</p>
-          <div className="qr">
-            {/* Mock dots for aesthetic */}
-            {Array.from({length: 81}).map((_, i) => <i key={i}></i>)}
-          </div>
-          <div className="url text-center" style={{textAlign: 'center', color: 'var(--admin-muted)'}}>
-            리포트 관리를 열어 개별 발급 상태를 확인하세요.
-          </div>
-          <br />
-          <div className="actions">
             <Link href={`/admin/sessions/${sessionId}/reports`} className="btn primary" style={{width: '100%'}}>QR 리포트 관리 페이지</Link>
           </div>
         </aside>

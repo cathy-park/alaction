@@ -111,25 +111,7 @@ export default function AdminDashboard() {
           </div>
         </div>
         
-        <div className="card">
-          <div className="card-head">
-            <div>
-              <h3>오늘의 작업</h3>
-              <p>경기 후 처리 순서입니다.</p>
-            </div>
-          </div>
-          <div className="card-body">
-            <div className="tabs">
-              <span className="tab active">1. 세션</span>
-              <span className="tab">2. 참여자</span>
-              <span className="tab">3. 기록</span>
-              <span className="tab">4. QR</span>
-            </div>
-            <div className="note">QR은 먼저 생성할 수 있지만, 결과 입력 전에는 “리포트 준비 중” 화면이 노출됩니다.</div>
-            <br />
-            <Link href="/admin/sessions/new" className="btn primary" style={{width: '100%'}}>새 세션 만들기</Link>
-          </div>
-        </div>
+
       </div>
     </section>
   );
