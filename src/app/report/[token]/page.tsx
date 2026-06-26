@@ -200,8 +200,31 @@ export default function MobileReport({ params }: { params: Promise<{ token: stri
         </div>
         
         <div className="rank">
-          <small>RANK</small>
-          <b>{result.rank}</b>
+          {/* Glowing rings */}
+          <svg width="150" height="150" viewBox="0 0 150 150" style={{position: 'absolute', inset: 0, overflow: 'visible', animation: 'spinSlow 12s linear infinite'}}>
+            <defs>
+              <linearGradient id="rankRingGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#ff35cd" />
+                <stop offset="100%" stopColor="#20c7ff" />
+              </linearGradient>
+              <filter id="rankGlow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="6" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+            </defs>
+            <circle cx="75" cy="75" r="66" fill="none" stroke="url(#rankRingGrad)" strokeWidth="4" filter="url(#rankGlow)" opacity="0.6" style={{animation: 'pulseGlow 2s ease-in-out infinite alternate'}}/>
+            <circle cx="75" cy="75" r="66" fill="none" stroke="url(#rankRingGrad)" strokeWidth="2" />
+          </svg>
+
+          {/* Inner dashed ring */}
+          <svg width="150" height="150" viewBox="0 0 150 150" style={{position: 'absolute', inset: 0, animation: 'spinReverse 20s linear infinite'}}>
+            <circle cx="75" cy="75" r="54" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="1" strokeDasharray="2 4" />
+          </svg>
+          
+          <div style={{position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+            <small>RANK</small>
+            <b>{result.rank}</b>
+          </div>
         </div>
         
         <div className="report-title">
@@ -313,12 +336,22 @@ export default function MobileReport({ params }: { params: Promise<{ token: stri
           margin: 34px auto 20px;
           display: flex; align-items: center; justify-content: center; flex-direction: column;
           border-radius: 50%;
-          border: 1px solid rgba(255,53,205,.55);
-          background: radial-gradient(circle, rgba(255,53,205,.18), rgba(255,255,255,.03));
-          box-shadow: 0 0 50px rgba(255,53,205,.25);
+          position: relative;
         }
-        .rank small { color: #a49cb7; font-size: 12px; font-weight: 1000; }
-        .rank b { font-size: 58px; color: #fff; }
+        .rank small { color: #a49cb7; font-size: 12px; font-weight: 1000; letter-spacing: 0.1em; }
+        .rank b { font-size: 58px; color: #fff; margin-top: -4px; text-shadow: 0 0 20px rgba(255,255,255,0.3); }
+        @keyframes spinSlow {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        @keyframes spinReverse {
+          from { transform: rotate(360deg); }
+          to { transform: rotate(0deg); }
+        }
+        @keyframes pulseGlow {
+          0%, 100% { opacity: 0.5; filter: blur(6px); }
+          50% { opacity: 0.8; filter: blur(10px); }
+        }
         .report-title { text-align: center; color: #fff; }
         .report-title h3 { margin: 0; font-size: 24px; letter-spacing: -.055em; }
         .report-title p { margin: 8px 0 0; color: #a49cb7; line-height: 1.5; font-size: 13px; }
