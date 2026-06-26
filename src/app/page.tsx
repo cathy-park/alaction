@@ -1,7 +1,7 @@
 // @ts-nocheck
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 // SVG Icons (line style)
 const IconTarget = () => <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>;
@@ -16,8 +16,11 @@ const IconMap = () => <svg xmlns="http://www.w3.org/2000/svg" width="18" height=
 const IconInstagram = () => <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>;
 const IconYoutube = () => <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8"><rect x="2" y="5" width="20" height="14" rx="4"/><path strokeLinecap="round" strokeLinejoin="round" d="M10 9l5 3-5 3V9z" fill="currentColor" stroke="none"/></svg>;
 const IconBlog = () => <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8"><rect x="3" y="3" width="18" height="18" rx="3"/><path strokeLinecap="round" d="M7 8h10M7 12h7M7 16h5"/></svg>;
+const IconMenu = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" /></svg>;
+const IconClose = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M18 6L6 18M6 6l12 12" /></svg>;
 
 export default function Page() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   useEffect(() => {
     
         /* ─── NAV scroll class ─── */
@@ -612,6 +615,24 @@ export default function Page() {
       </div>
     </div>
   </footer>
+
+  {/* ─── MOBILE MENU ─── */}
+  <div className="mobile-fab mobile-only" onClick={() => setIsMobileMenuOpen(true)}>
+    <IconMenu />
+  </div>
+  <div className={`mobile-menu-overlay mobile-only ${isMobileMenuOpen ? 'open' : ''}`}>
+    <div className="mobile-menu-close" onClick={() => setIsMobileMenuOpen(false)}>
+      <IconClose />
+    </div>
+    <nav className="mobile-nav-links">
+      <a href="#features" onClick={() => setIsMobileMenuOpen(false)}>게임 특징</a>
+      <a href="#reviews" onClick={() => setIsMobileMenuOpen(false)}>후기</a>
+      <a href="#gallery" onClick={() => setIsMobileMenuOpen(false)}>매장 사진</a>
+      <a href="#program" onClick={() => setIsMobileMenuOpen(false)}>프로그램</a>
+      <a href="#report" onClick={() => setIsMobileMenuOpen(false)}>QR 리포트</a>
+      <a href="https://talk.naver.com/profile/w4cqwe" target="_blank" rel="noopener noreferrer" className="mobile-nav-cta">예약 문의</a>
+    </nav>
+  </div>
     </>
   );
 }
