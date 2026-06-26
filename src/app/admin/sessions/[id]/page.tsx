@@ -15,6 +15,7 @@ export default function SessionDetails({ params }: { params: Promise<{ id: strin
 
   const [isEditingSession, setIsEditingSession] = useState(false);
   const [editSessionTitle, setEditSessionTitle] = useState('');
+  const [editSessionType, setEditSessionType] = useState('일반 이용');
 
   // Participant Form
   const [newParticipant, setNewParticipant] = useState({
@@ -146,14 +147,17 @@ export default function SessionDetails({ params }: { params: Promise<{ id: strin
     }));
   };
 
-  const handleUpdateSessionTitle = async () => {
+  const handleUpdateSession = async () => {
     if (!editSessionTitle.trim()) return;
-    const { error } = await supabase.from('sessions').update({ title: editSessionTitle }).eq('id', sessionId);
+    const { error } = await supabase.from('sessions').update({ 
+      title: editSessionTitle,
+      program_type: editSessionType 
+    }).eq('id', sessionId);
     if (!error) {
-      setSession({ ...session, title: editSessionTitle });
+      setSession({ ...session, title: editSessionTitle, program_type: editSessionType });
       setIsEditingSession(false);
     } else {
-      alert('세션 이름 수정에 실패했습니다.');
+      alert('세션 정보 수정에 실패했습니다.');
     }
   };
 
@@ -182,14 +186,19 @@ export default function SessionDetails({ params }: { params: Promise<{ id: strin
           {isEditingSession ? (
             <div style={{display: 'flex', gap: '8px', alignItems: 'center', marginTop: '4px'}}>
               <input type="text" value={editSessionTitle} onChange={e => setEditSessionTitle(e.target.value)} style={{fontSize: '24px', fontWeight: 'bold', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', padding: '4px 12px', borderRadius: '8px', width: '300px'}} />
-              <button onClick={handleUpdateSessionTitle} className="btn primary" style={{height: '38px'}}>저장</button>
+              <select value={editSessionType} onChange={e => setEditSessionType(e.target.value)} style={{height: '38px', borderRadius: '8px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', padding: '0 10px'}}>
+                <option value="일반 이용">일반 이용</option>
+                <option value="단체 프로그램">단체 프로그램</option>
+                <option value="대회/이벤트">대회/이벤트</option>
+              </select>
+              <button onClick={handleUpdateSession} className="btn primary" style={{height: '38px'}}>저장</button>
               <button onClick={() => setIsEditingSession(false)} className="btn" style={{height: '38px'}}>취소</button>
             </div>
           ) : (
             <div style={{display: 'flex', gap: '16px', alignItems: 'center'}}>
-              <h2 style={{margin: '4px 0 0'}}>{session?.title}</h2>
+              <h2 style={{margin: '4px 0 0'}}>{session?.title} <span style={{fontSize: '16px', color: 'var(--admin-c)', fontWeight: 'normal', marginLeft: '8px'}}>[{session?.program_type || '일반 이용'}]</span></h2>
               <div style={{display: 'flex', gap: '8px', marginTop: '4px'}}>
-                <button onClick={() => { setEditSessionTitle(session?.title || ''); setIsEditingSession(true); }} className="btn" style={{height: '28px', fontSize: '11px', padding: '0 10px'}}>이름 수정</button>
+                <button onClick={() => { setEditSessionTitle(session?.title || ''); setEditSessionType(session?.program_type || '일반 이용'); setIsEditingSession(true); }} className="btn" style={{height: '28px', fontSize: '11px', padding: '0 10px'}}>수정</button>
                 <button onClick={handleDeleteSession} className="btn" style={{height: '28px', fontSize: '11px', padding: '0 10px', color: '#ff5f7a', borderColor: 'rgba(255,95,122,0.3)'}}>세션 삭제</button>
               </div>
             </div>

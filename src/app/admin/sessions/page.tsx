@@ -7,6 +7,8 @@ import Link from 'next/link';
 export default function SessionsList() {
   const [sessions, setSessions] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [searchKeyword, setSearchKeyword] = useState('');
+  const [filterType, setFilterType] = useState('전체');
 
   useEffect(() => {
     fetchSessions();
@@ -21,6 +23,12 @@ export default function SessionsList() {
     if (data) setSessions(data);
     setLoading(false);
   };
+
+  const filteredSessions = sessions.filter(s => {
+    if (filterType !== '전체' && s.program_type !== filterType) return false;
+    if (searchKeyword && !s.title?.toLowerCase().includes(searchKeyword.toLowerCase())) return false;
+    return true;
+  });
 
   return (
     <section id="sessions-list">
@@ -37,6 +45,15 @@ export default function SessionsList() {
           <div>
             <h3>전체 세션</h3>
             <p>세션별 참여자와 결과를 확인하고 리포트를 발급하세요.</p>
+          </div>
+          <div style={{display: 'flex', gap: '8px', alignItems: 'center'}}>
+            <select value={filterType} onChange={e => setFilterType(e.target.value)} style={{height: '38px', borderRadius: '8px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', padding: '0 10px'}}>
+              <option value="전체">모든 유형</option>
+              <option value="일반 이용">일반 이용</option>
+              <option value="단체 프로그램">단체 프로그램</option>
+              <option value="대회/이벤트">대회/이벤트</option>
+            </select>
+            <input type="text" placeholder="세션명 검색" value={searchKeyword} onChange={e => setSearchKeyword(e.target.value)} style={{height: '38px', borderRadius: '8px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', padding: '0 12px'}} />
           </div>
         </div>
         <div className="card-body">
@@ -56,7 +73,7 @@ export default function SessionsList() {
                   </tr>
                 </thead>
                 <tbody>
-                  {sessions.map(session => (
+                  {filteredSessions.map(session => (
                     <tr key={session.id}>
                       <td>{session.title}</td>
                       <td>{session.play_date}</td>

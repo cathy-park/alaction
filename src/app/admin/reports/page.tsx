@@ -11,6 +11,9 @@ export default function AllReports() {
   const [loading, setLoading] = useState(true);
   const [origin, setOrigin] = useState('');
   const [previewToken, setPreviewToken] = useState<string | null>(null);
+  
+  const [searchKeyword, setSearchKeyword] = useState('');
+  const [filterStatus, setFilterStatus] = useState('전체');
 
   useEffect(() => {
     setOrigin(window.location.origin);
@@ -80,6 +83,12 @@ export default function AllReports() {
     }
   };
 
+  const filteredReports = reports.filter(r => {
+    if (filterStatus !== '전체' && r.report_status !== filterStatus) return false;
+    if (searchKeyword && !r.participants?.nickname?.toLowerCase().includes(searchKeyword.toLowerCase()) && !r.session_title?.toLowerCase().includes(searchKeyword.toLowerCase())) return false;
+    return true;
+  });
+
   if (loading) return <div style={{color: 'var(--admin-p)', textAlign: 'center', padding: '40px'}}>LOADING DATA...</div>;
 
   return (
@@ -97,6 +106,14 @@ export default function AllReports() {
           <div className="card-head">
             <div>
               <h3>리포트 통합 목록</h3>
+            </div>
+            <div style={{display: 'flex', gap: '8px', alignItems: 'center'}}>
+              <select value={filterStatus} onChange={e => setFilterStatus(e.target.value)} style={{height: '38px', borderRadius: '8px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', padding: '0 10px'}}>
+                <option value="전체">모든 상태</option>
+                <option value="ready">준비 중</option>
+                <option value="published">공개</option>
+              </select>
+              <input type="text" placeholder="세션명/닉네임 검색" value={searchKeyword} onChange={e => setSearchKeyword(e.target.value)} style={{height: '38px', borderRadius: '8px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', padding: '0 12px', width: '180px'}} />
             </div>
           </div>
           <div className="card-body" style={{overflowX: 'auto'}}>
