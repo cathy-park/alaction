@@ -350,6 +350,7 @@
       max-width:100%; margin:28px 0 36px 0;
       color: rgba(248,245,255,0.72); font-size:18px; line-height:1.75;
       text-align: left;
+      white-space: nowrap; /* PC에서는 강제로 한 줄로 표시 */
     }
     .hero-sub {
       max-width:100%; margin:28px 0 36px 0;
@@ -927,7 +928,7 @@
     @media(max-width:768px) {
       .nav-links { display:none; }
       .hero-content { transform: none; }
-      .hero-sub { font-size: 15px !important; }
+      .hero-sub { font-size: 15px !important; white-space: normal !important; }
       .hero-bg-img.mobile-only { filter: brightness(0.45) saturate(1.1) !important; }
       .hero h1 { font-size:clamp(42px,11vw,80px); }
       section { padding:56px 0; }
