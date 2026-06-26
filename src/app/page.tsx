@@ -138,9 +138,18 @@ export default function Page() {
   <main>
     {/* ─── HERO ─── */}
     <section className="hero-section">
-      <div className="hero-bg-layer"></div>
-      <img className="hero-smoke-layer" src="/hero_smoke.png" alt="" aria-hidden="true" />
-      <img className="hero-woman-layer" src="/hero_woman.png" alt="레이저 장비를 든 알액션 모델" />
+      {/* Layer 1: 전체 배경 (여성 포함) */}
+      <img className="hero-bg-img" src="/hero.png" alt="알액션 레이저 아레나" />
+      
+      {/* Layer 2: 순수 CSS 연기 파티클 */}
+      <div className="css-smoke-wrap" aria-hidden="true">
+        <div className="smoke-particle p1" />
+        <div className="smoke-particle p2" />
+        <div className="smoke-particle p3" />
+        <div className="smoke-particle p4" />
+      </div>
+
+      {/* Layer 3: 텍스트/버튼 */}
       <div className="wrap hero-content">
         <div className="hero-badge">
           <i className="spark" />
@@ -262,87 +271,148 @@ export default function Page() {
     </section>
     {/* ─── REVIEWS ─── */}
     <section id="reviews">
-      <div className="wrap">
-        <div className="reviews-head">
+      <div className="wrap" style={{ maxWidth: '100%', padding: '0 20px', overflow: 'hidden' }}>
+        <div className="reviews-head" style={{ maxWidth: '1200px', margin: '0 auto 52px' }}>
           <div className="section-label anim-fadein">User Reviews</div>
           <h2 className="section-title anim-fadein delay-1">직접 플레이한<br />유저들의 후기</h2>
         </div>
-        {/* Featured reviews grid */}
-        <div className="reviews-featured anim-fadein delay-1">
-          <div className="review-card featured" style={{gridRow: 'span 2'}}>
-            <div className="review-stars">★★★★★</div>
-            <p className="review-text">"회사 워크샵으로 방문했는데, 팀원들 모두 완전히 빠져들었어요! 평소에 조용하던 팀원이 MVP를 차지해서 다 같이 엄청 웃었습니다. 퇴근 후 회식 느낌이 아니라 진짜 게임 속에 들어온 것 같아서 최고였어요. 내년에도 또 예약할 예정입니다."</p>
-            <div className="review-author">
-              <div className="review-avatar">K</div>
-              <div>
-                <div className="review-name">Kim J.H.</div>
-                <div className="review-meta">기업 워크샵 · 30명 방문</div>
-              </div>
-            </div>
-          </div>
-          <div className="review-card featured">
-            <div className="review-stars">★★★★★</div>
-            <p className="review-text">"QR 리포트가 진짜 신기했어요. 제 정확도가 72%라는 걸 처음 알았는데, 친구들이랑 경쟁하면서 더 재밌게 즐겼습니다."</p>
-            <div className="review-author">
-              <div className="review-avatar" style={{background: 'linear-gradient(135deg,var(--blue),var(--cyan))'}}>L</div>
-              <div>
-                <div className="review-name">Lee S.Y.</div>
-                <div className="review-meta">친구 모임 · 6명 방문</div>
-              </div>
-            </div>
-          </div>
-          <div className="review-card featured">
-            <div className="review-stars">★★★★☆</div>
-            <p className="review-text">"아이들 생일파티 장소로 완전 강추! 아이들이 엄청 좋아했고, 어른들도 함께 즐길 수 있어서 좋았어요."</p>
-            <div className="review-author">
-              <div className="review-avatar" style={{background: 'linear-gradient(135deg,var(--green),var(--blue))'}}>P</div>
-              <div>
-                <div className="review-name">Park M.J.</div>
-                <div className="review-meta">가족 생일파티 · 12명</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* Scrollable carousel */}
+        
         <div className="reviews-carousel anim-fadein delay-2">
-          <div className="review-card">
-            <div className="review-stars">★★★★★</div>
-            <p className="review-text">"사격 게임 좋아하는데 실제로 뛰면서 하니까 완전 다른 느낌. 어드레날린 폭발이에요!"</p>
-            <div className="review-author">
-              <div className="review-avatar" style={{background: 'linear-gradient(135deg,var(--pink),var(--purple))'}}>C</div>
-              <div><div className="review-name">Choi D.W.</div><div className="review-meta">개인 방문</div></div>
+          {/* 첫 번째 줄: 왼쪽으로 롤링 */}
+          <div className="auto-scroll-track left-scroll">
+            <div className="review-card">
+              <div className="review-stars">★★★★★</div>
+              <p className="review-text">"회사 워크샵으로 방문했는데, 팀원들 모두 완전히 빠져들었어요! 평소에 조용하던 팀원이 MVP를 차지해서 다 같이 엄청 웃었습니다."</p>
+              <div className="review-author">
+                <div className="review-avatar">K</div>
+                <div><div className="review-name">Kim J.H.</div><div className="review-meta">기업 워크샵 · 30명</div></div>
+              </div>
+            </div>
+            <div className="review-card">
+              <div className="review-stars">★★★★★</div>
+              <p className="review-text">"QR 리포트가 진짜 신기했어요. 제 정확도가 72%라는 걸 처음 알았는데, 친구들이랑 경쟁하면서 더 재밌게 즐겼습니다."</p>
+              <div className="review-author">
+                <div className="review-avatar" style={{background: 'linear-gradient(135deg,var(--blue),var(--cyan))'}}>L</div>
+                <div><div className="review-name">Lee S.Y.</div><div className="review-meta">친구 모임 · 6명</div></div>
+              </div>
+            </div>
+            <div className="review-card">
+              <div className="review-stars">★★★★★</div>
+              <p className="review-text">"사격 게임 좋아하는데 실제로 뛰면서 하니까 완전 다른 느낌. 어드레날린 폭발이에요!"</p>
+              <div className="review-author">
+                <div className="review-avatar" style={{background: 'linear-gradient(135deg,var(--pink),var(--purple))'}}>C</div>
+                <div><div className="review-name">Choi D.W.</div><div className="review-meta">개인 방문</div></div>
+              </div>
+            </div>
+            <div className="review-card">
+              <div className="review-stars">★★★★☆</div>
+              <p className="review-text">"아이들 생일파티 장소로 완전 강추! 아이들이 엄청 좋아했고, 어른들도 함께 즐길 수 있어서 좋았어요."</p>
+              <div className="review-author">
+                <div className="review-avatar" style={{background: 'linear-gradient(135deg,var(--green),var(--blue))'}}>P</div>
+                <div><div className="review-name">Park M.J.</div><div className="review-meta">가족 생일파티 · 12명</div></div>
+              </div>
+            </div>
+            {/* 왼쪽 스크롤 복제본 */}
+            <div className="review-card">
+              <div className="review-stars">★★★★★</div>
+              <p className="review-text">"회사 워크샵으로 방문했는데, 팀원들 모두 완전히 빠져들었어요! 평소에 조용하던 팀원이 MVP를 차지해서 다 같이 엄청 웃었습니다."</p>
+              <div className="review-author">
+                <div className="review-avatar">K</div>
+                <div><div className="review-name">Kim J.H.</div><div className="review-meta">기업 워크샵 · 30명</div></div>
+              </div>
+            </div>
+            <div className="review-card">
+              <div className="review-stars">★★★★★</div>
+              <p className="review-text">"QR 리포트가 진짜 신기했어요. 제 정확도가 72%라는 걸 처음 알았는데, 친구들이랑 경쟁하면서 더 재밌게 즐겼습니다."</p>
+              <div className="review-author">
+                <div className="review-avatar" style={{background: 'linear-gradient(135deg,var(--blue),var(--cyan))'}}>L</div>
+                <div><div className="review-name">Lee S.Y.</div><div className="review-meta">친구 모임 · 6명</div></div>
+              </div>
+            </div>
+            <div className="review-card">
+              <div className="review-stars">★★★★★</div>
+              <p className="review-text">"사격 게임 좋아하는데 실제로 뛰면서 하니까 완전 다른 느낌. 어드레날린 폭발이에요!"</p>
+              <div className="review-author">
+                <div className="review-avatar" style={{background: 'linear-gradient(135deg,var(--pink),var(--purple))'}}>C</div>
+                <div><div className="review-name">Choi D.W.</div><div className="review-meta">개인 방문</div></div>
+              </div>
+            </div>
+            <div className="review-card">
+              <div className="review-stars">★★★★☆</div>
+              <p className="review-text">"아이들 생일파티 장소로 완전 강추! 아이들이 엄청 좋아했고, 어른들도 함께 즐길 수 있어서 좋았어요."</p>
+              <div className="review-author">
+                <div className="review-avatar" style={{background: 'linear-gradient(135deg,var(--green),var(--blue))'}}>P</div>
+                <div><div className="review-name">Park M.J.</div><div className="review-meta">가족 생일파티 · 12명</div></div>
+              </div>
             </div>
           </div>
-          <div className="review-card">
-            <div className="review-stars">★★★★★</div>
-            <p className="review-text">"동아리 행사로 방문했습니다. 팀장님이 친절하게 설명해 주시고 분위기도 너무 좋았어요. 시설도 깔끔했습니다!"</p>
-            <div className="review-author">
-              <div className="review-avatar" style={{background: 'linear-gradient(135deg,var(--purple),var(--blue))'}}>J</div>
-              <div><div className="review-name">Jung H.S.</div><div className="review-meta">동아리 · 20명</div></div>
+          
+          {/* 두 번째 줄: 오른쪽으로 롤링 */}
+          <div className="auto-scroll-track right-scroll">
+            <div className="review-card">
+              <div className="review-stars">★★★★★</div>
+              <p className="review-text">"동아리 행사로 방문했습니다. 팀장님이 친절하게 설명해 주시고 분위기도 너무 좋았어요. 시설도 깔끔했습니다!"</p>
+              <div className="review-author">
+                <div className="review-avatar" style={{background: 'linear-gradient(135deg,var(--purple),var(--blue))'}}>J</div>
+                <div><div className="review-name">Jung H.S.</div><div className="review-meta">동아리 · 20명</div></div>
+              </div>
             </div>
-          </div>
-          <div className="review-card">
-            <div className="review-stars">★★★★★</div>
-            <p className="review-text">"비가 오는 날 우연히 방문했는데 이제 비만 오면 여기 오고 싶어요. 실내라 쾌적하고 게임은 너무 재밌습니다."</p>
-            <div className="review-author">
-              <div className="review-avatar" style={{background: 'linear-gradient(135deg,var(--blue),var(--green))'}}>S</div>
-              <div><div className="review-name">Son B.K.</div><div className="review-meta">커플 방문</div></div>
+            <div className="review-card">
+              <div className="review-stars">★★★★★</div>
+              <p className="review-text">"비가 오는 날 우연히 방문했는데 이제 비만 오면 여기 오고 싶어요. 실내라 쾌적하고 게임은 너무 재밌습니다."</p>
+              <div className="review-author">
+                <div className="review-avatar" style={{background: 'linear-gradient(135deg,var(--blue),var(--green))'}}>S</div>
+                <div><div className="review-name">Son B.K.</div><div className="review-meta">커플 방문</div></div>
+              </div>
             </div>
-          </div>
-          <div className="review-card">
-            <div className="review-stars">★★★★★</div>
-            <p className="review-text">"처음엔 무서울 것 같았는데 스태프분들이 친절하게 안내해 주셔서 금방 적응했어요. 결과 리포트 보는 재미도 있었습니다."</p>
-            <div className="review-author">
-              <div className="review-avatar" style={{background: 'linear-gradient(135deg,var(--pink),var(--cyan))'}}>N</div>
-              <div><div className="review-name">Na Y.R.</div><div className="review-meta">친구 4명</div></div>
+            <div className="review-card">
+              <div className="review-stars">★★★★★</div>
+              <p className="review-text">"처음엔 무서울 것 같았는데 스태프분들이 친절하게 안내해 주셔서 금방 적응했어요. 결과 리포트 보는 재미도 있었습니다."</p>
+              <div className="review-author">
+                <div className="review-avatar" style={{background: 'linear-gradient(135deg,var(--pink),var(--cyan))'}}>N</div>
+                <div><div className="review-name">Na Y.R.</div><div className="review-meta">친구 4명</div></div>
+              </div>
             </div>
-          </div>
-          <div className="review-card">
-            <div className="review-stars">★★★★★</div>
-            <p className="review-text">"학원 아이들 데리고 갔는데 집중력, 팀워크, 전략적 사고까지 자연스럽게 훈련됐어요. 교육적으로도 훌륭합니다!"</p>
-            <div className="review-author">
-              <div className="review-avatar" style={{background: 'linear-gradient(135deg,var(--green),var(--purple))'}}>O</div>
-              <div><div className="review-name">Oh T.H.</div><div className="review-meta">청소년 그룹 · 25명</div></div>
+            <div className="review-card">
+              <div className="review-stars">★★★★★</div>
+              <p className="review-text">"학원 아이들 데리고 갔는데 집중력, 팀워크, 전략적 사고까지 자연스럽게 훈련됐어요. 교육적으로도 훌륭합니다!"</p>
+              <div className="review-author">
+                <div className="review-avatar" style={{background: 'linear-gradient(135deg,var(--green),var(--purple))'}}>O</div>
+                <div><div className="review-name">Oh T.H.</div><div className="review-meta">청소년 그룹 · 25명</div></div>
+              </div>
+            </div>
+            {/* 오른쪽 스크롤 복제본 */}
+            <div className="review-card">
+              <div className="review-stars">★★★★★</div>
+              <p className="review-text">"동아리 행사로 방문했습니다. 팀장님이 친절하게 설명해 주시고 분위기도 너무 좋았어요. 시설도 깔끔했습니다!"</p>
+              <div className="review-author">
+                <div className="review-avatar" style={{background: 'linear-gradient(135deg,var(--purple),var(--blue))'}}>J</div>
+                <div><div className="review-name">Jung H.S.</div><div className="review-meta">동아리 · 20명</div></div>
+              </div>
+            </div>
+            <div className="review-card">
+              <div className="review-stars">★★★★★</div>
+              <p className="review-text">"비가 오는 날 우연히 방문했는데 이제 비만 오면 여기 오고 싶어요. 실내라 쾌적하고 게임은 너무 재밌습니다."</p>
+              <div className="review-author">
+                <div className="review-avatar" style={{background: 'linear-gradient(135deg,var(--blue),var(--green))'}}>S</div>
+                <div><div className="review-name">Son B.K.</div><div className="review-meta">커플 방문</div></div>
+              </div>
+            </div>
+            <div className="review-card">
+              <div className="review-stars">★★★★★</div>
+              <p className="review-text">"처음엔 무서울 것 같았는데 스태프분들이 친절하게 안내해 주셔서 금방 적응했어요. 결과 리포트 보는 재미도 있었습니다."</p>
+              <div className="review-author">
+                <div className="review-avatar" style={{background: 'linear-gradient(135deg,var(--pink),var(--cyan))'}}>N</div>
+                <div><div className="review-name">Na Y.R.</div><div className="review-meta">친구 4명</div></div>
+              </div>
+            </div>
+            <div className="review-card">
+              <div className="review-stars">★★★★★</div>
+              <p className="review-text">"학원 아이들 데리고 갔는데 집중력, 팀워크, 전략적 사고까지 자연스럽게 훈련됐어요. 교육적으로도 훌륭합니다!"</p>
+              <div className="review-author">
+                <div className="review-avatar" style={{background: 'linear-gradient(135deg,var(--green),var(--purple))'}}>O</div>
+                <div><div className="review-name">Oh T.H.</div><div className="review-meta">청소년 그룹 · 25명</div></div>
+              </div>
             </div>
           </div>
         </div>

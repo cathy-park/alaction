@@ -35,36 +35,38 @@ export default function MobileReport({ params }: { params: Promise<{ token: stri
   // ─── 이미지 저장 핸들러 ───────────────────────────────────────────
   const handleSaveImage = async () => {
     if (!reportRef.current) return;
-    const el = reportRef.current;
 
     try {
-      // 1) 폰트가 완전히 로드될 때까지 대기
       await document.fonts.ready;
+      setLoading(true);
 
-      // 2) 캡처 전 is-exporting 클래스 부착 (저장용 CSS 적용)
-      el.classList.add('is-exporting');
-
-      // 3) html2canvas 캡처 (useCORS: true, allowTaint: true 추가)
-      const canvas = await html2canvas(el, {
-        backgroundColor: '#050508',
-        scale: 3,
+      const srcCanvas = await html2canvas(reportRef.current, {
+        scale: 2,
         useCORS: true,
-        allowTaint: true,
-        logging: false,
+        backgroundColor: '#0a0818',
+        scrollY: -window.scrollY
       });
 
-      // 4) 클래스 제거 (원래 화면으로 복귀)
-      el.classList.remove('is-exporting');
+      const OFFSET_Y = -15 * 2;
+      const dstCanvas = document.createElement('canvas');
+      dstCanvas.width = srcCanvas.width;
+      dstCanvas.height = srcCanvas.height;
+      const ctx = dstCanvas.getContext('2d')!;
+      
+      ctx.fillStyle = '#0a0818';
+      ctx.fillRect(0, 0, dstCanvas.width, dstCanvas.height);
+      ctx.drawImage(srcCanvas, 0, OFFSET_Y);
 
-      // 5) 다운로드
-      const url = canvas.toDataURL('image/png');
+      const dataUrl = dstCanvas.toDataURL('image/jpeg', 0.95);
       const link = document.createElement('a');
-      link.download = `ALACTION_REPORT_${participant.nickname}.png`;
-      link.href = url;
+      link.download = `alaction-report-${report.shooting_results.rank}위.jpg`;
+      link.href = dataUrl;
       link.click();
+
     } catch (e) {
-      reportRef.current?.classList.remove('is-exporting');
       alert('이미지 저장에 실패했습니다.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -104,7 +106,7 @@ export default function MobileReport({ params }: { params: Promise<{ token: stri
     <div style={{minHeight: '100vh', background: '#050508', padding: '14px', fontFamily: '-apple-system, BlinkMacSystemFont, "Pretendard", sans-serif'}}>
       <div className="screen" ref={reportRef} style={{maxWidth: '480px', margin: '0 auto'}}>
         <div className="report-logo">
-          <span>ALACTION</span>
+          <img src="/logo2.png" alt="R.ACTION" style={{ height: '22px', width: 'auto' }} />
           <span>QR</span>
         </div>
         
@@ -121,7 +123,7 @@ export default function MobileReport({ params }: { params: Promise<{ token: stri
         {styleBadge && (
           <div style={{textAlign: 'center', marginTop: '12px'}}>
             <span style={{display: 'inline-block', padding: '6px 14px', background: 'rgba(255,53,205,0.15)', border: '1px solid rgba(255,53,205,0.4)', borderRadius: '99px', color: '#ff35cd', fontSize: '13px', fontWeight: 800, letterSpacing: '-0.02em'}}>
-              {styleBadge}
+              🎯 {styleBadge}
             </span>
           </div>
         )}
@@ -136,7 +138,7 @@ export default function MobileReport({ params }: { params: Promise<{ token: stri
         <div className="report-metrics">
           <div className="report-metric">
             <span>점수</span>
-            <b style={{color: '#fff'}}>{result.score}</b>
+            <b>{result.score}</b>
           </div>
           <div className="report-metric">
             <span>정확도</span>
@@ -144,7 +146,7 @@ export default function MobileReport({ params }: { params: Promise<{ token: stri
           </div>
           <div className="report-metric">
             <span>발사 수</span>
-            <b style={{color: '#fff'}}>{result.shots_fired}</b>
+            <b>{result.shots_fired}</b>
           </div>
           <div className="report-metric">
             <span>맞힌 수</span>
@@ -156,15 +158,16 @@ export default function MobileReport({ params }: { params: Promise<{ token: stri
           </div>
           <div className="report-metric">
             <span>성향</span>
-            <b style={{color: '#ffe66b'}}>{report.play_style || (result.accuracy > 70 ? '정밀형' : '돌격형')}</b>
+            <b style={{color: '#ffe66b', fontSize: '24px', display: 'block', lineHeight: 1.2}}>
+              {report.play_style || (result.accuracy > 70 ? '🎯 정밀형 플레이' : '🔥 돌격형 플레이')}
+            </b>
           </div>
         </div>
 
         {strengthCard && (
           <div style={{marginTop: '20px', padding: '18px', borderRadius: '20px', background: 'linear-gradient(135deg, rgba(32,199,255,0.1), rgba(32,199,255,0.02))', border: '1px solid rgba(32,199,255,0.2)'}}>
-            {/* 이모지를 별도 span으로 분리 → baseline 밀림 방지 */}
-            <div className="card-label" style={{color: '#20c7ff'}}>
-              <span className="card-emoji" aria-hidden="true">⚡️</span>
+            <div className="card-label" style={{color: '#20c7ff', marginBottom: '8px', fontSize: '13px', fontWeight: 900}}>
+              <span className="card-emoji" style={{marginRight: '6px'}}>⚡️</span>
               <span>강점</span>
             </div>
             <div style={{color: '#dffdf9', fontSize: '13px', lineHeight: 1.6, wordBreak: 'keep-all'}}>
@@ -175,9 +178,8 @@ export default function MobileReport({ params }: { params: Promise<{ token: stri
 
         {nextPlayCard && (
           <div style={{marginTop: '12px', padding: '18px', borderRadius: '20px', background: 'linear-gradient(135deg, rgba(255,53,205,0.1), rgba(255,53,205,0.02))', border: '1px solid rgba(255,53,205,0.2)'}}>
-            {/* 이모지를 별도 span으로 분리 → baseline 밀림 방지 */}
-            <div className="card-label" style={{color: '#ff35cd'}}>
-              <span className="card-emoji" aria-hidden="true">🎯</span>
+            <div className="card-label" style={{color: '#ff35cd', marginBottom: '8px', fontSize: '13px', fontWeight: 900}}>
+              <span className="card-emoji" style={{marginRight: '6px'}}>🎯</span>
               <span>다음 플레이 포인트</span>
             </div>
             <div style={{color: '#f8f5ff', fontSize: '13px', lineHeight: 1.6, wordBreak: 'keep-all'}}>
@@ -237,14 +239,13 @@ export default function MobileReport({ params }: { params: Promise<{ token: stri
           margin-top: 24px;
         }
         .report-metric {
-          min-height: 86px;
-          padding: 14px;
-          border-radius: 20px;
-          background: rgba(255,255,255,.055);
-          border: 1px solid rgba(255,255,255,.08);
+          background: rgba(255,255,255,0.03);
+          border: 1px solid rgba(255,255,255,0.06);
+          border-radius: 16px;
+          padding: 20px;
         }
-        .report-metric span { display: block; color: #a49cb7; font-size: 11px; font-weight: 900; }
-        .report-metric b { display: block; margin-top: 12px; font-size: 24px; letter-spacing: -.05em; }
+        .report-metric > span { display: block; color: #a49cb7; font-size: 11px; font-weight: 900; }
+        .report-metric > b { display: block; margin-top: 12px; font-size: 24px; letter-spacing: -.05em; color: #fff; }
         .comment {
           padding: 16px;
           border-radius: 20px;
@@ -280,9 +281,7 @@ export default function MobileReport({ params }: { params: Promise<{ token: stri
 
         /* ─── 카드 라벨 (이모지 + 텍스트 정렬) ─── */
         .card-label {
-          display: flex;
-          align-items: center;
-          gap: 6px;
+          display: block;
           font-size: 12px;
           font-weight: 900;
           margin-bottom: 6px;
@@ -302,37 +301,7 @@ export default function MobileReport({ params }: { params: Promise<{ token: stri
           vertical-align: middle;
         }
 
-        /* ─── 이미지 저장 전용 CSS (is-exporting) ─── */
-        .is-exporting {
-          /* flex 자식 정렬이 캡처 시 깨지는 것 방지 */
-          display: block !important;
-        }
-        .is-exporting .card-label {
-          /* 캡처 시 line-height 고정 */
-          line-height: 1.2 !important;
-          align-items: flex-start !important;
-        }
-        .is-exporting .card-emoji {
-          /* html2canvas에서 vertical-align 오작동 방지 */
-          vertical-align: top !important;
-          top: 1px !important;
-          font-size: 14px !important;
-        }
-        .is-exporting .report-metric {
-          /* flex 대신 block으로 캡처 안정화 */
-          display: block !important;
-        }
-        .is-exporting .rank {
-          /* 캡처 시 flexbox 높이 보정 */
-          display: flex !important;
-          line-height: 1 !important;
-        }
-        .is-exporting .report-logo,
-        .is-exporting .report-metrics,
-        .is-exporting .report-title {
-          /* 그리드/플렉스 캡처 시 높이 안정화 */
-          overflow: visible !important;
-        }
+
       `}} />
     </div>
   );
