@@ -87,6 +87,7 @@ export default function SessionReports({ params }: { params: Promise<{ id: strin
                   <th>닉네임</th>
                   <th>팀</th>
                   <th>상태</th>
+                  <th>QR 코드</th>
                   <th>URL 토큰</th>
                   <th>관리</th>
                 </tr>
@@ -106,6 +107,13 @@ export default function SessionReports({ params }: { params: Promise<{ id: strin
                          r.report_status === 'ready' ? '준비 중' : 
                          r.report_status === 'expired' ? '만료' : '비공개'}
                       </span>
+                    </td>
+                    <td>
+                      {r.url ? (
+                        <div style={{width: '60px', height: '60px', background: '#fff', padding: '4px', borderRadius: '4px'}}>
+                          <img src={`https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${encodeURIComponent(r.url)}`} alt="QR" style={{width: '100%', height: '100%', objectFit: 'contain'}} />
+                        </div>
+                      ) : '-'}
                     </td>
                     <td><div style={{width: '100px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'}}>{r.report_token}</div></td>
                     <td>

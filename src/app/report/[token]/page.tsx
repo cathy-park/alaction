@@ -92,8 +92,7 @@ export default function MobileReport({ params }: { params: Promise<{ token: stri
         </div>
         
         <div className="comment">
-          알액션에서 훌륭한 플레이를 보여주셨습니다!
-          정확도 {result.accuracy}%를 기록하며 뛰어난 사격 솜씨를 증명했습니다.
+          {result.gpt_analysis || `알액션에서 훌륭한 플레이를 보여주셨습니다! 정확도 ${result.accuracy}%를 기록하며 뛰어난 사격 솜씨를 증명했습니다.`}
         </div>
         
         <a href="/" className="btn primary" style={{width: '100%', marginTop: '18px', display: 'flex', height: '46px'}}>홈페이지로 이동</a>

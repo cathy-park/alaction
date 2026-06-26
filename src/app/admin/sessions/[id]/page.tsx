@@ -76,6 +76,7 @@ export default function SessionDetails({ params }: { params: Promise<{ id: strin
       hits: hits,
       times_hit: parseInt(r.times_hit) || 0,
       accuracy: parseFloat(acc as string),
+      gpt_analysis: r.gpt_analysis || '',
     };
 
     if (r.id) {
@@ -165,6 +166,7 @@ export default function SessionDetails({ params }: { params: Promise<{ id: strin
                     <th>맞힌 수</th>
                     <th>맞은 수</th>
                     <th>정확도</th>
+                    <th>GPT 코멘트</th>
                     <th>상태/관리</th>
                   </tr>
                 </thead>
@@ -173,12 +175,13 @@ export default function SessionDetails({ params }: { params: Promise<{ id: strin
                     <tr key={p.id}>
                       <td>{p.nickname}</td>
                       <td>{p.team_name || '-'}</td>
-                      <td><input type="number" placeholder="1" value={results[p.id]?.rank || ''} onChange={e => setResults({...results, [p.id]: {...results[p.id], rank: e.target.value}})} /></td>
-                      <td><input type="number" placeholder="0" value={results[p.id]?.score || ''} onChange={e => setResults({...results, [p.id]: {...results[p.id], score: e.target.value}})} /></td>
-                      <td><input type="number" placeholder="0" value={results[p.id]?.shots_fired || ''} onChange={e => setResults({...results, [p.id]: {...results[p.id], shots_fired: e.target.value}})} /></td>
-                      <td><input type="number" placeholder="0" value={results[p.id]?.hits || ''} onChange={e => setResults({...results, [p.id]: {...results[p.id], hits: e.target.value}})} /></td>
-                      <td><input type="number" placeholder="0" value={results[p.id]?.times_hit || ''} onChange={e => setResults({...results, [p.id]: {...results[p.id], times_hit: e.target.value}})} /></td>
-                      <td className="calc">{results[p.id]?.accuracy !== undefined ? `${results[p.id].accuracy}%` : '-'}</td>
+                      <td><input type="number" placeholder="1" value={results[p.id]?.rank || ''} onChange={e => setResults({...results, [p.id]: {...results[p.id], rank: e.target.value}})} style={{width: '50px'}} /></td>
+                      <td><input type="number" placeholder="0" value={results[p.id]?.score || ''} onChange={e => setResults({...results, [p.id]: {...results[p.id], score: e.target.value}})} style={{width: '60px'}} /></td>
+                      <td><input type="number" placeholder="0" value={results[p.id]?.shots_fired || ''} onChange={e => setResults({...results, [p.id]: {...results[p.id], shots_fired: e.target.value}})} style={{width: '60px'}} /></td>
+                      <td><input type="number" placeholder="0" value={results[p.id]?.hits || ''} onChange={e => setResults({...results, [p.id]: {...results[p.id], hits: e.target.value}})} style={{width: '60px'}} /></td>
+                      <td><input type="number" placeholder="0" value={results[p.id]?.times_hit || ''} onChange={e => setResults({...results, [p.id]: {...results[p.id], times_hit: e.target.value}})} style={{width: '60px'}} /></td>
+                      <td className="calc" style={{width: '60px'}}>{results[p.id]?.accuracy !== undefined ? `${results[p.id].accuracy}%` : '-'}</td>
+                      <td><input type="text" placeholder="GPT 코멘트 입력" value={results[p.id]?.gpt_analysis || ''} onChange={e => setResults({...results, [p.id]: {...results[p.id], gpt_analysis: e.target.value}})} style={{width: '120px'}} /></td>
                       <td>
                         <div className="actions">
                           <button onClick={() => handleSaveResult(p.id)} className="btn">저장</button>
