@@ -186,3 +186,11 @@ main { padding: 26px 26px 60px; min-width: 0; }
   .btn { flex: 1; }
   .section-title { align-items: flex-start; flex-direction: column; }
 }
+
+/* 지정된 4개 어드민 페이지에만 상단 타이틀 위에 50px 여백 추가 */
+#dashboard,
+#session,
+#sessions-list,
+#reports {
+  margin-top: 50px;
+}
