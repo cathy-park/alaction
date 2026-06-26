@@ -298,15 +298,14 @@
     /* ── Layer 4: 텍스트 콘텐츠 ── */
     .hero-content {
       position: relative;
-      z-index: 50; /* 다른 데코레이션 레이어(z-index 2~3)보다 확실히 높게 설정하여 클릭이 덮이지 않도록 함 */
+      z-index: 99999; /* 다른 모든 것보다 높게 설정 */
       pointer-events: auto !important;
-      transform: translate3d(0, 0, 10px); /* 3D 가속 버그로 인한 클릭 씹힘 방지 */
-      -webkit-transform: translate3d(0, 0, 10px);
     }
 
     /* 모바일 조정 */
     @media (max-width: 768px) {
       .smoke-particle { opacity: 0.6; }
+      .hero-content { padding-top: 40px; }
       .hero-woman-img { 
         width: 250vw !important; 
         right: auto !important; 
@@ -325,7 +324,7 @@
       backdrop-filter:blur(10px);
       font-size:12px; font-weight:700; font-family:'Rajdhani',sans-serif;
       letter-spacing:.12em; text-transform:uppercase; color:#BFBBCF;
-      margin-bottom:8px;
+      margin-bottom:0px; /* 칩과 h1 간격 축소 */
     }
     .spark {
       width:8px; height:8px; border-radius:50%;
@@ -337,7 +336,7 @@
       font-family:'Orbitron',sans-serif;
       font-size:clamp(72px,10vw,156px);
       font-weight:900; line-height:.82; letter-spacing:-.08em;
-      margin:8px auto 20px; max-width:1100px;
+      margin:5px auto 20px; max-width:1100px;
       color: #f8f5ff;
     }
     .hero-section h1 .line2 {
@@ -353,6 +352,15 @@
       color: rgba(248,245,255,0.72); font-size:18px; line-height:1.75;
       text-align: left;
       white-space: nowrap; /* PC에서는 강제로 한 줄로 표시 */
+      min-height: 32px; /* 들썩거림 방지 */
+    }
+    @media (max-width: 768px) {
+      .hero-section .hero-sub {
+        white-space: normal; /* 모바일은 줄바꿈 허용 */
+        min-height: 80px; /* 3줄 정도 높이 미리 확보 */
+        font-size: 15px;
+        line-height: 1.6;
+      }
     }
     .hero-sub {
       max-width:100%; margin:28px 0 36px 0;
@@ -369,10 +377,8 @@
     }
     .btn {
       position: relative;
-      z-index: 99999; /* 모든 버튼의 z-index를 최상위로 설정 */
+      z-index: 999999; /* 모든 버튼의 z-index를 최상위로 설정 */
       pointer-events: auto !important;
-      transform: translate3d(0, 0, 15px); /* 3D 가속 버그 방지 */
-      -webkit-transform: translate3d(0, 0, 15px);
       height:52px; padding:0 26px;
       display:inline-flex; align-items:center; justify-content:center; gap:8px;
       border-radius:999px; font-family:'Rajdhani',sans-serif;

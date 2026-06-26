@@ -44,16 +44,9 @@ const TypewriterText = ({ text }: { text: string }) => {
     };
   }, [text]);
   return (
-    <span style={{ position: 'relative', display: 'inline-block', width: '100%', pointerEvents: 'none' }}>
-      {/* 텍스트가 차지할 크기를 미리 투명하게 깔아서 들썩거림을 예방함 */}
-      <span style={{ opacity: 0, userSelect: 'none', pointerEvents: 'none', display: 'block' }}>
-        {text}
-      </span>
-      {/* 실제 한 글자씩 표시되는 타이핑 레이어 */}
-      <span style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', display: 'block', pointerEvents: 'none' }}>
-        {displayedText}
-        <span style={{animation: 'blink 1s step-end infinite', borderRight: '2px solid var(--blue)', paddingRight: '2px', marginLeft: '2px'}}>&nbsp;</span>
-      </span>
+    <span style={{ position: 'relative', display: 'block', width: '100%', pointerEvents: 'none' }}>
+      {displayedText}
+      <span style={{animation: 'blink 1s step-end infinite', borderRight: '2px solid var(--blue)', paddingRight: '2px', marginLeft: '2px'}}>&nbsp;</span>
     </span>
   );
 };
