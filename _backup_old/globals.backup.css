@@ -365,6 +365,9 @@
       pointer-events: auto !important;
     }
     .btn {
+      position: relative;
+      z-index: 99999; /* 모든 버튼의 z-index를 최상위로 설정 */
+      pointer-events: auto !important;
       height:52px; padding:0 26px;
       display:inline-flex; align-items:center; justify-content:center; gap:8px;
       border-radius:999px; font-family:'Rajdhani',sans-serif;
