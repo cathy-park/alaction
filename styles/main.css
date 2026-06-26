@@ -1,0 +1,22 @@
+/* utilities */
+.fade-in { opacity:0; transform: translateY(20px); transition:opacity .6s var(--ease), transform .6s var(--ease); }
+.fade-in.visible { opacity:1; transform:none; }
+
+.slide-up { transform: translateY(30px); opacity:0; transition:transform .6s var(--ease), opacity .6s var(--ease); }
+.slide-up.visible { transform:none; opacity:1; }
+
+.glow { box-shadow:0 0 12px var(--pink); }
+
+.carousel { overflow:hidden; scroll-snap-type:x mandatory; display:flex; }
+.carousel::-webkit-scrollbar { display:none; }
+.carousel .slide { scroll-snap-align:start; min-width:100%; flex-shrink:0; }
+
+/* gallery */
+#gallery .grid { display:grid; gap:12px; grid-template-columns:repeat(auto-fit, minmax(120px,1fr)); }
+#gallery .thumb { width:100%; height:auto; cursor:pointer; border-radius:8px; }
+.lightbox { position:fixed; inset:0; background:rgba(0,0,0,.85); display:flex; align-items:center; justify-content:center; z-index:9999; }
+.lightbox img { max-width:90%; max-height:90%; border-radius:12px; }
+.lightbox button { position:absolute; background:none; border:none; color:#fff; font-size:2rem; cursor:pointer; }
+.lightbox .close { top:20px; right:30px; }
+.lightbox .prev { left:30px; }
+.lightbox .next { right:30px; }
