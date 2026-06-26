@@ -157,11 +157,11 @@ export default function SessionReports({ params }: { params: Promise<{ id: strin
             </div>
           </div>
           {previewToken ? (
-            <div style={{borderRadius: '40px', overflow: 'hidden', outline: '10px solid #111118', boxShadow: '0 0 0 1px rgba(255,255,255,0.08), 0 24px 60px rgba(0,0,0,0.6)', width: '360px', height: '680px', margin: '0 auto', background: '#0a0818'}}>
+            <div style={{borderRadius: '40px', overflow: 'hidden', outline: '10px solid #111118', boxShadow: '0 0 0 1px rgba(255,255,255,0.08), 0 24px 60px rgba(0,0,0,0.6)', width: '390px', height: '844px', margin: '0 auto', background: '#0a0818'}}>
               <iframe src={`/report/${previewToken}`} style={{width: '100%', height: '100%', border: 'none'}} title="Report Preview"></iframe>
             </div>
           ) : (
-            <div style={{borderRadius: '40px', outline: '10px solid #111118', boxShadow: '0 0 0 1px rgba(255,255,255,0.08), 0 24px 60px rgba(0,0,0,0.6)', width: '360px', height: '680px', margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--admin-muted)', background: '#111118'}}>
+            <div style={{borderRadius: '40px', outline: '10px solid #111118', boxShadow: '0 0 0 1px rgba(255,255,255,0.08), 0 24px 60px rgba(0,0,0,0.6)', width: '390px', height: '844px', margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--admin-muted)', background: '#111118'}}>
               리스트에서 '미리보기'를<br/>선택해주세요.
             </div>
           )}

@@ -11,7 +11,7 @@ export default function AllReports() {
   const [loading, setLoading] = useState(true);
   const [origin, setOrigin] = useState('');
   const [previewToken, setPreviewToken] = useState<string | null>(null);
-  
+
   const [searchKeyword, setSearchKeyword] = useState('');
   const [filterStatus, setFilterStatus] = useState('전체');
 
@@ -22,14 +22,14 @@ export default function AllReports() {
 
   const fetchReports = async () => {
     const { data: reportsData } = await supabase.from('reports').select('*');
-    
+
     if (reportsData) {
       const enhancedReports = [];
       for (const r of reportsData) {
         const { data: pData } = await supabase.from('participants').select('*').eq('id', r.participant_id).single();
         const { data: sData } = await supabase.from('shooting_results').select('*').eq('id', r.result_id).single();
         const { data: sessionData } = await supabase.from('sessions').select('*').eq('id', r.session_id).single();
-        
+
         enhancedReports.push({
           ...r,
           participants: pData || {},
@@ -56,7 +56,7 @@ export default function AllReports() {
       const pngUrl = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
       const downloadLink = document.createElement("a");
       downloadLink.href = pngUrl;
-      downloadLink.download = `ALACTION_QR_${nickname}.png`;
+      downloadLink.download = `R.ACTION_QR_${nickname}.png`;
       document.body.appendChild(downloadLink);
       downloadLink.click();
       document.body.removeChild(downloadLink);
@@ -72,7 +72,7 @@ export default function AllReports() {
         printWindow.document.write(`
           <html>
             <head>
-              <title>ALACTION QR 인쇄 - ${nickname}</title>
+              <title>R.ACTION QR 인쇄 - ${nickname}</title>
               <style>
                 @page { margin: 0; size: auto; }
                 body {
@@ -124,7 +124,7 @@ export default function AllReports() {
             <body>
               <div class="bg"></div>
               <div class="card">
-                <div class="logo">ALACTION</div>
+                <div class="logo">R.ACTION</div>
                 <h2>${nickname}</h2>
                 <p>QR 코드를 스캔하여 개인 슈팅 리포트를 확인하세요</p>
                 <div class="qr-container">
@@ -146,7 +146,7 @@ export default function AllReports() {
     return true;
   });
 
-  if (loading) return <div style={{color: 'var(--admin-p)', textAlign: 'center', padding: '40px'}}>LOADING DATA...</div>;
+  if (loading) return <div style={{ color: 'var(--admin-p)', textAlign: 'center', padding: '40px' }}>LOADING DATA...</div>;
 
   return (
     <div id="reports" className="admin-page-content">
@@ -164,16 +164,16 @@ export default function AllReports() {
             <div>
               <h3>리포트 통합 목록</h3>
             </div>
-            <div style={{display: 'flex', gap: '8px', alignItems: 'center'}}>
-              <select value={filterStatus} onChange={e => setFilterStatus(e.target.value)} style={{height: '38px', borderRadius: '8px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', padding: '0 10px'}}>
+            <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+              <select value={filterStatus} onChange={e => setFilterStatus(e.target.value)} style={{ height: '38px', borderRadius: '8px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', padding: '0 10px' }}>
                 <option value="전체">모든 상태</option>
                 <option value="ready">준비 중</option>
                 <option value="published">공개</option>
               </select>
-              <input type="text" placeholder="세션명/닉네임 검색" value={searchKeyword} onChange={e => setSearchKeyword(e.target.value)} style={{height: '38px', borderRadius: '8px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', padding: '0 12px', width: '180px'}} />
+              <input type="text" placeholder="세션명/닉네임 검색" value={searchKeyword} onChange={e => setSearchKeyword(e.target.value)} style={{ height: '38px', borderRadius: '8px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', padding: '0 12px', width: '180px' }} />
             </div>
           </div>
-          <div className="card-body" style={{overflowX: 'auto'}}>
+          <div className="card-body" style={{ overflowX: 'auto' }}>
             <table>
               <thead>
                 <tr>
@@ -190,25 +190,24 @@ export default function AllReports() {
                     <td>{r.session_title}</td>
                     <td>{r.participants?.nickname || '-'}</td>
                     <td>
-                      <span className={`status ${
-                        r.report_status === 'published' ? 'public' :
+                      <span className={`status ${r.report_status === 'published' ? 'public' :
                         r.report_status === 'ready' ? 'pending' :
-                        r.report_status === 'expired' ? 'expired' : 'private'
-                      }`}>
-                        {r.report_status === 'published' ? '공개' : 
-                         r.report_status === 'ready' ? '준비 중' : 
-                         r.report_status === 'expired' ? '만료' : '비공개'}
+                          r.report_status === 'expired' ? 'expired' : 'private'
+                        }`}>
+                        {r.report_status === 'published' ? '공개' :
+                          r.report_status === 'ready' ? '준비 중' :
+                            r.report_status === 'expired' ? '만료' : '비공개'}
                       </span>
                     </td>
                     <td>
                       {r.url ? (
-                        <div style={{display: 'flex', gap: '12px', alignItems: 'center'}}>
-                          <div style={{width: '60px', height: '60px', background: '#fff', padding: '4px', borderRadius: '4px'}}>
-                            <QRCodeCanvas value={r.url} size={52} id={`qr-${r.id}`} style={{width: '100%', height: '100%'}} />
+                        <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                          <div style={{ width: '60px', height: '60px', background: '#fff', padding: '4px', borderRadius: '4px' }}>
+                            <QRCodeCanvas value={r.url} size={52} id={`qr-${r.id}`} style={{ width: '100%', height: '100%' }} />
                           </div>
-                          <div style={{display: 'flex', flexDirection: 'column', gap: '4px'}}>
-                            <button onClick={() => handleDownloadQR(r.id, r.participants?.nickname || '사용자')} className="btn" style={{height: '24px', fontSize: '11px', padding: '0 8px'}}>저장</button>
-                            <button onClick={() => handlePrintQR(r.id, r.participants?.nickname || '사용자')} className="btn" style={{height: '24px', fontSize: '11px', padding: '0 8px'}}>인쇄</button>
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                            <button onClick={() => handleDownloadQR(r.id, r.participants?.nickname || '사용자')} className="btn" style={{ height: '24px', fontSize: '11px', padding: '0 8px' }}>저장</button>
+                            <button onClick={() => handlePrintQR(r.id, r.participants?.nickname || '사용자')} className="btn" style={{ height: '24px', fontSize: '11px', padding: '0 8px' }}>인쇄</button>
                           </div>
                         </div>
                       ) : '-'}
@@ -229,7 +228,7 @@ export default function AllReports() {
                 ))}
                 {reports.length === 0 && (
                   <tr>
-                    <td colSpan={5} style={{textAlign: 'center', color: 'var(--admin-muted)'}}>발급된 리포트가 없습니다.</td>
+                    <td colSpan={5} style={{ textAlign: 'center', color: 'var(--admin-muted)' }}>발급된 리포트가 없습니다.</td>
                   </tr>
                 )}
               </tbody>
@@ -239,18 +238,18 @@ export default function AllReports() {
 
         {/* Preview Column */}
         <div>
-          <div className="section-title" style={{marginTop: 0}}>
+          <div className="section-title" style={{ marginTop: 0 }}>
             <div>
-              <h2 style={{fontSize: '20px'}}>사용자 리포트 미리보기</h2>
+              <h2 style={{ fontSize: '20px' }}>사용자 리포트 미리보기</h2>
               <p>QR 스캔 후 사용자가 보게 될 모바일 리포트 화면입니다.</p>
             </div>
           </div>
           {previewToken ? (
-            <div style={{borderRadius: '40px', overflow: 'hidden', outline: '10px solid #111118', boxShadow: '0 0 0 1px rgba(255,255,255,0.08), 0 24px 60px rgba(0,0,0,0.6)', width: '360px', height: '680px', margin: '0 auto', background: '#0a0818'}}>
-              <iframe src={`/report/${previewToken}`} style={{width: '100%', height: '100%', border: 'none'}} title="Report Preview"></iframe>
+            <div style={{ borderRadius: '40px', overflow: 'hidden', outline: '10px solid #111118', boxShadow: '0 0 0 1px rgba(255,255,255,0.08), 0 24px 60px rgba(0,0,0,0.6)', width: '390px', height: '844px', margin: '0 auto', background: '#0a0818' }}>
+              <iframe src={`/report/${previewToken}`} style={{ width: '100%', height: '100%', border: 'none' }} title="Report Preview"></iframe>
             </div>
           ) : (
-            <div style={{borderRadius: '40px', outline: '10px solid #111118', boxShadow: '0 0 0 1px rgba(255,255,255,0.08), 0 24px 60px rgba(0,0,0,0.6)', width: '360px', height: '680px', margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--admin-muted)', background: '#111118'}}>
+            <div style={{ borderRadius: '40px', outline: '10px solid #111118', boxShadow: '0 0 0 1px rgba(255,255,255,0.08), 0 24px 60px rgba(0,0,0,0.6)', width: '390px', height: '844px', margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--admin-muted)', background: '#111118' }}>
               리포트를 선택해주세요.
             </div>
           )}
