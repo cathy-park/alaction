@@ -451,22 +451,9 @@ export default function Page() {
           <div className="phone-mockup anim-scale">
             <div className="phone-notch" />
             <div className="phone-screen">
-              <div style={{fontFamily: '"Rajdhani",sans-serif', fontSize: 10, letterSpacing: '.2em', color: 'var(--pink)', textTransform: 'uppercase'}}>PLAYER DATA</div>
-              <div className="phone-rank">
-                <small>RANK</small>
-                1ST
+              <div className="scroll-img-wrap">
+                <img src="/report.png" alt="리포트 예시" />
               </div>
-              <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, width: '100%'}}>
-                <div style={{background: 'var(--glass)', border: '1px solid var(--line)', borderRadius: 10, padding: 10, textAlign: 'center'}}>
-                  <div style={{fontFamily: '"Rajdhani",sans-serif', fontSize: 22, fontWeight: 700, color: 'var(--pink)'}}>3,450</div>
-                  <div style={{fontSize: 9, color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '.1em'}}>Score</div>
-                </div>
-                <div style={{background: 'var(--glass)', border: '1px solid var(--line)', borderRadius: 10, padding: 10, textAlign: 'center'}}>
-                  <div style={{fontFamily: '"Rajdhani",sans-serif', fontSize: 22, fontWeight: 700, color: 'var(--blue)'}}>82%</div>
-                  <div style={{fontSize: 9, color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '.1em'}}>Accuracy</div>
-                </div>
-              </div>
-              <a className="btn btn-primary" style={{width: '100%', fontSize: 13, height: 42}} href="#contact"><span>QR REPORT 보기</span></a>
             </div>
           </div>
           <div>
