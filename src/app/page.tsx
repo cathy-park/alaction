@@ -208,9 +208,11 @@ export default function Page() {
         </h1>
         <div className="hero-sub"><TypewriterText text="실내 레이저 슈팅으로 경험하는 팀 배틀. 날씨 상관없이 최고 강도의 액티비티를 즐기고, QR 리포트로 내 플레이 기록을 확인하세요." /></div>
         <div className="hero-actions">
+          {/* 지금 예약하기: 네이버 예약 링크 (새창 이동) */}
           <a className="btn btn-primary" href="https://m.booking.naver.com/booking/12/bizes/766721/items/4624099?area=pll&lang=ko&service-target=map-pc&startDateTime=2026-06-26T00%3A00%3A00%2B09%3A00&theme=place" target="_blank" rel="noopener noreferrer">
             <span>지금 예약하기</span>
           </a>
+          {/* 게임 특징 보기: 게임특징 섹션(#features)으로 이동 */}
           <a className="btn btn-ghost" href="#features">게임 특징 보기</a>
         </div>
       </div>
