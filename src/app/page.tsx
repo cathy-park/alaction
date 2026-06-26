@@ -469,8 +469,8 @@ export default function Page() {
             <div className="shorts-head">
               <div>
                 <div className="section-label anim-fadein">✦ SHORT PLAY CLIPS ✦</div>
-                <h2 className="section-title anim-fadein delay-1" style={{ background: 'linear-gradient(90deg,var(--pink),var(--blue))', WebkitBackgroundClip: 'text', color: 'transparent' }}>15초로 보는 알액션</h2>
-                <p className="section-desc anim-fadein delay-2">짧은 영상으로 <strong style={{color:'var(--pink)'}}>알액션</strong>의 분위기와 팀 배틀, <strong style={{color:'var(--pink)'}}>QR 리포트</strong>를 빠르게 확인해보세요.</p>
+                <h2 className="section-title anim-fadein delay-1" style={{ color: '#fff' }}>15초로 보는<br />알액션</h2>
+                <p className="section-desc anim-fadein delay-2">짧은 영상으로 알액션의 분위기와 팀 배틀, QR 리포트를 빠르게 확인해보세요.</p>
               </div>
               <a className="btn btn-ghost anim-fadein delay-3" href="https://pcmap.place.naver.com/place/1297342503/photo?filterType=%ED%81%B4%EB%A6%BD#" target="_blank" rel="noopener noreferrer">전체 영상 보기 〉</a>
             </div>
