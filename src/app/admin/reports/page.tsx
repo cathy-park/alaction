@@ -71,10 +71,67 @@ export default function AllReports() {
       if (printWindow) {
         printWindow.document.write(`
           <html>
-            <head><title>QR 인쇄 - ${nickname}</title></head>
-            <body style="display:flex; flex-direction:column; justify-content:center; align-items:center; height:100vh; margin:0; font-family:sans-serif;">
-              <h2 style="margin-bottom: 20px;">${nickname}님의 리포트 QR</h2>
-              <img src="${pngUrl}" style="width:300px; height:300px;" onload="window.print();window.close();" />
+            <head>
+              <title>ALACTION QR 인쇄 - ${nickname}</title>
+              <style>
+                @page { margin: 0; size: auto; }
+                body {
+                  margin: 0; padding: 0;
+                  background-color: #050508;
+                  color: #f8f5ff;
+                  font-family: -apple-system, BlinkMacSystemFont, "Pretendard", sans-serif;
+                  display: flex; flex-direction: column; justify-content: center; align-items: center;
+                  height: 100vh;
+                  -webkit-print-color-adjust: exact;
+                  print-color-adjust: exact;
+                }
+                .bg {
+                  position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: -1;
+                  background-image: 
+                    radial-gradient(circle at 15% 25%, rgba(255, 53, 205, 0.15) 0%, transparent 50%),
+                    radial-gradient(circle at 85% 75%, rgba(32, 199, 255, 0.15) 0%, transparent 50%);
+                }
+                .card {
+                  background: rgba(255, 255, 255, 0.03);
+                  border: 1px solid rgba(255, 255, 255, 0.1);
+                  border-radius: 40px;
+                  padding: 60px 50px;
+                  text-align: center;
+                  box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+                  position: relative;
+                }
+                .logo {
+                  font-size: 28px; font-weight: 900; letter-spacing: -0.05em;
+                  background: linear-gradient(90deg, #fff, #ff35cd, #20c7ff);
+                  -webkit-background-clip: text;
+                  color: transparent;
+                  margin-bottom: 40px;
+                }
+                h2 { margin: 0 0 12px 0; font-size: 32px; font-weight: 800; letter-spacing: -0.03em; }
+                p { color: #a49cb7; margin: 0 0 40px 0; font-size: 16px; }
+                .qr-container {
+                  background: #fff;
+                  padding: 24px;
+                  border-radius: 28px;
+                  display: inline-block;
+                  box-shadow: 0 0 60px rgba(32, 199, 255, 0.25);
+                  margin-bottom: 30px;
+                }
+                img { width: 280px; height: 280px; display: block; }
+                .footer { color: #666; font-size: 14px; font-weight: bold; letter-spacing: 0.1em; }
+              </style>
+            </head>
+            <body>
+              <div class="bg"></div>
+              <div class="card">
+                <div class="logo">ALACTION</div>
+                <h2>${nickname}</h2>
+                <p>QR 코드를 스캔하여 개인 슈팅 리포트를 확인하세요</p>
+                <div class="qr-container">
+                  <img src="${pngUrl}" onload="setTimeout(() => { window.print(); window.close(); }, 500);" />
+                </div>
+                <div class="footer">SHOOTING REPORT</div>
+              </div>
             </body>
           </html>
         `);
