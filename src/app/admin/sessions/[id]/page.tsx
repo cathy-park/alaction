@@ -186,7 +186,7 @@ export default function SessionDetails({ params }: { params: Promise<{ id: strin
           {isEditingSession ? (
             <div style={{display: 'flex', gap: '8px', alignItems: 'center', marginTop: '4px'}}>
               <input type="text" value={editSessionTitle} onChange={e => setEditSessionTitle(e.target.value)} style={{fontSize: '24px', fontWeight: 'bold', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', padding: '4px 12px', borderRadius: '8px', width: '300px'}} />
-              <select value={editSessionType} onChange={e => setEditSessionType(e.target.value)} style={{height: '38px', borderRadius: '8px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', padding: '0 10px'}}>
+              <select value={editSessionType} onChange={e => setEditSessionType(e.target.value)} style={{height: '38px', borderRadius: '8px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', padding: '0 10px', fontSize: '14px', width: '150px'}}>
                 <option value="일반 이용">일반 이용</option>
                 <option value="단체 프로그램">단체 프로그램</option>
                 <option value="대회/이벤트">대회/이벤트</option>
