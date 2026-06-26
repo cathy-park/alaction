@@ -143,8 +143,8 @@ export default function SessionDetails({ params }: { params: Promise<{ id: strin
 
     const shots = extractNum(/발사\s*수[\s:]*([\d,]+)/) || extractNum(/발사\s*([\d,]+)회/);
     const hits = extractNum(/맞힌\s*수[\s:]*([\d,]+)/) || extractNum(/([\d,]+)회를\s*명중/);
-    const timesHit = extractNum(/맞은\s*수[\s:]*([\d,]+)/);
-    const score = extractNum(/점수[\s:]*([\d,]+)/) || extractNum(/([\d,]+)점을\s*달성/);
+    const timesHit = extractNum(/맞은\s*수[\s:]*([\d,]+)/) || extractNum(/맞은\s*수\s*([\d,]+)회/);
+    const score = extractNum(/점수[\s:]*([\d,]+)/) || extractNum(/([\d,]+)점/);
     const rank = extractNum(/랭킹[\s:]*([\d,]+)/) || extractNum(/([\d,]+)위/);
 
     if (shots !== null) updatedResult.shots_fired = shots;
