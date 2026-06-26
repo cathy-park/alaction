@@ -20,7 +20,7 @@
               radial-gradient(circle at 5% 12%, rgba(32,199,255,.12), transparent 30%),
               linear-gradient(180deg, #050508, #090714 48%, #050508);
   color: var(--admin-ink);
-  font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", Inter, sans-serif;
+  font-family: "Tossface", -apple-system, BlinkMacSystemFont, "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", Inter, sans-serif;
   word-break: keep-all;
   min-height: 100vh;
   position: relative;

@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import url("https://cdn.jsdelivr.net/gh/toss/tossface/dist/tossface.css");
 
     /* ─── DESIGN TOKENS ─────────────────────────────────────── */
     :root {
@@ -28,7 +29,7 @@
     *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
     html { scroll-behavior:smooth; }
     body {
-      font-family: "Noto Sans KR", -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: "Tossface", "Noto Sans KR", -apple-system, BlinkMacSystemFont, sans-serif;
       background: var(--bg);
       color: var(--ink);
       overflow-x: hidden;
