@@ -27,20 +27,29 @@ export default function Page() {
         },{passive:true});
     
         /* ─── Hero parallax ─── */
+        /* ─── Hero parallax ─── */
         const heroBg = document.getElementById('heroBg');
+        const heroWoman = document.getElementById('heroWoman');
+        const particles = document.getElementById('particles');
+        
         window.addEventListener('scroll',()=>{
           const y = window.scrollY;
           if (heroBg) heroBg.style.transform = `translateY(${y * 0.35}px)`;
+          if (heroWoman) heroWoman.style.transform = `translateY(${y * 0.15}px)`;
+          if (particles) particles.style.transform = `translateY(${y * 0.25}px)`;
         },{passive:true});
     
         /* ─── Mouse parallax on hero ─── */
-        const hero = document.querySelector('.hero');
+        const hero = document.querySelector('.hero-section');
         hero?.addEventListener('mousemove',(e: any)=>{
           const {clientX,clientY} = e;
           const {innerWidth,innerHeight} = window;
           const dx = (clientX/innerWidth - 0.5)*14;
           const dy = (clientY/innerHeight - 0.5)*8;
+          
           if (heroBg) heroBg.style.transform = `translate(${dx}px,${dy}px) translateY(${window.scrollY*0.35}px)`;
+          if (heroWoman) heroWoman.style.transform = `translate(${dx*-1.5}px,${dy*-1.5}px) translateY(${window.scrollY*0.15}px)`;
+          if (particles) particles.style.transform = `translate(${dx*2}px,${dy*2}px) translateY(${window.scrollY*0.25}px)`;
         });
     
         /* ─── Intersection Observer fade-in ─── */
@@ -138,16 +147,24 @@ export default function Page() {
   <main>
     {/* ─── HERO ─── */}
     <section className="hero-section">
-      {/* Layer 1: 전체 배경 (여성 포함) */}
-      <img className="hero-bg-img" src="/hero.png" alt="알액션 레이저 아레나" />
+      {/* Layer 1: 원경 배경 */}
+      <img id="heroBg" className="hero-bg-img" src="/hero_bg.png" alt="알액션 배경" />
       
-      {/* Layer 2: 순수 CSS 연기 파티클 */}
-      <div className="css-smoke-wrap" aria-hidden="true">
+      {/* Layer 2: 순수 CSS 연기 파티클 + 부유하는 불티 */}
+      <div id="particles" className="css-smoke-wrap" aria-hidden="true">
         <div className="smoke-particle p1" />
         <div className="smoke-particle p2" />
         <div className="smoke-particle p3" />
         <div className="smoke-particle p4" />
+        <div className="spark-particle s1" />
+        <div className="spark-particle s2" />
+        <div className="spark-particle s3" />
+        <div className="spark-particle s4" />
+        <div className="spark-particle s5" />
       </div>
+
+      {/* Layer 3: 근경 인물 */}
+      <img id="heroWoman" className="hero-woman-img" src="/hero_woman.png" alt="알액션 레이저 아레나" />
 
       {/* Layer 3: 텍스트/버튼 */}
       <div className="wrap hero-content">

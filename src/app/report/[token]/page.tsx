@@ -47,7 +47,7 @@ export default function MobileReport({ params }: { params: Promise<{ token: stri
         scrollY: -window.scrollY
       });
 
-      const OFFSET_Y = -15 * 2;
+      const OFFSET_Y = -(35 * 2);
       const dstCanvas = document.createElement('canvas');
       dstCanvas.width = srcCanvas.width;
       dstCanvas.height = srcCanvas.height;
@@ -106,7 +106,10 @@ export default function MobileReport({ params }: { params: Promise<{ token: stri
     <div style={{minHeight: '100vh', background: '#050508', padding: '14px', fontFamily: '-apple-system, BlinkMacSystemFont, "Pretendard", sans-serif'}}>
       <div className="screen" ref={reportRef} style={{maxWidth: '480px', margin: '0 auto'}}>
         <div className="report-logo">
-          <img src="/logo2.png" alt="R.ACTION" style={{ height: '22px', width: 'auto' }} />
+          <span className="brand" style={{fontSize: '15px', gap: '7px'}}>
+            <img src="/logo.png" alt="" style={{ width: '22px', height: '22px', objectFit: 'contain' }} />
+            <span>R.ACTION</span>
+          </span>
           <span>QR</span>
         </div>
         

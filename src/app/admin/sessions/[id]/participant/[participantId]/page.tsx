@@ -250,11 +250,23 @@ export default function ParticipantReportEdit({ params }: { params: Promise<{ id
             </div>
           </div>
 
-          {/* ─ 폰 목업 (단일 레이어, 2중 프레임 없음) ─ */}
-          <div style={{borderRadius: '36px', overflow: 'hidden', border: '8px solid #1a1a24', boxShadow: '0 0 0 1px rgba(255,255,255,0.1), 0 20px 40px rgba(0,0,0,0.4)', width: '100%', height: '680px', overflowY: 'auto', background: 'linear-gradient(180deg,#0a0818,#17102a)'}}>
+          {/* ─ 폰 목업 (단일 프레임) ─ */}
+          <div style={{
+            borderRadius: '40px',
+            overflow: 'hidden',
+            outline: '10px solid #111118',
+            boxShadow: '0 0 0 1px rgba(255,255,255,0.08), 0 24px 60px rgba(0,0,0,0.6)',
+            width: '100%',
+            height: '680px',
+            overflowY: 'auto',
+            background: 'linear-gradient(180deg,#0a0818,#17102a)',
+          }}>
             <div style={{padding: '20px', fontFamily: '-apple-system, BlinkMacSystemFont, "Pretendard", sans-serif'}}>
               <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: '#fff', fontWeight: 1000, fontSize: '13px'}}>
-                <img src="/logo2.png" alt="R.ACTION" style={{height: '20px', width: 'auto'}} />
+                <span className="brand" style={{fontSize: '14px', gap: '6px', margin: 0}}>
+                  <img src="/logo.png" alt="" style={{width:'20px', height:'20px', objectFit:'contain'}} />
+                  <span>R.ACTION</span>
+                </span>
                 <span style={{letterSpacing: '.1em'}}>QR</span>
               </div>
               <div style={{width: '110px', height: '110px', margin: '28px auto 18px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', borderRadius: '50%', border: '1px solid rgba(255,53,205,.55)', background: 'radial-gradient(circle,rgba(255,53,205,.18),rgba(255,255,255,.03))', boxShadow: '0 0 50px rgba(255,53,205,.25)'}}>

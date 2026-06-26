@@ -79,15 +79,21 @@ export default function SessionsList() {
                       <td>{session.play_date}</td>
                       <td>{session.program_type}</td>
                       <td>
-                        <span className={`status ${
+                        <button onClick={async () => {
+                          const newStatus = session.status === 'published' ? 'private' : 'published';
+                          const { error } = await supabase.from('sessions').update({ status: newStatus }).eq('id', session.id);
+                          if (!error) {
+                            setSessions(sessions.map(s => s.id === session.id ? { ...s, status: newStatus } : s));
+                          }
+                        }} className={`status ${
                           session.status === 'published' ? 'public' :
                           session.status === 'ready' ? 'pending' :
                           session.status === 'expired' ? 'expired' : 'private'
-                        }`}>
-                          {session.status === 'published' ? '공개' : 
+                        }`} style={{cursor: 'pointer', border: 'none'}}>
+                          {session.status === 'published' ? '🌐 공개' : 
                            session.status === 'ready' ? '준비 중' : 
-                           session.status === 'expired' ? '만료' : '비공개'}
-                        </span>
+                           session.status === 'expired' ? '만료' : '🔒 비공개'}
+                        </button>
                       </td>
                       <td style={{color: 'var(--admin-muted)'}}>{new Date(session.created_at).toLocaleDateString()}</td>
                       <td>

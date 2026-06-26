@@ -16,6 +16,15 @@ export default function SessionDetails({ params }: { params: Promise<{ id: strin
   const [isEditingSession, setIsEditingSession] = useState(false);
   const [editSessionTitle, setEditSessionTitle] = useState('');
   const [editSessionType, setEditSessionType] = useState('일반 이용');
+  const [sessionStatus, setSessionStatus] = useState('');
+
+  const handleToggleSessionStatus = async (newStatus: string) => {
+    const { error } = await supabase.from('sessions').update({ status: newStatus }).eq('id', sessionId);
+    if (!error) {
+      setSession({ ...session, status: newStatus });
+      setSessionStatus(newStatus);
+    }
+  };
 
   // Participant Form
   const [newParticipant, setNewParticipant] = useState({
@@ -34,7 +43,10 @@ export default function SessionDetails({ params }: { params: Promise<{ id: strin
 
   const fetchSessionData = async () => {
     const { data: sessionData } = await supabase.from('sessions').select('*').eq('id', sessionId).single();
-    if (sessionData) setSession(sessionData);
+    if (sessionData) {
+      setSession(sessionData);
+      setSessionStatus(sessionData.status || 'private');
+    }
 
     const { data: participantsData } = await supabase.from('participants').select('*').eq('session_id', sessionId).order('created_at', { ascending: true });
     if (participantsData) {
@@ -204,6 +216,20 @@ export default function SessionDetails({ params }: { params: Promise<{ id: strin
             </div>
           )}
           <p>이 세션의 참가자를 추가하고 리포트를 발급/관리합니다.</p>
+        </div>
+        {/* 세션 공개/비공개 토글 */}
+        <div style={{display:'flex', alignItems:'center', gap:'12px', marginTop:'16px', padding:'14px 18px', background:'rgba(255,255,255,0.03)', borderRadius:'12px', border:'1px solid rgba(255,255,255,0.1)'}}>
+          <span style={{fontSize:'13px', color:'var(--admin-muted)', flexShrink:0}}>세션 공개 상태</span>
+          <div style={{display:'flex', gap:'8px', marginLeft:'auto'}}>
+            <button onClick={() => handleToggleSessionStatus('private')} style={{padding:'5px 14px', borderRadius:'99px', fontSize:'12px', fontWeight:700, cursor:'pointer', border:'1px solid',
+              background: sessionStatus !== 'published' ? 'rgba(255,255,255,0.12)' : 'transparent',
+              borderColor: sessionStatus !== 'published' ? 'rgba(255,255,255,0.4)' : 'rgba(255,255,255,0.12)',
+              color: sessionStatus !== 'published' ? '#fff' : 'var(--admin-muted)'}}>🔒 비공개</button>
+            <button onClick={() => handleToggleSessionStatus('published')} style={{padding:'5px 14px', borderRadius:'99px', fontSize:'12px', fontWeight:700, cursor:'pointer', border:'1px solid',
+              background: sessionStatus === 'published' ? 'rgba(186,255,45,0.15)' : 'transparent',
+              borderColor: sessionStatus === 'published' ? 'rgba(186,255,45,0.5)' : 'rgba(255,255,255,0.12)',
+              color: sessionStatus === 'published' ? '#baff2d' : 'var(--admin-muted)'}}>🌐 공개</button>
+          </div>
         </div>
       </div>
 
