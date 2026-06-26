@@ -158,7 +158,7 @@ export default function SessionReports({ params }: { params: Promise<{ id: strin
           </div>
           {previewToken ? (
             <div className="phone">
-              <div style={{height: '600px', borderRadius: '32px', overflow: 'hidden', border: '1px solid rgba(255,255,255,.08)'}}>
+              <div style={{height: '600px', borderRadius: '32px', overflow: 'hidden'}}>
                 {/* Embed the report page via iframe for true preview */}
                 <iframe src={`/report/${previewToken}`} style={{width: '100%', height: '100%', border: 'none'}} title="Report Preview"></iframe>
               </div>

@@ -137,10 +137,10 @@ export default function Page() {
   </header>
   <main>
     {/* ─── HERO ─── */}
-    <section className="hero">
-      <div className="hero-bg" id="heroBg"></div>
-      <img src="/hero.png" alt="알액션 히어로 이미지" className="hero-image" />
-      <div className="hero-smoke"></div>
+    <section className="hero-section">
+      <div className="hero-bg-layer"></div>
+      <img className="hero-smoke-layer" src="/images/hero_smoke.png" alt="" aria-hidden="true" />
+      <img className="hero-woman-layer" src="/images/hero_woman.png" alt="레이저 장비를 든 알액션 모델" />
       <div className="wrap hero-content">
         <div className="hero-badge">
           <i className="spark" />
@@ -449,11 +449,13 @@ export default function Page() {
       <div className="wrap">
         <div className="report-preview-layout">
           <div className="report-preview-phone-area">
-            <div className="phone-mockup anim-scale">
-              <div className="phone-notch" />
-              <div className="phone-screen">
-                <div className="report-scroll-content">
-                  <img src="/report.png" alt="리포트 예시" />
+            <div className="report-phone anim-scale">
+              <div className="phone-frame">
+                <div className="phone-notch" />
+                <div className="phone-screen">
+                  <div className="report-scroll-content">
+                    <img src="/report.png" alt="리포트 예시" />
+                  </div>
                 </div>
               </div>
             </div>
