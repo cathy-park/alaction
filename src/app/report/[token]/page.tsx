@@ -3,11 +3,6 @@
 import { useEffect, useState, use } from 'react';
 import { supabase } from '@/lib/supabase';
 
-// Icons
-const IconTarget = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>;
-const IconSwords = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M14.5 14.5L20 9m0 0V4h-5m5 5l-5.5 5.5M9.5 9.5L4 15m0 0v5h5m-5-5l5.5-5.5M9.5 14.5l5 5"/></svg>;
-const IconShield = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>;
-
 export default function MobileReport({ params }: { params: Promise<{ token: string }> }) {
   const resolvedParams = use(params);
   const token = resolvedParams.token;
@@ -26,125 +21,100 @@ export default function MobileReport({ params }: { params: Promise<{ token: stri
     setLoading(false);
   };
 
-  if (loading) return <div className="min-h-screen bg-[#04040a] flex items-center justify-center"><div className="text-[#FF2A9D] font-['Orbitron'] font-bold text-xl animate-pulse tracking-widest">LOADING DATA...</div></div>;
+  if (loading) return <div style={{minHeight: '100vh', background: '#050508', color: '#ff35cd', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>LOADING...</div>;
 
   if (!report) return (
-    <div className="min-h-screen bg-[#04040a] flex items-center justify-center text-center p-6">
-      <div className="bg-[rgba(255,255,255,0.02)] backdrop-blur-xl border border-[rgba(255,255,255,0.05)] rounded-[2rem] p-10">
-        <h1 className="text-[#FF2A9D] font-['Orbitron'] text-5xl font-black mb-4 tracking-widest">404</h1>
-        <p className="text-[#BFBBCF] text-sm font-['Noto_Sans_KR']">리포트를 찾을 수 없거나 유효하지 않은 링크입니다.</p>
+    <div style={{minHeight: '100vh', background: '#050508', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+      <div style={{textAlign: 'center', padding: '40px'}}>
+        <h1 style={{color: '#ff35cd', fontSize: '40px', margin: '0 0 10px'}}>404</h1>
+        <p style={{color: '#a49cb7'}}>리포트를 찾을 수 없습니다.</p>
       </div>
     </div>
   );
 
   if (report.report_status !== 'published') {
     return (
-      <div className="min-h-screen bg-[#04040a] flex items-center justify-center text-center p-6">
-        <div className="bg-[rgba(255,255,255,0.02)] backdrop-blur-xl border border-[rgba(255,255,255,0.05)] rounded-[2rem] p-10 relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#20C6FF] to-transparent opacity-50" />
-          <h1 className="text-[#20C6FF] font-['Orbitron'] text-3xl font-black mb-4 tracking-widest">STAND BY</h1>
-          <p className="text-[#BFBBCF] text-sm font-['Noto_Sans_KR'] leading-relaxed">아직 리포트가 공개되지 않았습니다.<br/>관리자의 승인을 기다려주세요.</p>
+      <div style={{minHeight: '100vh', background: '#050508', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+        <div style={{textAlign: 'center', padding: '40px'}}>
+          <h1 style={{color: '#20c7ff', fontSize: '30px', margin: '0 0 10px'}}>STAND BY</h1>
+          <p style={{color: '#a49cb7'}}>아직 리포트가 공개되지 않았습니다.</p>
         </div>
       </div>
     );
   }
 
   const result = report.shooting_results;
-  const session = report.sessions;
   const participant = report.participants;
 
   return (
-    <div className="min-h-screen bg-[#04040a] text-[#F0ECFF] font-['Noto_Sans_KR'] pb-20 relative overflow-x-hidden">
-      {/* Background Orbs */}
-      <div className="absolute top-0 left-0 w-full h-[400px] bg-gradient-to-b from-[rgba(255,42,157,0.15)] to-transparent pointer-events-none" />
-      <div className="absolute top-[20%] right-[-20%] w-[300px] h-[300px] bg-[#8C3FFF] rounded-full blur-[120px] opacity-20 pointer-events-none" />
-      <div className="absolute bottom-[10%] left-[-20%] w-[300px] h-[300px] bg-[#20C6FF] rounded-full blur-[120px] opacity-20 pointer-events-none" />
-
-      <div className="max-w-md mx-auto relative z-10">
+    <div style={{minHeight: '100vh', background: '#050508', padding: '14px', fontFamily: '-apple-system, BlinkMacSystemFont, "Pretendard", sans-serif'}}>
+      <div className="screen" style={{maxWidth: '480px', margin: '0 auto'}}>
+        <div className="report-logo">
+          <span>ALACTION</span>
+          <span>QR</span>
+        </div>
         
-        {/* Header */}
-        <header className="py-6 px-6 flex justify-between items-center backdrop-blur-md sticky top-0 z-20 border-b border-[rgba(255,255,255,0.05)] bg-[rgba(4,4,10,0.8)]">
-          <div className="font-['Orbitron'] font-black text-xl tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-[#FF2A9D] to-[#20C6FF]">
-            ALACTION
+        <div className="rank">
+          <small>RANK</small>
+          <b>{result.rank}</b>
+        </div>
+        
+        <div className="report-title">
+          <h3>{participant.nickname}</h3>
+          <p>{participant.team_name || 'NO TEAM'}</p>
+        </div>
+        
+        <div className="report-metrics">
+          <div className="report-metric">
+            <span>점수</span>
+            <b style={{color: '#fff'}}>{result.score}</b>
           </div>
-          <div className="text-[10px] text-[#60597A] font-['Rajdhani'] uppercase tracking-widest font-bold border border-[#60597A]/30 px-2 py-1 rounded">
-            {session.play_date}
+          <div className="report-metric">
+            <span>정확도</span>
+            <b style={{color: '#baff2d'}}>{result.accuracy}%</b>
           </div>
-        </header>
-
-        <main className="p-6">
-          {/* Player Info */}
-          <div className="text-center mb-10 mt-4 animate-[fadeIn_0.5s_ease-out]">
-            <div className="inline-block px-4 py-1.5 rounded-full bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.1)] text-[#20C6FF] text-[10px] font-['Rajdhani'] font-bold uppercase tracking-widest mb-4 shadow-[0_0_15px_rgba(32,198,255,0.1)]">
-              {participant.team_name || 'SOLO PLAYER'}
-            </div>
-            <h1 className="text-4xl font-black font-['Orbitron'] text-white mb-2 tracking-wide drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">{participant.nickname}</h1>
-            <p className="text-xs text-[#9A91B4] font-['Rajdhani'] tracking-widest uppercase">{session.title}</p>
+          <div className="report-metric">
+            <span>발사 수</span>
+            <b style={{color: '#fff'}}>{result.shots_fired}</b>
           </div>
-
-          {/* Main Rank Card */}
-          <div className="relative mb-6 animate-[scaleIn_0.6s_ease-out]">
-            <div className="absolute inset-0 bg-gradient-to-br from-[#FF2A9D] to-[#8C3FFF] rounded-[2rem] blur-xl opacity-30" />
-            <div className="relative bg-[rgba(255,255,255,0.02)] border border-[rgba(255,42,157,0.3)] rounded-[2rem] p-10 text-center backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
-              <div className="text-[#FF2A9D] font-['Rajdhani'] text-xs font-bold tracking-[0.3em] uppercase mb-2">OVERALL RANKING</div>
-              <div className="text-[100px] leading-none font-['Orbitron'] font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-[#BFBBCF] drop-shadow-[0_10px_20px_rgba(255,42,157,0.3)]">
-                {result.rank}
-              </div>
-              <div className="text-[#9A91B4] text-[10px] font-['Rajdhani'] uppercase tracking-widest mt-4">Out of all participants</div>
-            </div>
+          <div className="report-metric">
+            <span>맞힌 수</span>
+            <b style={{color: '#20c7ff'}}>{result.hits}</b>
           </div>
-
-          {/* Core Stats Bento */}
-          <div className="grid grid-cols-2 gap-4 mb-4 animate-[fadeIn_0.7s_ease-out]">
-            <div className="bg-[rgba(255,255,255,0.02)] border border-[rgba(255,255,255,0.05)] rounded-3xl p-6 relative overflow-hidden">
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#B5FF2D] to-transparent opacity-50" />
-              <div className="text-[#B5FF2D] font-['Rajdhani'] text-[10px] font-bold tracking-[0.2em] uppercase mb-2 flex items-center gap-2">
-                <IconSwords /> TOTAL SCORE
-              </div>
-              <div className="text-4xl font-['Rajdhani'] font-bold text-white drop-shadow-[0_0_10px_rgba(181,255,45,0.3)]">{result.score}</div>
-            </div>
-            <div className="bg-[rgba(255,255,255,0.02)] border border-[rgba(255,255,255,0.05)] rounded-3xl p-6 relative overflow-hidden">
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#20C6FF] to-transparent opacity-50" />
-              <div className="text-[#20C6FF] font-['Rajdhani'] text-[10px] font-bold tracking-[0.2em] uppercase mb-2 flex items-center gap-2">
-                <IconTarget /> ACCURACY
-              </div>
-              <div className="text-4xl font-['Rajdhani'] font-bold text-white drop-shadow-[0_0_10px_rgba(32,198,255,0.3)]">{result.accuracy}%</div>
-            </div>
+          <div className="report-metric">
+            <span>맞은 수</span>
+            <b style={{color: '#ff35cd'}}>{result.times_hit}</b>
           </div>
-
-          {/* Sub Stats Row */}
-          <div className="grid grid-cols-3 gap-3 mb-10 animate-[fadeIn_0.8s_ease-out]">
-            <div className="bg-[rgba(255,255,255,0.02)] border border-[rgba(255,255,255,0.05)] rounded-2xl p-4 text-center">
-              <div className="text-[#9A91B4] font-['Rajdhani'] text-[9px] font-bold tracking-wider uppercase mb-1">SHOTS FIRED</div>
-              <div className="text-2xl font-['Rajdhani'] font-bold text-white">{result.shots_fired}</div>
-            </div>
-            <div className="bg-[rgba(255,255,255,0.02)] border border-[rgba(255,255,255,0.05)] rounded-2xl p-4 text-center">
-              <div className="text-[#9A91B4] font-['Rajdhani'] text-[9px] font-bold tracking-wider uppercase mb-1">TARGET HITS</div>
-              <div className="text-2xl font-['Rajdhani'] font-bold text-[#20C6FF]">{result.hits}</div>
-            </div>
-            <div className="bg-[rgba(255,255,255,0.02)] border border-[rgba(255,255,255,0.05)] rounded-2xl p-4 text-center">
-              <div className="text-[#9A91B4] font-['Rajdhani'] text-[9px] font-bold tracking-wider uppercase mb-1 flex justify-center items-center gap-1"><IconShield /> DAMAGED</div>
-              <div className="text-2xl font-['Rajdhani'] font-bold text-[#FF2A9D]">{result.times_hit}</div>
-            </div>
+          <div className="report-metric">
+            <span>성향</span>
+            <b style={{color: '#ffe66b'}}>{result.accuracy > 70 ? '정밀형' : '돌격형'}</b>
           </div>
-
-          {/* CTA Box */}
-          <div className="bg-[rgba(255,42,157,0.05)] border border-[rgba(255,42,157,0.2)] rounded-3xl p-8 text-center relative overflow-hidden group animate-[fadeIn_0.9s_ease-out]">
-            <div className="absolute inset-0 bg-gradient-to-r from-[#FF2A9D] to-[#8C3FFF] opacity-0 group-hover:opacity-10 transition-opacity duration-500" />
-            <h3 className="font-['Orbitron'] font-bold text-xl mb-2 text-white tracking-widest">NEXT BATTLE?</h3>
-            <p className="text-xs text-[#BFBBCF] mb-6">최고 기록을 경신하기 위해 다시 한 번 도전하세요.</p>
-            <a href="/" className="inline-block relative w-full overflow-hidden bg-[rgba(255,255,255,0.1)] border border-[rgba(255,42,157,0.5)] text-white py-4 rounded-xl transition-all shadow-[0_0_20px_rgba(255,42,157,0.2)] hover:shadow-[0_0_30px_rgba(255,42,157,0.5)]">
-              <div className="absolute inset-0 bg-gradient-to-r from-[#FF2A9D] to-[#8C3FFF] opacity-80" />
-              <span className="relative font-bold font-['Rajdhani'] text-sm tracking-[0.2em] uppercase">홈페이지로 이동</span>
-            </a>
-          </div>
-
-        </main>
+        </div>
+        
+        <div className="comment">
+          알액션에서 훌륭한 플레이를 보여주셨습니다!
+          정확도 {result.accuracy}%를 기록하며 뛰어난 사격 솜씨를 증명했습니다.
+        </div>
+        
+        <a href="/" className="btn primary" style={{width: '100%', marginTop: '18px', display: 'flex', height: '46px'}}>홈페이지로 이동</a>
       </div>
 
       <style dangerouslySetInnerHTML={{__html: `
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes scaleIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        .screen { min-height: 590px; border-radius: 32px; padding: 22px; background: linear-gradient(180deg,#0a0818,#17102a); border: 1px solid rgba(255,255,255,.08); }
+        .report-logo { display: flex; justify-content: space-between; color: #fff; font-weight: 1000; font-size: 13px; letter-spacing: .1em; }
+        .rank { width: 150px; height: 150px; margin: 34px auto 20px; display: flex; align-items: center; justify-content: center; flex-direction: column; border-radius: 50%; border: 1px solid rgba(255,53,205,.55); background: radial-gradient(circle,rgba(255,53,205,.18),rgba(255,255,255,.03)); box-shadow: 0 0 50px rgba(255,53,205,.25); }
+        .rank small { color: #a49cb7; font-size: 12px; font-weight: 1000; }
+        .rank b { font-size: 58px; color: #fff; }
+        .report-title { text-align: center; color: #fff; }
+        .report-title h3 { margin: 0; font-size: 24px; letter-spacing: -.055em; }
+        .report-title p { margin: 8px 0 0; color: #a49cb7; line-height: 1.5; font-size: 13px; }
+        .report-metrics { display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; margin-top: 24px; }
+        .report-metric { min-height: 86px; padding: 14px; border-radius: 20px; background: rgba(255,255,255,.055); border: 1px solid rgba(255,255,255,.08); }
+        .report-metric span { display: block; color: #a49cb7; font-size: 11px; font-weight: 900; }
+        .report-metric b { display: block; margin-top: 12px; font-size: 24px; letter-spacing: -.05em; }
+        .comment { margin-top: 16px; padding: 16px; border-radius: 20px; background: rgba(56,255,228,.07); border: 1px solid rgba(56,255,228,.16); color: #dffdf9; font-size: 13px; line-height: 1.55; }
+        .btn { height: 42px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 0 16px; border: 1px solid rgba(255,255,255,.12); border-radius: 999px; background: rgba(255,255,255,.055); color: #f8f5ff; font-weight: 1000; font-size: 13px; cursor: pointer; text-decoration: none; }
+        .btn.primary { border: 0; background: linear-gradient(100deg,#ff35cd,#8b44ff 58%,#20c7ff); box-shadow: 0 0 30px rgba(255,53,205,.25); }
       `}} />
     </div>
   );

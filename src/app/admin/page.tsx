@@ -40,100 +40,97 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div className="space-y-10">
-      <div className="flex justify-between items-center">
+    <section id="dashboard">
+      <div className="top">
         <div>
-          <h1 className="text-3xl font-bold font-['Orbitron'] tracking-wide">SYSTEM OVERVIEW</h1>
-          <p className="text-[#9A91B4] text-sm mt-1">Real-time status of sessions and reports.</p>
+          <div className="kicker">Admin Dashboard</div>
+          <h1>알액션 QR 슈팅 리포트 관리</h1>
         </div>
-        <Link href="/admin/sessions/new" className="group relative inline-flex items-center justify-center overflow-hidden rounded-full p-4 px-8 font-medium text-white transition-all duration-300">
-          <span className="absolute inset-0 bg-gradient-to-r from-[#FF2A9D] to-[#8C3FFF] opacity-90 group-hover:opacity-100"></span>
-          <span className="absolute bottom-0 left-0 h-1/3 w-full bg-gradient-to-t from-white/20 to-transparent"></span>
-          <span className="relative font-bold shadow-black drop-shadow-md">새 경기 세션 생성 ⚡</span>
-        </Link>
-      </div>
-
-      {/* Stats Bento Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <div className="bg-[rgba(255,255,255,0.02)] border border-[rgba(255,255,255,0.05)] rounded-[1.5rem] p-6 relative overflow-hidden group hover:border-[#FF2A9D]/30 transition-colors">
-          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#FF2A9D] to-transparent opacity-50" />
-          <h3 className="text-[#9A91B4] font-['Rajdhani'] uppercase tracking-widest text-xs font-bold mb-2">Total Sessions</h3>
-          <div className="font-['Rajdhani'] font-bold text-5xl text-transparent bg-clip-text bg-gradient-to-br from-white to-[#BFBBCF]">
-            {stats.total}
-          </div>
-        </div>
-        <div className="bg-[rgba(255,255,255,0.02)] border border-[rgba(255,255,255,0.05)] rounded-[1.5rem] p-6 relative overflow-hidden group hover:border-[#20C6FF]/30 transition-colors">
-          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#20C6FF] to-transparent opacity-50" />
-          <h3 className="text-[#9A91B4] font-['Rajdhani'] uppercase tracking-widest text-xs font-bold mb-2">Published Reports</h3>
-          <div className="font-['Rajdhani'] font-bold text-5xl text-transparent bg-clip-text bg-gradient-to-br from-[#20C6FF] to-[#0070FF]">
-            {stats.published}
-          </div>
-        </div>
-        <div className="bg-[rgba(255,255,255,0.02)] border border-[rgba(255,255,255,0.05)] rounded-[1.5rem] p-6 relative overflow-hidden group hover:border-[#B5FF2D]/30 transition-colors">
-          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#B5FF2D] to-transparent opacity-50" />
-          <h3 className="text-[#9A91B4] font-['Rajdhani'] uppercase tracking-widest text-xs font-bold mb-2">Ready Reports</h3>
-          <div className="font-['Rajdhani'] font-bold text-5xl text-transparent bg-clip-text bg-gradient-to-br from-[#B5FF2D] to-[#20C6FF]">
-            {stats.ready}
-          </div>
-        </div>
-        <div className="bg-[rgba(255,255,255,0.02)] border border-[rgba(255,255,255,0.05)] rounded-[1.5rem] p-6 relative overflow-hidden group hover:border-[#60597A]/50 transition-colors">
-          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#60597A] to-transparent opacity-50" />
-          <h3 className="text-[#9A91B4] font-['Rajdhani'] uppercase tracking-widest text-xs font-bold mb-2">Expired</h3>
-          <div className="font-['Rajdhani'] font-bold text-5xl text-[#60597A]">
-            {stats.expired}
-          </div>
+        <div className="actions">
+          <Link href="/admin/sessions" className="btn">리포트 목록</Link>
+          <Link href="/admin/sessions/new" className="btn primary">+ 새 경기 세션</Link>
         </div>
       </div>
-
-      {/* Recent Sessions Table */}
-      <div className="bg-[rgba(255,255,255,0.02)] border border-[rgba(255,255,255,0.05)] rounded-[2rem] overflow-hidden backdrop-blur-md">
-        <div className="p-6 border-b border-[rgba(255,255,255,0.05)] flex justify-between items-center">
-          <h2 className="text-xl font-bold font-['Orbitron']">RECENT SESSIONS</h2>
-          <Link href="/admin/sessions" className="text-sm font-['Rajdhani'] uppercase tracking-widest text-[#20C6FF] hover:text-white transition-colors">View All →</Link>
+      
+      <div className="stats">
+        <div className="stat"><small>전체 세션</small><b>{stats.total}</b><span>총 생성된 경기 세션</span></div>
+        <div className="stat"><small>공개 리포트</small><b>{stats.published}</b><span>QR 열람 가능</span></div>
+        <div className="stat"><small>준비 중</small><b>{stats.ready}</b><span>데이터 입력 대기</span></div>
+        <div className="stat"><small>만료</small><b>{stats.expired}</b><span>열람 기간 종료</span></div>
+      </div>
+      
+      <div className="content">
+        <div className="card">
+          <div className="card-head">
+            <div>
+              <h3>최근 경기 세션</h3>
+              <p>세션별 참여자와 리포트 상태를 확인합니다.</p>
+            </div>
+            <Link href="/admin/sessions" className="btn">전체 보기</Link>
+          </div>
+          <div className="card-body">
+            <table>
+              <thead>
+                <tr>
+                  <th>세션명</th>
+                  <th>일자</th>
+                  <th>유형</th>
+                  <th>상태</th>
+                  <th>관리</th>
+                </tr>
+              </thead>
+              <tbody>
+                {recentSessions.map(session => (
+                  <tr key={session.id}>
+                    <td>{session.title}</td>
+                    <td>{session.play_date}</td>
+                    <td>{session.program_type}</td>
+                    <td>
+                      <span className={`status ${
+                        session.status === 'published' ? 'public' :
+                        session.status === 'ready' ? 'pending' :
+                        session.status === 'expired' ? 'expired' : 'private'
+                      }`}>
+                        {session.status === 'published' ? '공개' : 
+                         session.status === 'ready' ? '준비 중' : 
+                         session.status === 'expired' ? '만료' : '비공개'}
+                      </span>
+                    </td>
+                    <td>
+                      <Link href={`/admin/sessions/${session.id}`} className="btn">관리</Link>
+                    </td>
+                  </tr>
+                ))}
+                {recentSessions.length === 0 && (
+                  <tr>
+                    <td colSpan={5} style={{textAlign: 'center', color: 'var(--admin-muted)'}}>최근 경기 세션이 없습니다.</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
         
-        <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
-            <thead>
-              <tr className="bg-[rgba(0,0,0,0.2)] text-[#9A91B4] text-xs font-['Rajdhani'] uppercase tracking-wider">
-                <th className="p-4 font-bold">Session Name</th>
-                <th className="p-4 font-bold">Play Date</th>
-                <th className="p-4 font-bold">Type</th>
-                <th className="p-4 font-bold">Status</th>
-                <th className="p-4 font-bold text-right">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {recentSessions.map(session => (
-                <tr key={session.id} className="border-b border-[rgba(255,255,255,0.02)] hover:bg-[rgba(255,255,255,0.02)] transition-colors">
-                  <td className="p-4 font-bold text-white">{session.title}</td>
-                  <td className="p-4 text-[#BFBBCF]">{session.play_date}</td>
-                  <td className="p-4 text-[#BFBBCF]">{session.program_type}</td>
-                  <td className="p-4">
-                    <span className={`px-3 py-1 rounded-full text-[10px] font-bold font-['Rajdhani'] tracking-widest uppercase border ${
-                      session.status === 'published' ? 'bg-[#20C6FF]/10 text-[#20C6FF] border-[#20C6FF]/30' :
-                      session.status === 'ready' ? 'bg-[#B5FF2D]/10 text-[#B5FF2D] border-[#B5FF2D]/30' :
-                      'bg-gray-500/10 text-gray-400 border-gray-500/30'
-                    }`}>
-                      {session.status}
-                    </span>
-                  </td>
-                  <td className="p-4 text-right">
-                    <Link href={`/admin/sessions/${session.id}`} className="text-sm font-bold text-[#FF2A9D] hover:text-white transition-colors">
-                      관리하기
-                    </Link>
-                  </td>
-                </tr>
-              ))}
-              {recentSessions.length === 0 && (
-                <tr>
-                  <td colSpan={5} className="p-8 text-center text-[#60597A] font-['Rajdhani'] uppercase tracking-widest">No sessions found.</td>
-                </tr>
-              )}
-            </tbody>
-          </table>
+        <div className="card">
+          <div className="card-head">
+            <div>
+              <h3>오늘의 작업</h3>
+              <p>경기 후 처리 순서입니다.</p>
+            </div>
+          </div>
+          <div className="card-body">
+            <div className="tabs">
+              <span className="tab active">1. 세션</span>
+              <span className="tab">2. 참여자</span>
+              <span className="tab">3. 기록</span>
+              <span className="tab">4. QR</span>
+            </div>
+            <div className="note">QR은 먼저 생성할 수 있지만, 결과 입력 전에는 “리포트 준비 중” 화면이 노출됩니다.</div>
+            <br />
+            <Link href="/admin/sessions/new" className="btn primary" style={{width: '100%'}}>새 세션 만들기</Link>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

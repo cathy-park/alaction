@@ -3,7 +3,6 @@
 import { useEffect, useState, use } from 'react';
 import { supabase } from '@/lib/supabase';
 import Link from 'next/link';
-import QRCode from 'qrcode';
 
 export default function SessionReports({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = use(params);
@@ -12,6 +11,9 @@ export default function SessionReports({ params }: { params: Promise<{ id: strin
   const [session, setSession] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [origin, setOrigin] = useState('');
+
+  // Added preview state
+  const [previewToken, setPreviewToken] = useState<string | null>(null);
 
   useEffect(() => {
     setOrigin(window.location.origin);
@@ -28,19 +30,8 @@ export default function SessionReports({ params }: { params: Promise<{ id: strin
       .eq('session_id', sessionId);
     
     if (data) {
-      const reportsWithQr = await Promise.all(data.map(async (r) => {
-        const url = `${origin}/report/${r.report_token}`;
-        const qrDataUrl = await QRCode.toDataURL(url, {
-          width: 300,
-          margin: 1,
-          color: {
-            dark: '#04040a',
-            light: '#ffffff'
-          }
-        });
-        return { ...r, url, qrDataUrl };
-      }));
-      setReports(reportsWithQr);
+      setReports(data.map((r: any) => ({ ...r, url: `${origin}/report/${r.report_token}` })));
+      if (data.length > 0) setPreviewToken(data[0].report_token);
     }
     setLoading(false);
   };
@@ -61,111 +52,109 @@ export default function SessionReports({ params }: { params: Promise<{ id: strin
     }
   };
 
-  const downloadQr = (qrDataUrl: string, nickname: string) => {
-    const link = document.createElement('a');
-    link.href = qrDataUrl;
-    link.download = `QR_${nickname}_${session.title}.png`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
-  if (loading) return <div className="p-16 text-center text-[#FF2A9D] font-['Orbitron'] font-bold text-lg animate-pulse">LOADING DATA...</div>;
+  if (loading) return <div style={{color: 'var(--admin-p)', textAlign: 'center', padding: '40px'}}>LOADING DATA...</div>;
 
   return (
-    <div className="space-y-10">
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[rgba(255,255,255,0.05)] pb-6">
+    <section id="reports">
+      <div className="section-title">
         <div>
-          <Link href={`/admin/sessions/${sessionId}`} className="text-[#20C6FF] text-xs font-bold uppercase tracking-widest hover:text-white transition-colors mb-3 inline-block">← Back to Details</Link>
-          <h1 className="text-3xl font-bold font-['Orbitron'] tracking-wide">QR REPORTS</h1>
-          <p className="text-[#9A91B4] text-sm mt-2">[{session?.title}] 의 QR 코드를 발급하고 배포 상태를 관리합니다.</p>
+          <Link href={`/admin/sessions/${sessionId}`} style={{color: 'var(--admin-muted)', fontSize: '13px', textDecoration: 'none', marginBottom: '8px', display: 'inline-block'}}>← 세션 상세 보기로</Link>
+          <h2>리포트 / QR 관리</h2>
+          <p>리포트 상태를 준비 중, 공개, 비공개, 만료로 관리합니다.</p>
         </div>
-        
-        <div className="flex flex-wrap gap-3">
-          <button onClick={() => updateSessionStatus('published')} className="bg-[rgba(32,198,255,0.1)] border border-[rgba(32,198,255,0.3)] text-[#20C6FF] hover:bg-[rgba(32,198,255,0.2)] px-4 py-2 rounded-lg font-bold font-['Rajdhani'] uppercase tracking-widest text-xs transition-colors shadow-[0_0_10px_rgba(32,198,255,0.1)]">
-            PUBLISH ALL
-          </button>
-          <button onClick={() => updateSessionStatus('ready')} className="bg-[rgba(181,255,45,0.1)] border border-[rgba(181,255,45,0.3)] text-[#B5FF2D] hover:bg-[rgba(181,255,45,0.2)] px-4 py-2 rounded-lg font-bold font-['Rajdhani'] uppercase tracking-widest text-xs transition-colors shadow-[0_0_10px_rgba(181,255,45,0.1)]">
-            READY ALL
-          </button>
-          <button onClick={() => updateSessionStatus('private')} className="bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.1)] text-[#BFBBCF] hover:bg-[rgba(255,255,255,0.1)] hover:text-white px-4 py-2 rounded-lg font-bold font-['Rajdhani'] uppercase tracking-widest text-xs transition-colors">
-            PRIVATE ALL
-          </button>
+        <div className="actions">
+          <button onClick={() => updateSessionStatus('ready')} className="btn cyan">전체 준비 중</button>
+          <button onClick={() => updateSessionStatus('published')} className="btn primary">전체 공개</button>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {reports.map(r => (
-          <div key={r.id} className="relative group">
-            {/* Ambient Ticket Glow */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-[#FF2A9D] to-[#20C6FF] opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-500 rounded-3xl" />
-            
-            {/* Ticket Card */}
-            <div className="bg-[rgba(255,255,255,0.02)] backdrop-blur-md border border-[rgba(255,255,255,0.05)] rounded-[2rem] p-6 relative overflow-hidden flex flex-col items-center text-center">
-              {/* Status Badge */}
-              <div className="absolute top-4 left-4">
-                <span className={`px-2 py-1 rounded text-[9px] font-bold font-['Rajdhani'] tracking-widest uppercase border ${
-                  r.report_status === 'published' ? 'bg-[#20C6FF]/10 text-[#20C6FF] border-[#20C6FF]/30 shadow-[0_0_8px_rgba(32,198,255,0.3)]' :
-                  r.report_status === 'ready' ? 'bg-[#B5FF2D]/10 text-[#B5FF2D] border-[#B5FF2D]/30 shadow-[0_0_8px_rgba(181,255,45,0.3)]' :
-                  'bg-gray-500/10 text-gray-400 border-gray-500/30'
-                }`}>
-                  {r.report_status}
-                </span>
-              </div>
-
-              <div className="mt-4 mb-2">
-                <div className="font-['Orbitron'] font-bold text-xl text-white">{r.participants.nickname}</div>
-                <div className="text-[10px] text-[#60597A] uppercase tracking-widest font-bold mt-1">{r.participants.team_name || 'NO TEAM'}</div>
-              </div>
-              
-              <div className="flex items-center gap-4 my-4">
-                <div className="text-center">
-                  <div className="text-[#FF2A9D] font-['Rajdhani'] text-[10px] font-bold tracking-widest uppercase">RANK</div>
-                  <div className="text-2xl font-['Orbitron'] font-bold text-white">{r.shooting_results.rank}</div>
-                </div>
-                <div className="w-[1px] h-8 bg-[rgba(255,255,255,0.1)]"></div>
-                <div className="text-center">
-                  <div className="text-[#20C6FF] font-['Rajdhani'] text-[10px] font-bold tracking-widest uppercase">SCORE</div>
-                  <div className="text-2xl font-['Orbitron'] font-bold text-white">{r.shooting_results.score}</div>
-                </div>
-              </div>
-              
-              <div className="bg-white p-2 rounded-2xl mb-6 shadow-[0_0_20px_rgba(255,255,255,0.1)]">
-                <img src={r.qrDataUrl} alt="QR Code" className="w-32 h-32 rounded-xl" />
-              </div>
-
-              <div className="flex flex-col gap-3 w-full">
-                <button onClick={() => downloadQr(r.qrDataUrl, r.participants.nickname)} className="w-full bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.1)] hover:bg-[#8C3FFF] hover:border-[#8C3FFF] text-white py-3 rounded-xl text-xs font-bold font-['Rajdhani'] tracking-widest uppercase transition-all shadow-[0_0_15px_rgba(140,63,255,0)] hover:shadow-[0_0_15px_rgba(140,63,255,0.4)]">
-                  DOWNLOAD QR
-                </button>
-                <a href={r.url} target="_blank" rel="noreferrer" className="w-full border border-[#20C6FF]/50 text-[#20C6FF] hover:bg-[#20C6FF]/10 py-3 rounded-xl text-xs font-bold font-['Rajdhani'] tracking-widest uppercase transition-all text-center">
-                  PREVIEW REPORT
-                </a>
-              </div>
-
-              <div className="mt-6 pt-4 border-t border-[rgba(255,255,255,0.05)] w-full text-left">
-                <label className="block text-[10px] font-bold font-['Rajdhani'] uppercase tracking-widest text-[#60597A] mb-2">Change Status</label>
-                <select 
-                  value={r.report_status} 
-                  onChange={(e) => updateStatus(r.id, e.target.value)}
-                  className="w-full bg-[#070710] border border-[rgba(255,255,255,0.1)] rounded-xl px-3 py-2 text-white text-sm focus:outline-none focus:border-[#FF2A9D] transition-colors appearance-none"
-                >
-                  <option value="ready">Ready (준비 중)</option>
-                  <option value="published">Published (공개)</option>
-                  <option value="private">Private (비공개)</option>
-                  <option value="expired">Expired (만료됨)</option>
-                </select>
-              </div>
+      <div className="preview">
+        {/* Table Column */}
+        <div className="card">
+          <div className="card-head">
+            <div>
+              <h3>리포트 목록</h3>
+              <p>사용자에게 노출되는 리포트 접근 상태를 제어합니다.</p>
+            </div>
+            <div className="tabs">
+              <span className="tab active">전체</span>
             </div>
           </div>
-        ))}
-        {reports.length === 0 && (
-          <div className="col-span-full py-20 text-center border border-dashed border-[rgba(255,255,255,0.1)] rounded-[2rem]">
-            <div className="text-[#60597A] font-['Rajdhani'] uppercase tracking-widest">No reports generated.</div>
-            <div className="text-sm text-[#9A91B4] mt-2">세션 상세 페이지에서 플레이어의 리포트를 발행해주세요.</div>
+          <div className="card-body" style={{overflowX: 'auto'}}>
+            <table>
+              <thead>
+                <tr>
+                  <th>닉네임</th>
+                  <th>팀</th>
+                  <th>상태</th>
+                  <th>URL 토큰</th>
+                  <th>관리</th>
+                </tr>
+              </thead>
+              <tbody>
+                {reports.map(r => (
+                  <tr key={r.id}>
+                    <td>{r.participants.nickname}</td>
+                    <td>{r.participants.team_name || '-'}</td>
+                    <td>
+                      <span className={`status ${
+                        r.report_status === 'published' ? 'public' :
+                        r.report_status === 'ready' ? 'pending' :
+                        r.report_status === 'expired' ? 'expired' : 'private'
+                      }`}>
+                        {r.report_status === 'published' ? '공개' : 
+                         r.report_status === 'ready' ? '준비 중' : 
+                         r.report_status === 'expired' ? '만료' : '비공개'}
+                      </span>
+                    </td>
+                    <td><div style={{width: '100px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'}}>{r.report_token}</div></td>
+                    <td>
+                      <div className="actions">
+                        <button onClick={() => setPreviewToken(r.report_token)} className="btn">미리보기</button>
+                        {r.report_status !== 'published' ? (
+                          <button onClick={() => updateStatus(r.id, 'published')} className="btn primary">공개</button>
+                        ) : (
+                          <button onClick={() => updateStatus(r.id, 'ready')} className="btn">숨기기</button>
+                        )}
+                        <a href={r.url} target="_blank" rel="noreferrer" className="btn cyan">URL</a>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+                {reports.length === 0 && (
+                  <tr>
+                    <td colSpan={5} style={{textAlign: 'center', color: 'var(--admin-muted)'}}>발급된 리포트가 없습니다.</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
           </div>
-        )}
+        </div>
+
+        {/* Preview Column */}
+        <div>
+          <div className="section-title" style={{marginTop: 0}}>
+            <div>
+              <h2 style={{fontSize: '20px'}}>사용자 리포트 미리보기</h2>
+              <p>QR 스캔 후 사용자가 보게 될 모바일 리포트 화면입니다.</p>
+            </div>
+          </div>
+          {previewToken ? (
+            <div className="phone">
+              <div style={{height: '600px', borderRadius: '32px', overflow: 'hidden', border: '1px solid rgba(255,255,255,.08)'}}>
+                {/* Embed the report page via iframe for true preview */}
+                <iframe src={`/report/${previewToken}`} style={{width: '100%', height: '100%', border: 'none'}} title="Report Preview"></iframe>
+              </div>
+            </div>
+          ) : (
+            <div className="phone">
+              <div className="screen" style={{display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--admin-muted)', textAlign: 'center'}}>
+                리스트에서 '미리보기'를<br/>선택해주세요.
+              </div>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </section>
   );
 }
