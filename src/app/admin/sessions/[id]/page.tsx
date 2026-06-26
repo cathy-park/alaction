@@ -153,6 +153,9 @@ export default function SessionDetails({ params }: { params: Promise<{ id: strin
                 <h3>참여자별 슈팅 기록</h3>
                 <p>정확도는 맞힌 수 ÷ 발사 수 × 100으로 자동 계산합니다.</p>
               </div>
+              <a href="https://chatgpt.com/g/g-6a3e1bce607c8191b135e06eafc9cff9-alaegsyeon-syuting-ripoteu-bunseog-doumi" target="_blank" rel="noreferrer" className="btn cyan" style={{textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '13px', fontWeight: 800}}>
+                <span>🤖 분석 도우미(GPT) 열기</span>
+              </a>
             </div>
             <div className="card-body">
               <table>
