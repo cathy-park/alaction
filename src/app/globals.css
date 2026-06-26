@@ -307,6 +307,7 @@
     @media (max-width: 768px) {
       .smoke-particle { opacity: 0.6; }
       .hero-content { padding-top: 40px; }
+      .hero-badge { margin-bottom: 0px !important; }
       .hero-woman-img { 
         width: 250vw !important; 
         right: auto !important; 
@@ -325,7 +326,7 @@
       backdrop-filter:blur(10px);
       font-size:12px; font-weight:700; font-family:'Rajdhani',sans-serif;
       letter-spacing:.12em; text-transform:uppercase; color:#BFBBCF;
-      margin-bottom:0px; /* 칩과 h1 간격 축소 */
+      margin-bottom:20px; /* PC: 칩과 h1 간격 20px로 확보 (위로 띄움) */
       pointer-events: none; /* 클릭 방해 차단 */
     }
     .spark {
