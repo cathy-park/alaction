@@ -136,6 +136,16 @@ export default function SessionDetails({ params }: { params: Promise<{ id: strin
     await supabase.from('participants').update({ [field]: value }).eq('id', participantId);
   };
 
+  const handleUpdateResult = (participantId: string, field: string, value: string) => {
+    setResults(prev => ({
+      ...prev,
+      [participantId]: {
+        ...(prev[participantId] || {}),
+        [field]: value
+      }
+    }));
+  };
+
   const handleUpdateSessionTitle = async () => {
     if (!editSessionTitle.trim()) return;
     const { error } = await supabase.from('sessions').update({ title: editSessionTitle }).eq('id', sessionId);
@@ -152,7 +162,7 @@ export default function SessionDetails({ params }: { params: Promise<{ id: strin
     
     const { data: pList } = await supabase.from('participants').select('id').eq('session_id', sessionId);
     if (pList && pList.length > 0) {
-      const pIds = pList.map(p => p.id);
+      const pIds = pList.map((p: any) => p.id);
       await supabase.from('reports').delete().in('participant_id', pIds);
       await supabase.from('shooting_results').delete().in('participant_id', pIds);
       await supabase.from('participants').delete().eq('session_id', sessionId);
@@ -246,7 +256,7 @@ export default function SessionDetails({ params }: { params: Promise<{ id: strin
                       <td style={{fontWeight: 900, color: 'var(--admin-c)'}}>{r.accuracy ? `${r.accuracy}%` : '-'}</td>
                       <td>
                         <div className="actions" style={{flexWrap: 'nowrap'}}>
-                          <button onClick={() => saveResult(p.id)} className="btn">저장</button>
+                          <button onClick={() => handleSaveResult(p.id)} className="btn">저장</button>
                           <Link href={`/admin/sessions/${sessionId}/participant/${p.id}`} className="btn cyan">리포트 관리</Link>
                           <button onClick={() => handleDeleteParticipant(p.id)} className="btn red">삭제</button>
                         </div>
@@ -264,9 +274,6 @@ export default function SessionDetails({ params }: { params: Promise<{ id: strin
             </div>
           </div>
         </div>
-            <Link href={`/admin/sessions/${sessionId}/reports`} className="btn primary" style={{width: '100%'}}>QR 리포트 관리 페이지</Link>
-          </div>
-        </aside>
       </div>
     </section>
   );
