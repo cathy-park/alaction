@@ -194,7 +194,7 @@ export default function SessionDetails({ params }: { params: Promise<{ id: strin
     <section id="results">
       <div className="section-title">
         <div>
-          <Link href="/admin/sessions" style={{color: 'var(--admin-muted)', fontSize: '13px', textDecoration: 'none', marginBottom: '8px', display: 'inline-block'}}>← 세션 목록으로</Link>
+          <Link href="/admin/sessions" style={{color: 'var(--admin-muted)', fontSize: '13px', textDecoration: 'none', display: 'inline-block'}}>← 세션 목록으로</Link>
           {isEditingSession ? (
             <div style={{display: 'flex', gap: '8px', alignItems: 'center', marginTop: '4px'}}>
               <input type="text" value={editSessionTitle} onChange={e => setEditSessionTitle(e.target.value)} style={{fontSize: '24px', fontWeight: 'bold', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', padding: '4px 12px', borderRadius: '8px', width: '300px'}} />

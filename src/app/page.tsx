@@ -490,7 +490,7 @@ export default function Page() {
       <button className="lb-btn lb-next" id="lbNext" aria-label="다음">›</button>
     </div>
     {/* ─── PROGRAM ─── */}
-    <section id="program">
+    <section className="program-section" id="program" style={{ background: 'rgba(255,255,255,0.02)' }}>
       <div className="wrap">
         <div className="program-grid">
           <div>
@@ -567,7 +567,7 @@ export default function Page() {
       </div>
     </section>
     {/* ─── CTA ─── */}
-    <section className="cta-section" id="contact">
+    <section className="cta-section" id="contact" style={{ background: 'rgba(255,255,255,0.02)' }}>
       <div className="wrap">
         <div className="section-label anim-fadein" style={{justifyContent: 'center'}}>Contact</div>
         <h2 className="anim-fadein delay-1">방문 예약과<br />단체 문의를 지금 바로.</h2>
@@ -617,7 +617,7 @@ export default function Page() {
   </footer>
 
   {/* ─── MOBILE MENU ─── */}
-  <div className={`mobile-menu-container mobile-only ${isMobileMenuOpen ? 'open' : ''}`}>
+  <div className={`mobile-menu-container ${isMobileMenuOpen ? 'open' : ''}`}>
     <nav className="mobile-nav-links-fab">
       <a href="#features" onClick={() => setIsMobileMenuOpen(false)}>게임 특징</a>
       <a href="#reviews" onClick={() => setIsMobileMenuOpen(false)}>후기</a>
