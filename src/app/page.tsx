@@ -607,10 +607,10 @@ export default function Page() {
             </div>
             <div className="footer-col" style={{ minWidth: '220px' }}>
               <h4>운영 시간</h4>
-              <span style={{display: 'block', marginBottom: '4px', color: '#a49cb7'}}>토, 일 11:15 - 20:15</span>
-              <span style={{display: 'block', marginBottom: '4px', color: '#a49cb7'}}>화,수,목,금 14:30 - 20:30</span>
-              <span style={{display: 'block', marginBottom: '4px', color: '#a49cb7'}}>월 정기휴무 (매주 월요일)</span>
-              <span style={{display: 'block', marginTop: '6px', fontSize: '12px', color: '#7f788f'}}>- 단체의 경우, 영업 요일 및 시간 외 이용 협의 가능</span>
+              <span style={{display: 'block', marginBottom: '6px', fontSize: '13px', color: '#a49cb7'}}>화~금 14:30 - 20:30</span>
+              <span style={{display: 'block', marginBottom: '6px', fontSize: '13px', color: '#a49cb7'}}>토·일 11:15 - 20:15</span>
+              <span style={{display: 'block', marginBottom: '6px', fontSize: '13px', color: '#a49cb7'}}>매주 월요일 정기휴무</span>
+              <span style={{display: 'block', marginTop: '10px', fontSize: '12px', color: '#7f788f'}}>- 단체 이용 시 시간 외 협의 가능</span>
             </div>
             <div className="footer-col">
               <h4>문의</h4>
