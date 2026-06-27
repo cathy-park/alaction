@@ -1,5 +1,4 @@
 @import url("https://cdn.jsdelivr.net/gh/toss/tossface/dist/tossface.css");
-@import "tailwindcss";
 
     /* ─── DESIGN TOKENS ─────────────────────────────────────── */
     :root {
@@ -47,15 +46,7 @@
         radial-gradient(ellipse 70% 50% at 88% 12%, rgba(32,198,255,.12) 0%, transparent 50%),
         radial-gradient(ellipse 90% 60% at 50% 80%, rgba(140,63,255,.10) 0%, transparent 60%);
     }
-    /* scanline texture */
-    body::after {
-      content:"";
-      position:fixed; inset:0; z-index:0; pointer-events:none;
-      background-image: repeating-linear-gradient(
-        0deg, transparent, transparent 2px,
-        rgba(255,255,255,.012) 2px, rgba(255,255,255,.012) 4px
-      );
-    }
+
     main { position:relative; z-index:1; }
 
     /* ─── GRID UTILITY ────────────────────────────────────────── */
@@ -138,97 +129,18 @@
       object-fit: cover !important;
       object-position: center top;
       filter: brightness(0.7) contrast(1.15) saturate(1.2);
-      /* Ken Burns (Option B) */
-      animation: kenBurns 15s ease-in-out infinite alternate;
     }
     .pc-only { display: block; }
     .mobile-only { display: none !important; }
 
-    @keyframes kenBurns {
-      0% { transform: scale(1); }
-      100% { transform: scale(1.08); }
-    }
 
-    /* Option D: Scanline */
-    .hero-scanline {
-      position: absolute;
-      inset: 0;
-      z-index: 3;
-      background: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0) 50%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.2));
-      background-size: 100% 4px;
-      pointer-events: none;
-    }
-    .hero-scanline::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: rgba(255,255,255,0.02);
-      animation: scanlineScroll 6s linear infinite;
-    }
-    @keyframes scanlineScroll {
-      0% { transform: translateY(-100%); }
-      100% { transform: translateY(100%); }
-    }
-
-    /* Option E: Vignette Pulse */
-    .hero-vignette {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      box-shadow: inset 0 0 150px rgba(0,0,0,0.9);
-      animation: vignettePulse 3s infinite alternate ease-in-out;
-      pointer-events: none;
-    }
-    @keyframes vignettePulse {
-      0% { box-shadow: inset 0 0 80px rgba(0,0,0,0.6); }
-      100% { box-shadow: inset 0 0 250px rgba(0,0,0,1); }
-    }
 
     
 
 
 
 
-/* ── SVG Blob Smoke (No Flicker) ── */
-.hero-svg-smoke {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-  overflow: hidden;
-}
 
-.smoke-svg {
-  opacity: 0.8;
-  will-change: transform;
-  /* SVG 전체를 부드럽게 움직이게 하여 내부 필터 재계산(깜빡임) 방지 */
-  animation: svgContainerDrift 40s ease-in-out infinite alternate;
-  transform-origin: center center;
-}
-
-/* 내부 Blob들은 애니메이션 없이 정적으로 유지 */
-.svg-smoke-blob {
-  /* No animation here to prevent SVG filter flickering */
-}
-
-/* 매우 천천히 흐르는 정적인 안개 느낌 */
-@keyframes svgContainerDrift {
-  0% { transform: scale(1) translate3d(0, 5%, 0) rotate(0deg); }
-  100% { transform: scale(1.05) translate3d(-3%, -5%, 0) rotate(1deg); }
-}
-
-@media(max-width: 768px) {
-  .smoke-svg {
-    opacity: 0.5; /* 모바일에서는 더 연하게 */
-    /* 모바일에서는 애니메이션 오버라이드하여 사이즈 축소 적용 */
-    animation: svgContainerDriftMobile 40s ease-in-out infinite alternate;
-  }
-}
-
-@keyframes svgContainerDriftMobile {
-  0% { transform: scale(0.85) translate3d(0, 10%, 0) rotate(0deg); }
-  100% { transform: scale(0.9) translate3d(-2%, 5%, 0) rotate(1deg); }
-}
 
 /* 콘텐츠가 스모그보다 위에 오도록 */
 .hero-content,
@@ -249,8 +161,10 @@
   z-index: 0 !important;
 }
 
-/* 기존 어두운 오버레이가 너무 강하면 스모그가 묻히므로 낮춰야 함 */
+/* 기존 어두운 오버레이 */
 .hero-dark-overlay {
+  position: absolute;
+  inset: 0;
   z-index: 1;
   background:
     linear-gradient(
@@ -1110,50 +1024,3 @@
       border-color: rgba(255,42,157,.4) !important;
     }
   
-/* ── Cyberpunk Glitch Text ── */
-.glitch {
-  position: relative;
-  display: inline-block;
-}
-
-.glitch::before,
-.glitch::after {
-  content: attr(data-text);
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0; /* 평소엔 숨김 */
-  pointer-events: none;
-}
-
-.glitch::before {
-  color: rgba(32, 198, 255, 0.9);
-  z-index: -1;
-  animation: glitch-anim-1 6s infinite linear alternate-reverse;
-}
-
-.glitch::after {
-  color: rgba(255, 42, 157, 0.9);
-  z-index: -2;
-  animation: glitch-anim-2 5s infinite linear alternate-reverse;
-}
-
-@keyframes glitch-anim-1 {
-  0%, 15% { opacity: 0; clip-path: inset(0 0 0 0); transform: translate(0); }
-  16% { opacity: 1; clip-path: inset(20% 0 80% 0); transform: translate(-4px, 2px); }
-  17% { opacity: 1; clip-path: inset(50% 0 30% 0); transform: translate(4px, -2px); }
-  18% { opacity: 1; clip-path: inset(80% 0 5% 0); transform: translate(-4px, 4px); }
-  19% { opacity: 1; clip-path: inset(10% 0 60% 0); transform: translate(4px, -4px); }
-  20%, 100% { opacity: 0; clip-path: inset(0 0 0 0); transform: translate(0); }
-}
-
-@keyframes glitch-anim-2 {
-  0%, 15% { opacity: 0; clip-path: inset(0 0 0 0); transform: translate(0); }
-  16% { opacity: 1; clip-path: inset(10% 0 60% 0); transform: translate(4px, -2px); }
-  17% { opacity: 1; clip-path: inset(80% 0 5% 0); transform: translate(-4px, 2px); }
-  18% { opacity: 1; clip-path: inset(50% 0 30% 0); transform: translate(4px, 4px); }
-  19% { opacity: 1; clip-path: inset(20% 0 80% 0); transform: translate(-4px, -4px); }
-  20%, 100% { opacity: 0; clip-path: inset(0 0 0 0); transform: translate(0); }
-}

@@ -1,9 +1,7 @@
 // @ts-nocheck
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import HeroSvgSmoke from '@/components/HeroSvgSmoke';
-import HeroParticles from '@/components/HeroParticles';
+import { useEffect, useState } from 'react';
 
 // SVG Icons (line style)
 const IconTarget = () => <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="6" /><circle cx="12" cy="12" r="2" /></svg>;
@@ -22,36 +20,7 @@ const IconMenu = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height
 const IconClose = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M18 6L6 18M6 6l12 12" /></svg>;
 
 
-const TypewriterText = ({ text }: { text: string }) => {
-  const [displayedText, setDisplayedText] = useState('');
-  useEffect(() => {
-    let interval: NodeJS.Timeout;
-    let timeout: NodeJS.Timeout;
-    const startTyping = () => {
-      setDisplayedText('');
-      let i = 0;
-      interval = setInterval(() => {
-        setDisplayedText(text.slice(0, i + 1));
-        i++;
-        if (i === text.length) {
-          clearInterval(interval);
-          timeout = setTimeout(startTyping, 3000);
-        }
-      }, 50);
-    };
-    startTyping();
-    return () => {
-      clearInterval(interval);
-      clearTimeout(timeout);
-    };
-  }, [text]);
-  return (
-    <span style={{ position: 'relative', display: 'block', width: '100%', pointerEvents: 'none' }}>
-      {displayedText}
-      <span style={{ animation: 'blink 1s step-end infinite', borderRight: '2px solid var(--blue)', paddingRight: '2px', marginLeft: '2px' }}>&nbsp;</span>
-    </span>
-  );
-};
+
 
 export default function Page() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -192,12 +161,12 @@ export default function Page() {
           <img id="heroWoman" className="hero-woman-img mobile-only" src="/hero_woman.png" alt="알액션" />
 
           {/* Dark Overlay */}
-          <div className="hero-dark-overlay absolute inset-0" aria-hidden="true" />
+          <div className="hero-dark-overlay" aria-hidden="true" />
 
 
 
           {/* Layer 4: 텍스트/버튼 */}
-          <div id="heroContent" className="wrap hero-content" style={{ willChange: 'transform', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+          <div id="heroContent" className="wrap hero-content" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
             <div className="hero-badge">
               <i className="spark" />
               NOW OPEN · 평택 실내 레이저태그
@@ -206,7 +175,7 @@ export default function Page() {
               ENTER THE<br />
               <span className="line2">ARENA</span>
             </h1>
-            <div className="hero-sub"><TypewriterText text="실내 레이저 슈팅으로 경험하는 팀 배틀. 날씨 상관없이 최고 강도의 액티비티를 즐기고, QR 리포트로 내 플레이 기록을 확인하세요." /></div>
+            <div className="hero-sub">실내 레이저 슈팅으로 경험하는 팀 배틀. 날씨 상관없이 최고 강도의 액티비티를 즐기고, QR 리포트로 내 플레이 기록을 확인하세요.</div>
             <div className="hero-actions">
               {/* 지금 예약하기: 네이버 예약 링크 (새창 이동) */}
               <a className="btn btn-primary" href="https://m.booking.naver.com/booking/12/bizes/766721/items/4624099?area=pll&lang=ko&service-target=map-pc&startDateTime=2026-06-26T00%3A00%3A00%2B09%3A00&theme=place" target="_blank" rel="noopener noreferrer">
