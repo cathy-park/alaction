@@ -45,8 +45,23 @@ export default function MobileReport({ params }: { params: Promise<{ token: stri
   if (report.report_status !== 'published') {
     return (
       <div style={{minHeight: '100vh', background: '#050508', padding: '14px', fontFamily: '-apple-system, BlinkMacSystemFont, "Pretendard", sans-serif', color: '#fff'}}>
-        <div style={{maxWidth: '480px', margin: '0 auto', minHeight: 'calc(100vh - 28px)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '32px 24px', background: 'linear-gradient(180deg, #030208, #0a0714)', border: '1px solid rgba(255,255,255,.08)', borderRadius: '32px', overflow: 'hidden', position: 'relative'}}>
+        <div className="screen" style={{maxWidth: '480px', margin: '0 auto', display: 'flex', flexDirection: 'column', position: 'relative', overflow: 'hidden'}}>
         <style>{`
+          .screen {
+            min-height: 590px;
+            border-radius: 32px;
+            padding: 22px;
+            background: linear-gradient(180deg, #030208, #0a0714);
+            border: 1px solid rgba(255,255,255,.08);
+          }
+          .report-logo {
+            display: flex;
+            justify-content: space-between;
+            color: #fff;
+            font-weight: 1000;
+            font-size: 13px;
+            letter-spacing: .1em;
+          }
           @keyframes spinSlow {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
@@ -72,6 +87,15 @@ export default function MobileReport({ params }: { params: Promise<{ token: stri
           }
         `}</style>
         
+        <div className="report-logo">
+          <span className="brand" style={{display: 'flex', alignItems: 'center', fontSize: '15px', gap: '7px'}}>
+            <img src="/logo.png" alt="" style={{ width: '22px', height: '22px', objectFit: 'contain' }} />
+            <span>R.ACTION</span>
+          </span>
+          <span>QR</span>
+        </div>
+
+        <div style={{flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', padding: '20px 0'}}>
         {/* Background ambient glow */}
         <div style={{position: 'absolute', top: '-10%', right: '-10%', width: '300px', height: '300px', background: 'rgba(32,199,255,0.15)', filter: 'blur(100px)', borderRadius: '50%', zIndex: 0}}></div>
         <div style={{position: 'absolute', bottom: '-10%', left: '-10%', width: '300px', height: '300px', background: 'rgba(255,53,205,0.1)', filter: 'blur(100px)', borderRadius: '50%', zIndex: 0}}></div>
@@ -174,6 +198,7 @@ export default function MobileReport({ params }: { params: Promise<{ token: stri
             <div style={{width: '4px', height: '4px', borderRadius: '50%', background: '#20c7ff', animation: 'blinkDot 1.5s infinite 0.6s'}}></div>
           </div>
           <div style={{marginTop: '16px', color: '#5b546e', fontSize: '13px'}}>잠시 후 다시 확인해주세요</div>
+        </div>
         </div>
         </div>
       </div>
