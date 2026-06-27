@@ -202,7 +202,14 @@ export default function Page() {
           <div className="hero-scanline" aria-hidden="true" />
           <div className="hero-vignette" aria-hidden="true" />
 
-          {/* Layer 3: 텍스트/버튼 */}
+          {/* Layer: Neon Smog Overlay */}
+          <div className="hero-neon-smog" aria-hidden="true">
+            <div className="smog-layer pink"></div>
+            <div className="smog-layer purple"></div>
+            <div className="smog-layer blue"></div>
+          </div>
+
+          {/* Layer 4: 텍스트/버튼 */}
           <div className="wrap hero-content">
             <div className="hero-badge">
               <i className="spark" />
