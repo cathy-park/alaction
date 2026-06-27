@@ -225,13 +225,14 @@
 
     /* 모바일 조정 */
     @media (max-width: 768px) {
+      body::before { background: none !important; }
       .smoke-particle { opacity: 0.6; }
       .hero-content { padding-top: 40px; }
       .hero-badge { margin-bottom: 0px !important; }
       .hero-woman-img { 
         width: 250vw !important; 
-        right: auto !important; 
-        left: 25vw !important; 
+        right: -30vw !important; /* 우측에 붙도록 조정 */
+        left: auto !important; 
         transform: scaleX(-1) !important; 
         bottom: 0 !important; 
         top: auto !important; 
