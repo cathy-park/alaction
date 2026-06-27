@@ -557,6 +557,24 @@ export default function Page() {
             </div>
           </div>
         </section>
+        
+        {/* ─── VISUAL VIDEO ─── */}
+        <section className="cinematic-video-section">
+          <div className="wrap" style={{ position: 'relative' }}>
+            <div className="cinematic-glow" aria-hidden="true" />
+            <div className="cinematic-video-wrapper anim-scale">
+              <video 
+                src="/visual_vedio.mp4" 
+                autoPlay 
+                loop 
+                muted 
+                playsInline 
+                className="cinematic-video" 
+              />
+            </div>
+          </div>
+        </section>
+
         {/* ─── CTA ─── */}
         <section className="cta-section" id="contact" style={{ background: 'rgba(255,255,255,0.02)' }}>
           <div className="wrap">
