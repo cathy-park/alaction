@@ -1166,6 +1166,13 @@
   }
 }
 
+@media (pointer: coarse) {
+  .custom-cursor-dot,
+  .custom-cursor-ring {
+    display: none !important;
+  }
+}
+
 .custom-cursor-dot {
   position: fixed;
   top: 0; left: 0;

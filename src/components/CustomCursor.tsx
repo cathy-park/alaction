@@ -7,16 +7,8 @@ export default function CustomCursor() {
   const ringRef = useRef<HTMLDivElement>(null);
 
   const [isHovering, setIsHovering] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    // 터치 디바이스(모바일/태블릿)에서는 커서 이펙트 끄기
-    if (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches) {
-      return;
-    }
-    
-    setIsVisible(true);
-
     const dot = dotRef.current;
     const ring = ringRef.current;
     if (!dot || !ring) return;
@@ -72,7 +64,7 @@ export default function CustomCursor() {
     };
   }, []);
 
-  if (!isVisible) return null;
+
 
   return (
     <>
