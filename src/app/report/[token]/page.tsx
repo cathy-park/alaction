@@ -44,7 +44,8 @@ export default function MobileReport({ params }: { params: Promise<{ token: stri
 
   if (report.report_status !== 'published') {
     return (
-      <div style={{minHeight: '100vh', background: '#050508', color: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '32px 24px', fontFamily: '-apple-system, BlinkMacSystemFont, "Pretendard", sans-serif', overflow: 'hidden', position: 'relative'}}>
+      <div style={{minHeight: '100vh', background: '#050508', padding: '14px', fontFamily: '-apple-system, BlinkMacSystemFont, "Pretendard", sans-serif', color: '#fff'}}>
+        <div style={{maxWidth: '480px', margin: '0 auto', minHeight: 'calc(100vh - 28px)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '32px 24px', background: 'linear-gradient(180deg, #030208, #0a0714)', border: '1px solid rgba(255,255,255,.08)', borderRadius: '32px', overflow: 'hidden', position: 'relative'}}>
         <style>{`
           @keyframes spinSlow {
             from { transform: rotate(0deg); }
@@ -173,6 +174,7 @@ export default function MobileReport({ params }: { params: Promise<{ token: stri
             <div style={{width: '4px', height: '4px', borderRadius: '50%', background: '#20c7ff', animation: 'blinkDot 1.5s infinite 0.6s'}}></div>
           </div>
           <div style={{marginTop: '16px', color: '#5b546e', fontSize: '13px'}}>잠시 후 다시 확인해주세요</div>
+        </div>
         </div>
       </div>
     );
