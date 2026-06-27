@@ -204,6 +204,7 @@ export default function Page() {
 
           {/* Layer: Neon Smog Overlay */}
           <div className="hero-neon-smog" aria-hidden="true">
+            <div className="smog-texture"></div>
             <div className="smog-layer pink"></div>
             <div className="smog-layer purple"></div>
             <div className="smog-layer blue"></div>
