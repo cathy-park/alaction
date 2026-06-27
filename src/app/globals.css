@@ -1088,36 +1088,36 @@
 .glitch-line::before {
   left: 3px;
   text-shadow: -2px 0 cyan;
-  animation: glitch-slice-1 6s infinite linear alternate-reverse;
+  animation: glitch-slice-1 2.5s infinite linear;
 }
 
 .glitch-line::after {
   left: -3px;
   text-shadow: 2px 0 magenta, -1px 0 red;
-  animation: glitch-slice-2 6s infinite linear alternate-reverse;
+  animation: glitch-slice-2 2.5s infinite linear;
 }
 
 @keyframes glitch-slice-1 {
-  0%, 96% { clip-path: inset(0 0 0 0); transform: translate(0); opacity: 0; }
-  96.5% { opacity: 1; clip-path: inset(20% 0 70% 0); transform: translate(-10px, 1px); }
-  97% { opacity: 1; clip-path: inset(60% 0 10% 0); transform: translate(10px, -1px); }
-  97.5% { opacity: 1; clip-path: inset(40% 0 30% 0); transform: translate(-8px, 0); }
-  98% { opacity: 1; clip-path: inset(80% 0 5% 0); transform: translate(12px, 2px); }
-  98.5% { opacity: 1; clip-path: inset(10% 0 80% 0); transform: translate(-12px, -1px); }
-  99% { opacity: 1; clip-path: inset(50% 0 30% 0); transform: translate(8px, 1px); }
-  99.5% { opacity: 1; clip-path: inset(5% 0 85% 0); transform: translate(-10px, -2px); }
+  0%   { opacity: 1; clip-path: inset(20% 0 70% 0); transform: translate(-10px, 1px); }
+  10%  { opacity: 1; clip-path: inset(60% 0 10% 0); transform: translate(10px, -1px); }
+  20%  { opacity: 1; clip-path: inset(40% 0 30% 0); transform: translate(-8px, 0); }
+  30%  { opacity: 1; clip-path: inset(80% 0 5% 0); transform: translate(12px, 2px); }
+  40%  { opacity: 1; clip-path: inset(10% 0 80% 0); transform: translate(-12px, -1px); }
+  50%  { opacity: 1; clip-path: inset(50% 0 30% 0); transform: translate(8px, 1px); }
+  60%  { opacity: 1; clip-path: inset(5% 0 85% 0); transform: translate(-10px, -2px); }
+  61%  { clip-path: inset(0 0 0 0); transform: translate(0); opacity: 0; }
   100% { clip-path: inset(0 0 0 0); transform: translate(0); opacity: 0; }
 }
 
 @keyframes glitch-slice-2 {
-  0%, 96% { clip-path: inset(0 0 0 0); transform: translate(0); opacity: 0; }
-  96.5% { opacity: 1; clip-path: inset(10% 0 60% 0); transform: translate(10px, -1px); }
-  97% { opacity: 1; clip-path: inset(70% 0 20% 0); transform: translate(-10px, 1px); }
-  97.5% { opacity: 1; clip-path: inset(30% 0 40% 0); transform: translate(12px, 0); }
-  98% { opacity: 1; clip-path: inset(5% 0 80% 0); transform: translate(-8px, -2px); }
-  98.5% { opacity: 1; clip-path: inset(80% 0 10% 0); transform: translate(10px, 1px); }
-  99% { opacity: 1; clip-path: inset(40% 0 50% 0); transform: translate(-12px, -1px); }
-  99.5% { opacity: 1; clip-path: inset(60% 0 25% 0); transform: translate(8px, 2px); }
+  0%   { opacity: 1; clip-path: inset(10% 0 60% 0); transform: translate(10px, -1px); }
+  10%  { opacity: 1; clip-path: inset(70% 0 20% 0); transform: translate(-10px, 1px); }
+  20%  { opacity: 1; clip-path: inset(30% 0 40% 0); transform: translate(12px, 0); }
+  30%  { opacity: 1; clip-path: inset(5% 0 80% 0); transform: translate(-8px, -2px); }
+  40%  { opacity: 1; clip-path: inset(80% 0 10% 0); transform: translate(10px, 1px); }
+  50%  { opacity: 1; clip-path: inset(40% 0 50% 0); transform: translate(-12px, -1px); }
+  60%  { opacity: 1; clip-path: inset(60% 0 25% 0); transform: translate(8px, 2px); }
+  61%  { clip-path: inset(0 0 0 0); transform: translate(0); opacity: 0; }
   100% { clip-path: inset(0 0 0 0); transform: translate(0); opacity: 0; }
 }
   
