@@ -13,87 +13,67 @@ export default function HeroSvgSmoke() {
       >
         <defs>
           <filter id="svg-smoke-filter" x="-50%" y="-50%" width="200%" height="200%">
+            {/* baseFrequency를 낮추고 애니메이션을 제거해 깜빡임 방지, 구름 같은 덩어리 생성 */}
             <feTurbulence 
               type="fractalNoise" 
-              baseFrequency="0.012" 
+              baseFrequency="0.006" 
               numOctaves="4" 
-              seed="7" 
+              seed="15" 
               result="noise" 
             />
+            {/* 왜곡 수치를 높여서 불규칙한 덩어리감 형성 */}
             <feDisplacementMap 
               in="SourceGraphic" 
               in2="noise" 
-              scale="90" 
+              scale="200" 
               xChannelSelector="R" 
               yChannelSelector="G" 
               result="displaced" 
             />
-            <feGaussianBlur in="displaced" stdDeviation="20" result="blurred" />
+            {/* 블러를 강하게 줘서 선명한 경계선을 없앰 */}
+            <feGaussianBlur in="displaced" stdDeviation="50" result="blurred" />
           </filter>
 
-          <linearGradient id="smoke-pink" x1="0%" y1="100%" x2="0%" y2="0%">
-            <stop offset="0%" stopColor="rgba(255, 42, 157, 0.45)" />
-            <stop offset="60%" stopColor="rgba(255, 42, 157, 0.15)" />
-            <stop offset="100%" stopColor="rgba(255, 42, 157, 0)" />
-          </linearGradient>
+          {/* 은은하고 채도를 낮춘 그라데이션 */}
+          <radialGradient id="smoke-pink" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="rgba(200, 50, 150, 0.35)" />
+            <stop offset="50%" stopColor="rgba(200, 50, 150, 0.12)" />
+            <stop offset="100%" stopColor="rgba(200, 50, 150, 0)" />
+          </radialGradient>
 
-          <linearGradient id="smoke-purple" x1="0%" y1="100%" x2="0%" y2="0%">
-            <stop offset="0%" stopColor="rgba(140, 63, 255, 0.35)" />
-            <stop offset="50%" stopColor="rgba(140, 63, 255, 0.1)" />
-            <stop offset="100%" stopColor="rgba(140, 63, 255, 0)" />
-          </linearGradient>
+          <radialGradient id="smoke-purple" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="rgba(120, 60, 200, 0.3)" />
+            <stop offset="50%" stopColor="rgba(120, 60, 200, 0.1)" />
+            <stop offset="100%" stopColor="rgba(120, 60, 200, 0)" />
+          </radialGradient>
 
-          <linearGradient id="smoke-blue" x1="0%" y1="100%" x2="0%" y2="0%">
-            <stop offset="0%" stopColor="rgba(32, 198, 255, 0.35)" />
-            <stop offset="65%" stopColor="rgba(32, 198, 255, 0.15)" />
-            <stop offset="100%" stopColor="rgba(32, 198, 255, 0)" />
-          </linearGradient>
+          <radialGradient id="smoke-blue" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="rgba(40, 150, 220, 0.25)" />
+            <stop offset="50%" stopColor="rgba(40, 150, 220, 0.08)" />
+            <stop offset="100%" stopColor="rgba(40, 150, 220, 0)" />
+          </radialGradient>
         </defs>
 
         <g filter="url(#svg-smoke-filter)" style={{ mixBlendMode: 'screen' }}>
-          {/* 좌측 핑크 연기 결 */}
-          <path 
-            className="svg-smoke-path pink-path"
-            d="M -100,1100 Q 150,700 250,500 T 350,100" 
-            stroke="url(#smoke-pink)" 
-            strokeWidth="160" 
-            fill="none" 
-            strokeLinecap="round" 
+          {/* 왼쪽 하단 핑크 헤이즈 */}
+          <ellipse 
+            className="svg-smoke-blob pink-blob"
+            cx="150" cy="950" rx="450" ry="300"
+            fill="url(#smoke-pink)"
           />
-          {/* 인물 뒤쪽 퍼플/보라 연기 결 */}
-          <path 
-            className="svg-smoke-path purple-path"
-            d="M 400,1200 Q 550,700 700,500 T 600,-50" 
-            stroke="url(#smoke-purple)" 
-            strokeWidth="240" 
-            fill="none" 
-            strokeLinecap="round" 
+          
+          {/* 인물 뒤쪽(중앙~우측) 퍼플 안개 */}
+          <ellipse 
+            className="svg-smoke-blob purple-blob"
+            cx="700" cy="700" rx="350" ry="450"
+            fill="url(#smoke-purple)"
           />
-          {/* 우측 하단 블루 연기 결 */}
-          <path 
-            className="svg-smoke-path blue-path"
-            d="M 800,1100 Q 1000,750 900,450 T 1100,50" 
-            stroke="url(#smoke-blue)" 
-            strokeWidth="200" 
-            fill="none" 
-            strokeLinecap="round" 
-          />
-          {/* 보조: 얇은 연기 결 */}
-          <path 
-            className="svg-smoke-path pink-path-thin"
-            d="M 100,1100 Q 300,600 200,300" 
-            stroke="url(#smoke-pink)" 
-            strokeWidth="80" 
-            fill="none" 
-            strokeLinecap="round" 
-          />
-          <path 
-            className="svg-smoke-path blue-path-thin"
-            d="M 900,1200 Q 750,700 850,200" 
-            stroke="url(#smoke-blue)" 
-            strokeWidth="100" 
-            fill="none" 
-            strokeLinecap="round" 
+
+          {/* 하단 중앙~우측 블루 안개 */}
+          <ellipse 
+            className="svg-smoke-blob blue-blob"
+            cx="600" cy="1150" rx="550" ry="300"
+            fill="url(#smoke-blue)"
           />
         </g>
       </svg>
