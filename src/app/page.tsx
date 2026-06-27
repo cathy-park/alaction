@@ -2,7 +2,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import HeroNeonSmoke from '@/components/HeroNeonSmoke';
+import HeroSvgSmoke from '@/components/HeroSvgSmoke';
 
 // SVG Icons (line style)
 const IconTarget = () => <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="6" /><circle cx="12" cy="12" r="2" /></svg>;
@@ -195,7 +195,7 @@ export default function Page() {
           <div className="hero-vignette" aria-hidden="true" />
 
           {/* Layer: Neon Smog Overlay */}
-          <HeroNeonSmoke />
+          <HeroSvgSmoke />
 
           {/* Layer 4: 텍스트/버튼 */}
           <div className="wrap hero-content">
