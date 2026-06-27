@@ -344,7 +344,7 @@ export default function MobileReport({ params }: { params: Promise<{ token: stri
           min-height: 590px;
           border-radius: 32px;
           padding: 22px;
-          background: linear-gradient(180deg, #0a0818, #17102a);
+          background: linear-gradient(180deg, #030208, #0a0714);
           border: 1px solid rgba(255,255,255,.08);
         }
         .report-logo {
@@ -363,7 +363,7 @@ export default function MobileReport({ params }: { params: Promise<{ token: stri
           position: relative;
         }
         .rank small { color: #a49cb7; font-size: 12px; font-weight: 1000; letter-spacing: 0.1em; }
-        .rank b { font-size: 58px; color: #fff; margin-top: -4px; text-shadow: 0 0 20px rgba(255,255,255,0.3); }
+        .rank b { font-size: 72px; color: #FFEC6A; margin-top: -8px; text-shadow: 0 0 20px rgba(255,236,106,0.4); }
         @keyframes spinSlow {
           from { transform: rotate(0deg); }
           to { transform: rotate(360deg); }
