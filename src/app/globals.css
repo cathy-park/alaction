@@ -137,7 +137,7 @@
       height: 100% !important;
       object-fit: cover !important;
       object-position: center top;
-      filter: brightness(0.75) saturate(1.1);
+      filter: brightness(0.7) contrast(1.15) saturate(1.2);
       /* Ken Burns (Option B) */
       animation: kenBurns 15s ease-in-out infinite alternate;
     }
@@ -255,9 +255,9 @@
   background:
     linear-gradient(
       to bottom,
-      rgba(2, 4, 12, 0.18) 0%,
-      rgba(2, 4, 12, 0.24) 48%,
-      rgba(2, 4, 12, 0.62) 100%
+      rgba(2, 4, 12, 0.3) 0%,
+      rgba(2, 4, 12, 0.45) 48%,
+      rgba(2, 4, 12, 0.75) 100%
     );
 }
 
