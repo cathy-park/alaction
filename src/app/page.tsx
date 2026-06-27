@@ -27,6 +27,7 @@ const IconClose = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" heigh
 export default function Page() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
+  const [isReportModalOpen, setIsReportModalOpen] = useState(false);
 
   const toggleFaq = (idx: number) => {
     setActiveFaq(activeFaq === idx ? null : idx);
@@ -524,7 +525,7 @@ export default function Page() {
         <section id="report" className="report-preview-section">
           <div className="wrap">
             <div className="report-preview-layout">
-              <div className="report-preview-phone-area">
+              <div className="report-preview-phone-area pc-only">
                 <div className="report-phone anim-scale">
                   <div className="phone-frame">
                     <div className="report-scroll-content">
@@ -545,6 +546,13 @@ export default function Page() {
                   <div className="metric-card"><small>Damaged</small><b>맞은 수</b></div>
                   <div className="metric-card"><small>Accuracy</small><b>정확도</b></div>
                 </div>
+                <button 
+                  className="btn btn-primary mobile-only anim-fadein delay-3" 
+                  style={{ marginTop: '24px', width: 'max-content' }} 
+                  onClick={() => setIsReportModalOpen(true)}
+                >
+                  리포트 미리보기
+                </button>
               </div>
             </div>
           </div>
@@ -563,6 +571,21 @@ export default function Page() {
           </div>
         </section>
       </main>
+      
+      {/* ─── REPORT MODAL (Mobile Only) ─── */}
+      {isReportModalOpen && (
+        <div className="report-modal">
+          <button className="report-modal-close" onClick={() => setIsReportModalOpen(false)}>✕</button>
+          <div className="report-phone anim-scale">
+            <div className="phone-frame">
+              <div className="report-scroll-content">
+                <img src="/report.png?v=2" alt="리포트 예시" />
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* ─── FOOTER ─── */}
       <footer>
         <div className="wrap">
