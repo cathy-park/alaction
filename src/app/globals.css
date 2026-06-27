@@ -153,7 +153,7 @@
     .hero-scanline {
       position: absolute;
       inset: 0;
-      z-index: -3;
+      z-index: 3;
       background: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0) 50%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.2));
       background-size: 100% 4px;
       pointer-events: none;
@@ -174,7 +174,7 @@
     .hero-vignette {
       position: absolute;
       inset: 0;
-      z-index: -2;
+      z-index: 1;
       box-shadow: inset 0 0 150px rgba(0,0,0,0.9);
       animation: vignettePulse 3s infinite alternate ease-in-out;
       pointer-events: none;
