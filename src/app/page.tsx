@@ -174,9 +174,9 @@ export default function Page() {
               <i className="spark" />
               NOW OPEN · 평택 실내 레이저태그
             </div>
-            <h1 className="glitch-heavy" data-text="ENTER THE ARENA">
-              ENTER THE<br />
-              <span className="line2">ARENA</span>
+            <h1 className="hero-title-wrapper">
+              <span className="glitch-text line1" data-text="ENTER THE">ENTER THE</span>
+              <span className="glitch-text line2" data-text="ARENA">ARENA</span>
             </h1>
             <div className="hero-sub">실내 레이저 슈팅으로 경험하는 팀 배틀. 날씨 상관없이 최고 강도의 액티비티를 즐기고, QR 리포트로 내 플레이 기록을 확인하세요.</div>
             <div className="hero-actions">
