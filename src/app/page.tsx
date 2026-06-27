@@ -184,19 +184,10 @@ export default function Page() {
           <img id="heroBg" className="hero-bg-img pc-only" src="/hero.png" alt="알액션 레이저 아레나" />
           <img className="hero-bg-img mobile-only" src="/hero_bg.png" alt="알액션 배경" />
 
-          {/* Layer 2: 순수 CSS 연기 파티클 + 부유하는 불티 (Option A) */}
-          <div id="particles" className="css-smoke-wrap" aria-hidden="true">
-            <div className="smoke-particle p1" />
-            <div className="smoke-particle p2" />
-            <div className="smoke-particle p3" />
-            <div className="smoke-particle p4" />
-            <div className="spark-particle s1" />
-            <div className="spark-particle s2" />
-            <div className="spark-particle s3" />
-            <div className="spark-particle s4" />
-            <div className="spark-particle s5" />
-          </div>
           <img className="hero-woman-img mobile-only" src="/hero_woman.png" alt="알액션" />
+
+          {/* Dark Overlay */}
+          <div className="hero-dark-overlay absolute inset-0" aria-hidden="true" />
 
           {/* Layer 3: Scanline (Option D) & Vignette Pulse (Option E) */}
           <div className="hero-scanline" aria-hidden="true" />
@@ -204,10 +195,11 @@ export default function Page() {
 
           {/* Layer: Neon Smog Overlay */}
           <div className="hero-neon-smog" aria-hidden="true">
-            <div className="smog-texture"></div>
-            <div className="smog-layer pink"></div>
-            <div className="smog-layer purple"></div>
-            <div className="smog-layer blue"></div>
+            <div className="smog-layer smog-left" />
+            <div className="smog-layer smog-right" />
+            <div className="smog-layer smog-back" />
+            <div className="smog-layer smog-low" />
+            <div className="smog-noise" />
           </div>
 
           {/* Layer 4: 텍스트/버튼 */}
