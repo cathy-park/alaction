@@ -605,15 +605,17 @@ export default function Page() {
               <a href="https://naver.me/xIFpW5pv" target="_blank" rel="noopener noreferrer">운영 시간</a>
               <a href="https://naver.me/xIFpW5pv" target="_blank" rel="noopener noreferrer">주차 안내</a>
             </div>
-            <div className="footer-col">
+            <div className="footer-col" style={{ minWidth: '220px' }}>
               <h4>운영 시간</h4>
-              <a href="#">평일 14:00 – 22:00</a>
-              <a href="#">주말·공휴일 10:00 – 22:00</a>
+              <span style={{display: 'block', marginBottom: '4px', color: '#a49cb7'}}>토, 일 11:15 - 20:15</span>
+              <span style={{display: 'block', marginBottom: '4px', color: '#a49cb7'}}>화,수,목,금 14:30 - 20:30</span>
+              <span style={{display: 'block', marginBottom: '4px', color: '#a49cb7'}}>월 정기휴무 (매주 월요일)</span>
+              <span style={{display: 'block', marginTop: '6px', fontSize: '12px', color: '#7f788f'}}>- 단체의 경우, 영업 요일 및 시간 외 이용 협의 가능</span>
             </div>
             <div className="footer-col">
               <h4>문의</h4>
-              <a href="tel:031-000-0000">031-000-0000</a>
-              <a href="mailto:info@alaction-pt.com">info@alaction-pt.com</a>
+              <a href="tel:031-651-3515">031-651-3515</a>
+              <a href="https://talk.naver.com/ct/w4cqwe?frm=pnmb&frm=nmb_detail#nafullscreen" target="_blank" rel="noopener noreferrer">네이버 톡톡 문의</a>
             </div>
           </div>
           <div className="footer-bottom">
