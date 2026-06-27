@@ -162,6 +162,9 @@ export default function Page() {
 
           {/* Dark Overlay */}
           <div className="hero-dark-overlay" aria-hidden="true" />
+          
+          {/* Scanline Background */}
+          <div className="hero-scanline" aria-hidden="true" />
 
 
 
@@ -171,7 +174,7 @@ export default function Page() {
               <i className="spark" />
               NOW OPEN · 평택 실내 레이저태그
             </div>
-            <h1 className="glitch-light" data-text="ENTER THE ARENA">
+            <h1 className="glitch-heavy" data-text="ENTER THE ARENA">
               ENTER THE<br />
               <span className="line2">ARENA</span>
             </h1>
