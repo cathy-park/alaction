@@ -1,8 +1,7 @@
 // @ts-nocheck
 'use client';
 
-import { useEffect, useState, useRef, useCallback } from 'react';
-import HeroParticles from '@/components/HeroParticles';
+import { useState, useEffect } from 'react';
 
 // SVG Icons (line style)
 const IconTarget = () => <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="6" /><circle cx="12" cy="12" r="2" /></svg>;
@@ -25,30 +24,6 @@ const IconClose = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" heigh
 
 export default function Page() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  
-  // Parallax refs
-  const heroRef = useRef<HTMLSelectElement>(null);
-  const bgRef = useRef<HTMLImageElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
-  const rafRef = useRef<number | null>(null);
-
-  const handleHeroMouseMove = useCallback((e: React.MouseEvent) => {
-    // 모바일에서는 패럴랙스 생략 (성능 및 UX 고려)
-    if (window.innerWidth <= 768) return;
-    
-    if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    
-    rafRef.current = requestAnimationFrame(() => {
-      if (!heroRef.current || !bgRef.current || !contentRef.current) return;
-      const { left, top, width, height } = heroRef.current.getBoundingClientRect();
-      const x = (e.clientX - left) / width - 0.5;
-      const y = (e.clientY - top) / height - 0.5;
-
-      // 하드웨어 가속을 십분 활용하는 translate3d만 사용
-      bgRef.current.style.transform = `translate3d(${x * 20}px, ${y * 20}px, 0) scale(1.05)`;
-      contentRef.current.style.transform = `translate3d(${x * -30}px, ${y * -30}px, 0)`;
-    });
-  }, []);
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
 
   const toggleFaq = (idx: number) => {
@@ -178,27 +153,20 @@ export default function Page() {
       </header>
       <main>
         {/* ─── HERO ─── */}
-        <section className="hero-section" ref={heroRef} onMouseMove={handleHeroMouseMove}>
+        <section className="hero-section">
           {/* Layer 1: PC용 단일 배경, 모바일용 원경 배경 */}
-          <img id="heroBg" ref={bgRef} className="hero-bg-img pc-only" src="/hero.png" alt="알액션 레이저 아레나" style={{ willChange: 'transform' }} />
+          <img id="heroBg" className="hero-bg-img pc-only" src="/hero.png" alt="알액션 레이저 아레나" />
           <img className="hero-bg-img mobile-only" src="/hero_bg.png" alt="알액션 배경" />
 
           <img id="heroWoman" className="hero-woman-img mobile-only" src="/hero_woman.png" alt="알액션" />
 
           {/* Dark Overlay */}
           <div className="hero-dark-overlay" aria-hidden="true" />
-          
-          {/* Neon Blur Orbs */}
-          <div className="neon-orb pink" />
-          <div className="neon-orb cyan" />
-
-          {/* Lightweight Particles */}
-          <HeroParticles />
 
 
 
           {/* Layer 4: 텍스트/버튼 */}
-          <div id="heroContent" ref={contentRef} className="wrap hero-content" style={{ willChange: 'transform', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+          <div id="heroContent" className="wrap hero-content" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
             <div className="hero-badge">
               <i className="spark" />
               NOW OPEN · 평택 실내 레이저태그

@@ -174,46 +174,12 @@
       rgba(2, 4, 12, 0.75) 100%
     );
 }
-
-/* ── CSS Neon Orbs (Blur Orbs) ── */
-.neon-orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(150px);
-  z-index: 2; /* 다크 오버레이와 콘텐츠 사이 */
-  pointer-events: none;
-  opacity: 0.6;
-}
-.neon-orb.pink {
-  width: 600px;
-  height: 600px;
-  background: var(--pink);
-  top: 10%;
-  left: -10%;
-  animation: orbDrift 20s ease-in-out infinite alternate;
-}
-.neon-orb.cyan {
-  width: 500px;
-  height: 500px;
-  background: var(--blue);
-  bottom: -10%;
-  right: -5%;
-  animation: orbDrift 25s ease-in-out infinite alternate-reverse;
-}
-
-@keyframes orbDrift {
-  0% { transform: translate3d(0, 0, 0) scale(1); }
-  100% { transform: translate3d(50px, -50px, 0) scale(1.1); }
-}
-
-
-
 /* ── Layer 3: 여성 모델 누끼 이미지 ── */
     .hero-woman-img {
       position: absolute !important;
       right: 0;
       bottom: 0;
-      z-index: -1;
+      z-index: 2;
       width: min(58vw, 920px) !important;
       height: auto !important;
       object-fit: contain !important;
