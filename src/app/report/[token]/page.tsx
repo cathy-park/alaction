@@ -228,40 +228,45 @@ export default function MobileReport({ params }: { params: Promise<{ token: stri
         
         <div className="rank">
           {/* Glowing rings */}
-          <svg width="150" height="150" viewBox="0 0 150 150" style={{position: 'absolute', inset: 0, overflow: 'visible', animation: 'spinSlow 12s linear infinite'}}>
+          <svg width="180" height="180" viewBox="0 0 180 180" style={{position: 'absolute', inset: 0, overflow: 'visible', animation: 'spinSlow 12s linear infinite'}}>
             <defs>
               <linearGradient id="rankRingGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stopColor="#ff35cd" />
                 <stop offset="100%" stopColor="#20c7ff" />
               </linearGradient>
               <filter id="rankGlow" x="-20%" y="-20%" width="140%" height="140%">
-                <feGaussianBlur stdDeviation="6" result="blur" />
+                <feGaussianBlur stdDeviation="7" result="blur" />
                 <feComposite in="SourceGraphic" in2="blur" operator="over" />
               </filter>
             </defs>
-            <circle cx="75" cy="75" r="66" fill="none" stroke="url(#rankRingGrad)" strokeWidth="4" filter="url(#rankGlow)" opacity="0.6" style={{animation: 'pulseGlow 2s ease-in-out infinite alternate'}}/>
-            <circle cx="75" cy="75" r="66" fill="none" stroke="url(#rankRingGrad)" strokeWidth="2" />
+            <circle cx="90" cy="90" r="78" fill="none" stroke="url(#rankRingGrad)" strokeWidth="4" filter="url(#rankGlow)" opacity="0.6" style={{animation: 'pulseGlow 2s ease-in-out infinite alternate'}}/>
+            <circle cx="90" cy="90" r="78" fill="none" stroke="url(#rankRingGrad)" strokeWidth="2" />
           </svg>
 
           {/* Corner crosshairs */}
-          <div style={{position: 'absolute', top: '-10px', left: '-10px', width: '6px', height: '6px', borderTop: '1px solid rgba(255,255,255,0.2)', borderLeft: '1px solid rgba(255,255,255,0.2)'}}></div>
-          <div style={{position: 'absolute', top: '-10px', right: '-10px', width: '6px', height: '6px', borderTop: '1px solid rgba(255,255,255,0.2)', borderRight: '1px solid rgba(255,255,255,0.2)'}}></div>
-          <div style={{position: 'absolute', bottom: '-10px', left: '-10px', width: '6px', height: '6px', borderBottom: '1px solid rgba(255,255,255,0.2)', borderLeft: '1px solid rgba(255,255,255,0.2)'}}></div>
-          <div style={{position: 'absolute', bottom: '-10px', right: '-10px', width: '6px', height: '6px', borderBottom: '1px solid rgba(255,255,255,0.2)', borderRight: '1px solid rgba(255,255,255,0.2)'}}></div>
+          <div style={{position: 'absolute', top: '0px', left: '0px', width: '6px', height: '6px', borderTop: '1px solid rgba(255,255,255,0.2)', borderLeft: '1px solid rgba(255,255,255,0.2)'}}></div>
+          <div style={{position: 'absolute', top: '0px', right: '0px', width: '6px', height: '6px', borderTop: '1px solid rgba(255,255,255,0.2)', borderRight: '1px solid rgba(255,255,255,0.2)'}}></div>
+          <div style={{position: 'absolute', bottom: '0px', left: '0px', width: '6px', height: '6px', borderBottom: '1px solid rgba(255,255,255,0.2)', borderLeft: '1px solid rgba(255,255,255,0.2)'}}></div>
+          <div style={{position: 'absolute', bottom: '0px', right: '0px', width: '6px', height: '6px', borderBottom: '1px solid rgba(255,255,255,0.2)', borderRight: '1px solid rgba(255,255,255,0.2)'}}></div>
 
           {/* Inner dashed ring */}
-          <svg width="150" height="150" viewBox="0 0 150 150" style={{position: 'absolute', inset: 0, animation: 'spinReverse 20s linear infinite'}}>
-            <circle cx="75" cy="75" r="54" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="1" strokeDasharray="2 6" />
-            <circle cx="75" cy="75" r="54" fill="none" stroke="#20c7ff" strokeWidth="2" strokeDasharray="2 6" strokeDashoffset="100" opacity="0.8" style={{strokeDasharray: '30 150'}}/>
+          <svg width="180" height="180" viewBox="0 0 180 180" style={{position: 'absolute', inset: 0, animation: 'spinReverse 20s linear infinite'}}>
+            <circle cx="90" cy="90" r="64" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="1" strokeDasharray="2 6" />
+            <circle cx="90" cy="90" r="64" fill="none" stroke="#20c7ff" strokeWidth="2" strokeDasharray="2 6" strokeDashoffset="100" opacity="0.8" style={{strokeDasharray: '36 170'}}/>
           </svg>
 
           {/* Cross lines (faint) */}
           <div style={{position: 'absolute', inset: '0', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-            <div style={{width: '170px', height: '1px', background: 'rgba(255,255,255,0.05)'}}></div>
+            <div style={{width: '200px', height: '1px', background: 'rgba(255,255,255,0.05)'}}></div>
           </div>
           <div style={{position: 'absolute', inset: '0', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-            <div style={{width: '1px', height: '170px', background: 'rgba(255,255,255,0.05)'}}></div>
+            <div style={{width: '1px', height: '200px', background: 'rgba(255,255,255,0.05)'}}></div>
           </div>
+
+          {/* Horizontal Glowing Line & Dots (Existing Style) */}
+          <div style={{position: 'absolute', top: '50%', left: '-30px', right: '-30px', height: '1px', background: 'linear-gradient(90deg, transparent, rgba(255,53,205,0.5) 30%, rgba(32,199,255,0.5) 70%, transparent)', transform: 'translateY(-50%)'}}></div>
+          <div style={{position: 'absolute', top: '50%', left: '-5px', width: '4px', height: '4px', borderRadius: '50%', background: '#ff35cd', filter: 'blur(1px)', transform: 'translateY(-50%)', boxShadow: '0 0 10px #ff35cd, 0 0 20px #ff35cd'}}></div>
+          <div style={{position: 'absolute', top: '50%', right: '-5px', width: '4px', height: '4px', borderRadius: '50%', background: '#20c7ff', filter: 'blur(1px)', transform: 'translateY(-50%)', boxShadow: '0 0 10px #20c7ff, 0 0 20px #20c7ff'}}></div>
 
           <div style={{position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
             <small>RANK</small>
@@ -393,7 +398,7 @@ export default function MobileReport({ params }: { params: Promise<{ token: stri
           letter-spacing: .1em;
         }
         .rank {
-          width: 150px; height: 150px;
+          width: 180px; height: 180px;
           margin: 34px auto 20px;
           display: flex; align-items: center; justify-content: center; flex-direction: column;
           border-radius: 50%;
