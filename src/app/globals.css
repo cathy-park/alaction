@@ -1304,8 +1304,9 @@
 
 @media(max-width: 768px) {
   .cinematic-video-section { 
-    padding: 0 0 40px; 
-    margin-top: -80px; /* 모바일에서 40px 내림 (-120 -> -80) */
+    padding: 0; 
+    margin-top: 60px; /* 앞(리포트) 섹션과 겹치지 않고 완전히 독립된 섹션으로 분리 */
+    margin-bottom: 60px; /* 뒤(Contact) 섹션과의 여백 */
   }
   .cinematic-video-wrapper { 
     border-radius: 0; 
