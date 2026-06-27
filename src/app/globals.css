@@ -1259,7 +1259,7 @@
 
 /* ── Cinematic Video Section ── */
 .cinematic-video-section {
-  padding: 80px 0;
+  padding: 0 0 80px; /* PC에서 위로 80px 올림 (padding-top 제거) */
   position: relative;
   z-index: 10;
   overflow: hidden;
@@ -1303,5 +1303,8 @@
 
 @media(max-width: 768px) {
   .cinematic-video-section { padding: 40px 0; }
-  .cinematic-video-wrapper { border-radius: 16px; }
+  .cinematic-video-wrapper { 
+    border-radius: 16px; 
+    aspect-ratio: 9 / 16; /* 모바일(틱톡) 세로 비율 적용 */
+  }
 }  
