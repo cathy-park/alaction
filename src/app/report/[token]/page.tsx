@@ -276,7 +276,7 @@ export default function MobileReport({ params }: { params: Promise<{ token: stri
           <div className="report-metric">
             <span>맞힌 수</span>
             <div className="metric-val">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#20c7ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#20c7ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 8H5a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h3v5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-5h4l3-3V8z" /><line x1="12" y1="12" x2="12" y2="15" /></svg>
               <b style={{color: '#20c7ff'}}>{result.hits}</b>
             </div>
           </div>
@@ -290,9 +290,8 @@ export default function MobileReport({ params }: { params: Promise<{ token: stri
           <div className="report-metric">
             <span>성향</span>
             <div className="metric-val">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ff35cd" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><path d="M12 12l8-8"/><polyline points="16 4 20 4 20 8"/></svg>
               <b style={{color: '#ff35cd', fontSize: '16px'}}>
-                {report.play_style || (result.accuracy > 70 ? '정밀형 플레이' : '돌격형 플레이')}
+                {report.play_style || (result.accuracy > 70 ? '🎯 정밀형 플레이' : '🔥 돌격형 플레이')}
               </b>
             </div>
           </div>
