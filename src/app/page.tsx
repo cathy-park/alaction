@@ -61,28 +61,7 @@ export default function Page() {
     setActiveFaq(activeFaq === idx ? null : idx);
   };
 
-  const handleHeroMouseMove = (e: React.MouseEvent<HTMLElement>) => {
-    if (window.innerWidth <= 768) return; // 모바일 비활성화
-    
-    requestAnimationFrame(() => {
-      const { clientX, clientY } = e;
-      const centerX = window.innerWidth / 2;
-      const centerY = window.innerHeight / 2;
-      
-      const moveX = (clientX - centerX) / centerX;
-      const moveY = (clientY - centerY) / centerY;
 
-      const bg = document.getElementById('heroBg');
-      const content = document.getElementById('heroContent');
-      const smog = document.getElementById('heroSmogContainer');
-      const woman = document.getElementById('heroWoman');
-
-      if (bg) bg.style.transform = `translate(${moveX * 15}px, ${moveY * 15}px) scale(1.08)`;
-      if (content) content.style.transform = `translate(${moveX * -30}px, ${moveY * -20}px)`;
-      if (smog) smog.style.transform = `translate(${moveX * -10}px, ${moveY * -10}px)`;
-      if (woman) woman.style.transform = `translate(${moveX * -15}px, ${moveY * -10}px)`;
-    });
-  };
 
   useEffect(() => {
 
@@ -92,31 +71,7 @@ export default function Page() {
       nav?.classList.toggle('scrolled', window.scrollY > 80);
     }, { passive: true });
 
-    /* ─── Hero parallax ─── */
-    const heroBg = document.getElementById('heroBg');
-    const particles = document.getElementById('particles');
-
-    window.addEventListener('scroll', () => {
-      requestAnimationFrame(() => {
-        const y = window.scrollY;
-        if (heroBg) heroBg.style.transform = `translateY(${y * 0.35}px)`;
-        if (particles) particles.style.transform = `translateY(${y * 0.25}px)`;
-      });
-    }, { passive: true });
-
-    /* ─── Mouse parallax on hero ─── */
-    const hero = document.querySelector('.hero-section');
-    hero?.addEventListener('mousemove', (e: any) => {
-      requestAnimationFrame(() => {
-        const { clientX, clientY } = e;
-        const { innerWidth, innerHeight } = window;
-        const dx = (clientX / innerWidth - 0.5) * 14;
-        const dy = (clientY / innerHeight - 0.5) * 8;
-
-        if (heroBg) heroBg.style.transform = `translate(${dx}px,${dy}px) translateY(${window.scrollY * 0.35}px)`;
-        if (particles) particles.style.transform = `translate(${dx * 2}px,${dy * 2}px) translateY(${window.scrollY * 0.25}px)`;
-      });
-    });
+    /* ─── Hero parallax 제거 (정적 페이지로 유지) ─── */
 
     /* ─── Intersection Observer fade-in ─── */
     const animEls = document.querySelectorAll('.anim-fadein, .anim-scale');
@@ -229,7 +184,7 @@ export default function Page() {
       </header>
       <main>
         {/* ─── HERO ─── */}
-        <section className="hero-section" onMouseMove={handleHeroMouseMove}>
+        <section className="hero-section">
           {/* Layer 1: PC용 단일 배경, 모바일용 원경 배경 */}
           <img id="heroBg" className="hero-bg-img pc-only" src="/hero.png" alt="알액션 레이저 아레나" />
           <img className="hero-bg-img mobile-only" src="/hero_bg.png" alt="알액션 배경" />
@@ -239,15 +194,7 @@ export default function Page() {
           {/* Dark Overlay */}
           <div className="hero-dark-overlay absolute inset-0" aria-hidden="true" />
 
-          {/* Layer 3: Scanline (Option D) & Vignette Pulse (Option E) */}
-          <div className="hero-scanline" aria-hidden="true" />
-          <div className="hero-vignette" aria-hidden="true" />
 
-          {/* Layer: Neon Smog Overlay & Canvas Particles */}
-          <div id="heroSmogContainer" style={{ position: 'absolute', inset: 0, zIndex: 2, pointerEvents: 'none' }}>
-            {/* <HeroSvgSmoke /> 성능 문제로 임시 비활성화 */}
-            <HeroParticles />
-          </div>
 
           {/* Layer 4: 텍스트/버튼 */}
           <div id="heroContent" className="wrap hero-content" style={{ willChange: 'transform', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
@@ -255,7 +202,7 @@ export default function Page() {
               <i className="spark" />
               NOW OPEN · 평택 실내 레이저태그
             </div>
-            <h1 className="glitch" data-text="ENTER THE ARENA">
+            <h1>
               ENTER THE<br />
               <span className="line2">ARENA</span>
             </h1>
