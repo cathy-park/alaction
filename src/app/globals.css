@@ -188,7 +188,8 @@
 
 
 
-/* ── SVG Blob Smoke ── */
+
+/* ── SVG Blob Smoke (No Flicker) ── */
 .hero-svg-smoke {
   position: absolute;
   inset: 0;
@@ -198,42 +199,35 @@
 }
 
 .smoke-svg {
-  opacity: 0.85; /* 전체적으로 은은하게 톤다운 */
-}
-
-.svg-smoke-blob {
-  transform-origin: center center;
+  opacity: 0.8;
   will-change: transform;
+  /* SVG 전체를 부드럽게 움직이게 하여 내부 필터 재계산(깜빡임) 방지 */
+  animation: svgContainerDrift 40s ease-in-out infinite alternate;
+  transform-origin: center center;
 }
 
-.pink-blob {
-  animation: blobSway1 30s ease-in-out infinite alternate;
-}
-.purple-blob {
-  animation: blobSway2 35s ease-in-out infinite alternate-reverse;
-}
-.blue-blob {
-  animation: blobSway3 40s ease-in-out infinite alternate;
+/* 내부 Blob들은 애니메이션 없이 정적으로 유지 */
+.svg-smoke-blob {
+  /* No animation here to prevent SVG filter flickering */
 }
 
-/* 움직임을 아주 미세하게 최소화 (깜빡임, 튀는 느낌 제거) */
-@keyframes blobSway1 {
-  0% { transform: translate3d(0, 0, 0) scale(1) rotate(0deg); }
-  100% { transform: translate3d(20px, -15px, 0) scale(1.02) rotate(1deg); }
-}
-@keyframes blobSway2 {
-  0% { transform: translate3d(0, 0, 0) scale(1) rotate(0deg); }
-  100% { transform: translate3d(-15px, 15px, 0) scale(1.03) rotate(-1deg); }
-}
-@keyframes blobSway3 {
-  0% { transform: translate3d(0, 0, 0) scale(1) rotate(0deg); }
-  100% { transform: translate3d(25px, -10px, 0) scale(1.02) rotate(1deg); }
+/* 매우 천천히 흐르는 정적인 안개 느낌 */
+@keyframes svgContainerDrift {
+  0% { transform: scale(1) translate3d(0, 5%, 0) rotate(0deg); }
+  100% { transform: scale(1.05) translate3d(-3%, -5%, 0) rotate(1deg); }
 }
 
 @media(max-width: 768px) {
   .smoke-svg {
     opacity: 0.5; /* 모바일에서는 더 연하게 */
+    /* 모바일에서는 애니메이션 오버라이드하여 사이즈 축소 적용 */
+    animation: svgContainerDriftMobile 40s ease-in-out infinite alternate;
   }
+}
+
+@keyframes svgContainerDriftMobile {
+  0% { transform: scale(0.85) translate3d(0, 10%, 0) rotate(0deg); }
+  100% { transform: scale(0.9) translate3d(-2%, 5%, 0) rotate(1deg); }
 }
 
 /* 콘텐츠가 스모그보다 위에 오도록 */
