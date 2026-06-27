@@ -12,6 +12,7 @@ const IconSwords = () => <svg xmlns="http://www.w3.org/2000/svg" width="36" heig
 const IconSearch = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth="2"><circle cx="11" cy="11" r="8" /><path strokeLinecap="round" d="M21 21l-4.35-4.35" /></svg>;
 const IconCalendar = () => <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><rect x="3" y="4" width="18" height="18" rx="2" /><path strokeLinecap="round" d="M16 2v4M8 2v4M3 10h18" /></svg>;
 const IconPhone = () => <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M3 5.5A2.5 2.5 0 015.5 3h.5a1 1 0 011 1v3a1 1 0 01-1 1H5a1 1 0 00-1 1v1a13 13 0 0011 11h1a1 1 0 001-1v-.5a1 1 0 011-1h3a1 1 0 011 1v.5A2.5 2.5 0 0118.5 21C9.94 21 3 14.06 3 5.5z" /></svg>;
+const IconNaver = () => <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M16.5 4H20v16h-3.5l-9-11.4V20H4V4h3.5l9 11.4V4z" /></svg>;
 const IconMap = () => <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M12 2C8.686 2 6 4.686 6 8c0 5.25 6 12 6 12s6-6.75 6-12c0-3.314-2.686-6-6-6zm0 8a2 2 0 110-4 2 2 0 010 4z" /></svg>;
 const IconInstagram = () => <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8"><rect x="2" y="2" width="20" height="20" rx="5" /><circle cx="12" cy="12" r="5" /><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" /></svg>;
 const IconYoutube = () => <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8"><rect x="2" y="5" width="20" height="14" rx="4" /><path strokeLinecap="round" strokeLinejoin="round" d="M10 9l5 3-5 3V9z" fill="currentColor" stroke="none" /></svg>;
@@ -549,7 +550,7 @@ export default function Page() {
             <p className="anim-fadein delay-2">네이버 예약, 전화 문의, 길찾기 버튼은 실제 운영 링크로 연결됩니다.</p>
             <div className="cta-actions anim-fadein delay-3">
               <a className="btn btn-primary" href="https://m.booking.naver.com/booking/12/bizes/766721/items/4624099?area=pll&lang=ko&service-target=map-pc&startDateTime=2026-06-26T00%3A00%3A00%2B09%3A00&theme=place" target="_blank" rel="noopener noreferrer"><IconCalendar /><span>네이버 예약</span></a>
-              <a className="btn btn-ghost" href="https://talk.naver.com/profile/w4cqwe" target="_blank" rel="noopener noreferrer"><IconPhone />톡톡 문의</a>
+              <a className="btn btn-ghost" href="https://talk.naver.com/profile/w4cqwe" target="_blank" rel="noopener noreferrer"><IconNaver />톡톡 문의</a>
               <a className="btn btn-ghost" href="https://naver.me/xIFpW5pv" target="_blank" rel="noopener noreferrer"><IconMap />길찾기</a>
             </div>
           </div>
