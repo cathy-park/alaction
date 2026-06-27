@@ -1286,6 +1286,7 @@
   height: 100%;
   object-fit: cover;
   display: block;
+  transform: scale(1.15); /* Scale up to crop out watermark and letterboxes */
 }
 
 .cinematic-glow {
