@@ -3,6 +3,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import HeroSvgSmoke from '@/components/HeroSvgSmoke';
+import HeroParticles from '@/components/HeroParticles';
 
 // SVG Icons (line style)
 const IconTarget = () => <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="6" /><circle cx="12" cy="12" r="2" /></svg>;
@@ -54,6 +55,34 @@ const TypewriterText = ({ text }: { text: string }) => {
 
 export default function Page() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeFaq, setActiveFaq] = useState<number | null>(null);
+
+  const toggleFaq = (idx: number) => {
+    setActiveFaq(activeFaq === idx ? null : idx);
+  };
+
+  const handleHeroMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    if (window.innerWidth <= 768) return; // 모바일 비활성화
+    
+    const { clientX, clientY } = e;
+    const centerX = window.innerWidth / 2;
+    const centerY = window.innerHeight / 2;
+    
+    // -1 ~ 1 정규화
+    const moveX = (clientX - centerX) / centerX;
+    const moveY = (clientY - centerY) / centerY;
+
+    const bg = document.getElementById('heroBg');
+    const content = document.getElementById('heroContent');
+    const smog = document.getElementById('heroSmogContainer');
+    const woman = document.getElementById('heroWoman');
+
+    if (bg) bg.style.transform = `translate(${moveX * 15}px, ${moveY * 15}px) scale(1.08)`;
+    if (content) content.style.transform = `translate(${moveX * -30}px, ${moveY * -20}px)`;
+    if (smog) smog.style.transform = `translate(${moveX * -10}px, ${moveY * -10}px)`;
+    if (woman) woman.style.transform = `translate(${moveX * -15}px, ${moveY * -10}px)`;
+  };
+
   useEffect(() => {
 
     /* ─── NAV scroll class ─── */
@@ -180,12 +209,12 @@ export default function Page() {
       </header>
       <main>
         {/* ─── HERO ─── */}
-        <section className="hero-section">
+        <section className="hero-section" onMouseMove={handleHeroMouseMove}>
           {/* Layer 1: PC용 단일 배경, 모바일용 원경 배경 */}
           <img id="heroBg" className="hero-bg-img pc-only" src="/hero.png" alt="알액션 레이저 아레나" />
           <img className="hero-bg-img mobile-only" src="/hero_bg.png" alt="알액션 배경" />
 
-          <img className="hero-woman-img mobile-only" src="/hero_woman.png" alt="알액션" />
+          <img id="heroWoman" className="hero-woman-img mobile-only" src="/hero_woman.png" alt="알액션" />
 
           {/* Dark Overlay */}
           <div className="hero-dark-overlay absolute inset-0" aria-hidden="true" />
@@ -194,16 +223,19 @@ export default function Page() {
           <div className="hero-scanline" aria-hidden="true" />
           <div className="hero-vignette" aria-hidden="true" />
 
-          {/* Layer: Neon Smog Overlay */}
-          <HeroSvgSmoke />
+          {/* Layer: Neon Smog Overlay & Canvas Particles */}
+          <div id="heroSmogContainer" style={{ position: 'absolute', inset: 0, zIndex: 2, pointerEvents: 'none' }}>
+            <HeroSvgSmoke />
+            <HeroParticles />
+          </div>
 
           {/* Layer 4: 텍스트/버튼 */}
-          <div className="wrap hero-content">
+          <div id="heroContent" className="wrap hero-content" style={{ willChange: 'transform' }}>
             <div className="hero-badge">
               <i className="spark" />
               NOW OPEN · 평택 실내 레이저태그
             </div>
-            <h1>
+            <h1 className="glitch" data-text="ENTER THE ARENA">
               ENTER THE<br />
               <span className="line2">ARENA</span>
             </h1>
