@@ -64,23 +64,24 @@ export default function Page() {
   const handleHeroMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     if (window.innerWidth <= 768) return; // 모바일 비활성화
     
-    const { clientX, clientY } = e;
-    const centerX = window.innerWidth / 2;
-    const centerY = window.innerHeight / 2;
-    
-    // -1 ~ 1 정규화
-    const moveX = (clientX - centerX) / centerX;
-    const moveY = (clientY - centerY) / centerY;
+    requestAnimationFrame(() => {
+      const { clientX, clientY } = e;
+      const centerX = window.innerWidth / 2;
+      const centerY = window.innerHeight / 2;
+      
+      const moveX = (clientX - centerX) / centerX;
+      const moveY = (clientY - centerY) / centerY;
 
-    const bg = document.getElementById('heroBg');
-    const content = document.getElementById('heroContent');
-    const smog = document.getElementById('heroSmogContainer');
-    const woman = document.getElementById('heroWoman');
+      const bg = document.getElementById('heroBg');
+      const content = document.getElementById('heroContent');
+      const smog = document.getElementById('heroSmogContainer');
+      const woman = document.getElementById('heroWoman');
 
-    if (bg) bg.style.transform = `translate(${moveX * 15}px, ${moveY * 15}px) scale(1.08)`;
-    if (content) content.style.transform = `translate(${moveX * -30}px, ${moveY * -20}px)`;
-    if (smog) smog.style.transform = `translate(${moveX * -10}px, ${moveY * -10}px)`;
-    if (woman) woman.style.transform = `translate(${moveX * -15}px, ${moveY * -10}px)`;
+      if (bg) bg.style.transform = `translate(${moveX * 15}px, ${moveY * 15}px) scale(1.08)`;
+      if (content) content.style.transform = `translate(${moveX * -30}px, ${moveY * -20}px)`;
+      if (smog) smog.style.transform = `translate(${moveX * -10}px, ${moveY * -10}px)`;
+      if (woman) woman.style.transform = `translate(${moveX * -15}px, ${moveY * -10}px)`;
+    });
   };
 
   useEffect(() => {
@@ -92,26 +93,29 @@ export default function Page() {
     }, { passive: true });
 
     /* ─── Hero parallax ─── */
-    /* ─── Hero parallax ─── */
     const heroBg = document.getElementById('heroBg');
     const particles = document.getElementById('particles');
 
     window.addEventListener('scroll', () => {
-      const y = window.scrollY;
-      if (heroBg) heroBg.style.transform = `translateY(${y * 0.35}px)`;
-      if (particles) particles.style.transform = `translateY(${y * 0.25}px)`;
+      requestAnimationFrame(() => {
+        const y = window.scrollY;
+        if (heroBg) heroBg.style.transform = `translateY(${y * 0.35}px)`;
+        if (particles) particles.style.transform = `translateY(${y * 0.25}px)`;
+      });
     }, { passive: true });
 
     /* ─── Mouse parallax on hero ─── */
     const hero = document.querySelector('.hero-section');
     hero?.addEventListener('mousemove', (e: any) => {
-      const { clientX, clientY } = e;
-      const { innerWidth, innerHeight } = window;
-      const dx = (clientX / innerWidth - 0.5) * 14;
-      const dy = (clientY / innerHeight - 0.5) * 8;
+      requestAnimationFrame(() => {
+        const { clientX, clientY } = e;
+        const { innerWidth, innerHeight } = window;
+        const dx = (clientX / innerWidth - 0.5) * 14;
+        const dy = (clientY / innerHeight - 0.5) * 8;
 
-      if (heroBg) heroBg.style.transform = `translate(${dx}px,${dy}px) translateY(${window.scrollY * 0.35}px)`;
-      if (particles) particles.style.transform = `translate(${dx * 2}px,${dy * 2}px) translateY(${window.scrollY * 0.25}px)`;
+        if (heroBg) heroBg.style.transform = `translate(${dx}px,${dy}px) translateY(${window.scrollY * 0.35}px)`;
+        if (particles) particles.style.transform = `translate(${dx * 2}px,${dy * 2}px) translateY(${window.scrollY * 0.25}px)`;
+      });
     });
 
     /* ─── Intersection Observer fade-in ─── */
@@ -182,7 +186,23 @@ export default function Page() {
       if (e.key === 'ArrowLeft') navigateLb(-1);
       if (e.key === 'ArrowRight') navigateLb(1);
     });
-    lbImg.style.transition = 'opacity .15s';
+    if (lbImg) lbImg.style.transition = 'opacity .15s';
+
+    /* ─── Video Lazy Load ─── */
+    const videos = document.querySelectorAll('video');
+    const videoObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          (entry.target as HTMLVideoElement).play().catch(() => {});
+        } else {
+          (entry.target as HTMLVideoElement).pause();
+        }
+      });
+    }, { threshold: 0.2 });
+    videos.forEach(video => {
+      video.pause(); // 초기엔 정지
+      videoObserver.observe(video);
+    });
   }, []);
 
   return (
@@ -225,12 +245,12 @@ export default function Page() {
 
           {/* Layer: Neon Smog Overlay & Canvas Particles */}
           <div id="heroSmogContainer" style={{ position: 'absolute', inset: 0, zIndex: 2, pointerEvents: 'none' }}>
-            <HeroSvgSmoke />
+            {/* <HeroSvgSmoke /> 성능 문제로 임시 비활성화 */}
             <HeroParticles />
           </div>
 
           {/* Layer 4: 텍스트/버튼 */}
-          <div id="heroContent" className="wrap hero-content" style={{ willChange: 'transform' }}>
+          <div id="heroContent" className="wrap hero-content" style={{ willChange: 'transform', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
             <div className="hero-badge">
               <i className="spark" />
               NOW OPEN · 평택 실내 레이저태그
@@ -507,7 +527,7 @@ export default function Page() {
               <div className="short-card">
                 <div className="short-video-wrap">
                   <div className="short-video-inner">
-                    <video src="/vedio1.mp4" autoPlay loop muted playsInline style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <video src="/vedio1.mp4" loop muted playsInline preload="metadata" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   </div>
                 </div>
               </div>
@@ -515,7 +535,7 @@ export default function Page() {
               <div className="short-card">
                 <div className="short-video-wrap">
                   <div className="short-video-inner">
-                    <video src="/vedio2.mp4" autoPlay loop muted playsInline style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <video src="/vedio2.mp4" loop muted playsInline preload="metadata" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   </div>
                 </div>
               </div>
@@ -523,7 +543,7 @@ export default function Page() {
               <div className="short-card">
                 <div className="short-video-wrap">
                   <div className="short-video-inner">
-                    <video src="/vedio3.mp4" autoPlay loop muted playsInline style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <video src="/vedio3.mp4" loop muted playsInline preload="metadata" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   </div>
                 </div>
               </div>
