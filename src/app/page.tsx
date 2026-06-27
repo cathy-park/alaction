@@ -556,7 +556,7 @@ export default function Page() {
                 <div className="report-phone anim-scale">
                   <div className="phone-frame">
                     <div className="report-scroll-content">
-                      <img src="/report.png" alt="리포트 예시" />
+                      <img src="/report.png?v=2" alt="리포트 예시" />
                     </div>
                   </div>
                 </div>
