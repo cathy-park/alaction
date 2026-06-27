@@ -443,7 +443,7 @@
     #features { padding:80px 0 100px; }
     .features-head {
       display:flex; flex-wrap:wrap; gap:40px;
-      justify-content:space-between; align-items:flex-end;
+      justify-content:space-between; align-items:center;
       margin-bottom:52px;
     }
     .bento-grid {
@@ -598,7 +598,7 @@
     #gallery { padding:100px 0; }
     .gallery-head {
       display:flex; flex-wrap:wrap; gap:40px;
-      justify-content:space-between; align-items:flex-end;
+      justify-content:space-between; align-items:center;
       margin-bottom:48px;
     }
     .gallery-grid {
@@ -982,7 +982,7 @@
     #shorts { padding: 80px 0 100px; }
     .shorts-head {
       display: flex; flex-wrap: wrap; gap: 40px;
-      justify-content: space-between; align-items: flex-end;
+      justify-content: space-between; align-items: center;
       margin-bottom: 52px;
     }
     .shorts-desc-group {
