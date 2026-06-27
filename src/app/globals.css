@@ -175,6 +175,37 @@
     );
 }
 
+/* ── CSS Neon Orbs (Blur Orbs) ── */
+.neon-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(150px);
+  z-index: 2; /* 다크 오버레이와 콘텐츠 사이 */
+  pointer-events: none;
+  opacity: 0.6;
+}
+.neon-orb.pink {
+  width: 600px;
+  height: 600px;
+  background: var(--pink);
+  top: 10%;
+  left: -10%;
+  animation: orbDrift 20s ease-in-out infinite alternate;
+}
+.neon-orb.cyan {
+  width: 500px;
+  height: 500px;
+  background: var(--blue);
+  bottom: -10%;
+  right: -5%;
+  animation: orbDrift 25s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes orbDrift {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  100% { transform: translate3d(50px, -50px, 0) scale(1.1); }
+}
+
 
 
 /* ── Layer 3: 여성 모델 누끼 이미지 ── */
@@ -1023,4 +1054,51 @@
       color: var(--pink) !important;
       border-color: rgba(255,42,157,.4) !important;
     }
+
+/* ── Lightweight Cyberpunk Glitch ── */
+.glitch-light {
+  position: relative;
+  display: inline-block;
+}
+
+.glitch-light::before,
+.glitch-light::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0; /* 평소엔 숨김 */
+  pointer-events: none;
+}
+
+.glitch-light::before {
+  color: rgba(32, 198, 255, 0.9);
+  z-index: -1;
+  /* 5초 주기로 0.3초만 반짝 */
+  animation: glitch-flash-1 5s infinite linear;
+}
+
+.glitch-light::after {
+  color: rgba(255, 42, 157, 0.9);
+  z-index: -2;
+  animation: glitch-flash-2 5s infinite linear reverse;
+}
+
+@keyframes glitch-flash-1 {
+  0%, 94% { opacity: 0; transform: translate(0); }
+  95% { opacity: 1; transform: translate(-4px, 2px); }
+  97% { opacity: 1; transform: translate(4px, -2px); }
+  99% { opacity: 0; transform: translate(0); }
+  100% { opacity: 0; }
+}
+
+@keyframes glitch-flash-2 {
+  0%, 93% { opacity: 0; transform: translate(0); }
+  94% { opacity: 1; transform: translate(4px, -2px); }
+  96% { opacity: 1; transform: translate(-4px, 2px); }
+  98% { opacity: 0; transform: translate(0); }
+  100% { opacity: 0; }
+}
   
