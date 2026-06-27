@@ -538,7 +538,14 @@ export default function Page() {
                 <div className="section-label anim-fadein">Shooting Report</div>
                 <h2 className="section-title anim-fadein delay-1">QR로 확인하는<br /><span style={{ background: 'linear-gradient(90deg,var(--pink),var(--blue))', WebkitBackgroundClip: 'text', color: 'transparent' }}>나만의 결과 리포트</span></h2>
                 <p className="section-desc anim-fadein delay-2" style={{ marginTop: 16 }}>게임 종료 후에 QR 코드를 스캔하면 랭킹, 점수, 발사 수, 정확도 등 상세 플레이 데이터를 확인할 수 있습니다.</p>
-                <div className="report-metrics anim-fadein delay-2">
+                <button 
+                  className="btn btn-primary mobile-only anim-fadein delay-2" 
+                  style={{ marginTop: '24px', marginBottom: '8px', width: 'max-content' }} 
+                  onClick={() => setIsReportModalOpen(true)}
+                >
+                  리포트 미리보기
+                </button>
+                <div className="report-metrics anim-fadein delay-3">
                   <div className="metric-card"><small>Rank</small><b>랭킹</b></div>
                   <div className="metric-card"><small>Score</small><b>점수</b></div>
                   <div className="metric-card"><small>Shots</small><b>발사 수</b></div>
@@ -546,13 +553,6 @@ export default function Page() {
                   <div className="metric-card"><small>Damaged</small><b>맞은 수</b></div>
                   <div className="metric-card"><small>Accuracy</small><b>정확도</b></div>
                 </div>
-                <button 
-                  className="btn btn-primary mobile-only anim-fadein delay-3" 
-                  style={{ marginTop: '24px', width: 'max-content' }} 
-                  onClick={() => setIsReportModalOpen(true)}
-                >
-                  리포트 미리보기
-                </button>
               </div>
             </div>
           </div>
@@ -576,7 +576,7 @@ export default function Page() {
       {isReportModalOpen && (
         <div className="report-modal">
           <button className="report-modal-close" onClick={() => setIsReportModalOpen(false)}>✕</button>
-          <div className="report-phone anim-scale">
+          <div className="report-phone">
             <div className="phone-frame">
               <div className="report-scroll-content">
                 <img src="/report.png?v=2" alt="리포트 예시" />
