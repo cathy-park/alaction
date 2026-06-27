@@ -165,9 +165,10 @@ export default function Page() {
           
           {/* Scanline Background */}
           <div className="hero-scanline" aria-hidden="true" />
-
-
-
+          
+          {/* Laser Beams */}
+          <div className="hero-laser-beam pink" aria-hidden="true" />
+          <div className="hero-laser-beam blue" aria-hidden="true" />
           {/* Layer 4: 텍스트/버튼 */}
           <div id="heroContent" className="wrap hero-content" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
             <div className="hero-badge">
