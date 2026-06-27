@@ -228,7 +228,7 @@
       body::before { background: none !important; }
       .smoke-particle { opacity: 0.6; }
       .hero-content { padding-top: 40px; }
-      .hero-badge { margin-bottom: 0px !important; }
+      .hero-badge { margin-bottom: 20px !important; }
       .hero-woman-img { 
         width: 250vw !important; 
         right: -30vw !important; /* 우측에 붙도록 조정 */
@@ -260,7 +260,10 @@
       font-size:clamp(72px,10vw,156px);
       font-weight:900; line-height:.82; letter-spacing:-.08em;
       margin:5px 0 20px; max-width:1100px;
-      color: #f8f5ff;
+      background: linear-gradient(90deg, #ffffff 0%, #ff35cd 48%, #20c7ff 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
     .hero-section h1 .line2 {
       display:block;
@@ -1053,9 +1056,7 @@
 .glitch-heavy {
   position: relative;
   display: inline-block;
-  text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75),
-               -0.025em -0.05em 0 rgba(0, 255, 0, 0.75),
-               0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
+  /* 그라데이션 텍스트가 더 잘 보이도록 기본 텍스트 섀도우는 제거 */
 }
 
 .glitch-heavy::before,
