@@ -2,6 +2,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import TypewriterText from '@/components/TypewriterText';
 
 // SVG Icons (line style)
 const IconTarget = () => <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="6" /><circle cx="12" cy="12" r="2" /></svg>;
@@ -177,7 +178,13 @@ export default function Page() {
               <span className="glitch-line line1" data-text="ENTER THE">ENTER THE</span>
               <span className="glitch-line line2" data-text="ARENA">ARENA</span>
             </h1>
-            <div className="hero-sub">실내 레이저 슈팅으로 경험하는 팀 배틀. 날씨 상관없이 최고 강도의 액티비티를 즐기고, QR 리포트로 내 플레이 기록을 확인하세요.</div>
+            <div className="hero-sub">
+              <TypewriterText 
+                text="실내 레이저 슈팅으로 경험하는 팀 배틀. 날씨 상관없이 최고 강도의 액티비티를 즐기고, QR 리포트로 내 플레이 기록을 확인하세요."
+                delay={50}
+                pause={3000}
+              />
+            </div>
             <div className="hero-actions">
               {/* 지금 예약하기: 네이버 예약 링크 (새창 이동) */}
               <a className="btn btn-primary" href="https://m.booking.naver.com/booking/12/bizes/766721/items/4624099?area=pll&lang=ko&service-target=map-pc&startDateTime=2026-06-26T00%3A00%3A00%2B09%3A00&theme=place" target="_blank" rel="noopener noreferrer">
