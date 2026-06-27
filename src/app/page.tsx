@@ -120,7 +120,7 @@ export default function Page() {
     const videoObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          (entry.target as HTMLVideoElement).play().catch(() => {});
+          (entry.target as HTMLVideoElement).play().catch(() => { });
         } else {
           (entry.target as HTMLVideoElement).pause();
         }
@@ -165,7 +165,7 @@ export default function Page() {
 
           {/* Dark Overlay */}
           <div className="hero-dark-overlay" aria-hidden="true" />
-          
+
           {/* Tron Grid & Crosshair Background */}
           <div className="hero-grid" aria-hidden="true" />
           <div className="hero-crosshair" aria-hidden="true" />
@@ -180,7 +180,7 @@ export default function Page() {
               <span className="glitch-line line2" data-text="ARENA">ARENA</span>
             </h1>
             <div className="hero-sub">
-              <TypewriterText 
+              <TypewriterText
                 text="실내 레이저 슈팅으로 경험하는 팀 배틀. 날씨 상관없이 최고 강도의 액티비티를 즐기고, QR 리포트로 내 플레이 기록을 확인하세요."
                 delay={50}
                 pause={3000}
@@ -448,7 +448,7 @@ export default function Page() {
               </div>
               <a className="btn btn-ghost anim-fadein delay-3" href="https://pcmap.place.naver.com/place/1297342503/photo?filterType=%ED%81%B4%EB%A6%BD#" target="_blank" rel="noopener noreferrer">전체 영상 보기 〉</a>
             </div>
-            
+
             <div className="shorts-grid anim-scale">
               <div className="short-card">
                 <div className="short-video-wrap">
@@ -457,7 +457,7 @@ export default function Page() {
                   </div>
                 </div>
               </div>
-              
+
               <div className="short-card">
                 <div className="short-video-wrap">
                   <div className="short-video-inner">
@@ -465,7 +465,7 @@ export default function Page() {
                   </div>
                 </div>
               </div>
-              
+
               <div className="short-card">
                 <div className="short-video-wrap">
                   <div className="short-video-inner">
@@ -538,9 +538,9 @@ export default function Page() {
                 <div className="section-label anim-fadein">Shooting Report</div>
                 <h2 className="section-title anim-fadein delay-1">QR로 확인하는<br /><span style={{ background: 'linear-gradient(90deg,var(--pink),var(--blue))', WebkitBackgroundClip: 'text', color: 'transparent' }}>나만의 결과 리포트</span></h2>
                 <p className="section-desc anim-fadein delay-2" style={{ marginTop: 16 }}>게임 종료 후에 QR 코드를 스캔하면 랭킹, 점수, 발사 수, 정확도 등 상세 플레이 데이터를 확인할 수 있습니다.</p>
-                <button 
-                  className="btn btn-primary mobile-only anim-fadein delay-2" 
-                  style={{ marginTop: '24px', marginBottom: '8px', width: 'max-content' }} 
+                <button
+                  className="btn btn-primary mobile-only anim-fadein delay-2"
+                  style={{ marginTop: '24px', marginBottom: '8px', width: 'max-content' }}
                   onClick={() => setIsReportModalOpen(true)}
                 >
                   리포트 미리보기
@@ -557,19 +557,19 @@ export default function Page() {
             </div>
           </div>
         </section>
-        
+
         {/* ─── VISUAL VIDEO ─── */}
         <section className="cinematic-video-section">
           <div className="wrap" style={{ position: 'relative' }}>
             <div className="cinematic-glow" aria-hidden="true" />
             <div className="cinematic-video-wrapper anim-scale">
-              <video 
-                src="/visual_vedio.mp4?v=2" 
-                autoPlay 
-                loop 
-                muted 
-                playsInline 
-                className="cinematic-video" 
+              <video
+                src="/visual_vedio.mp4?v=2"
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="cinematic-video"
               />
             </div>
           </div>
@@ -589,7 +589,7 @@ export default function Page() {
           </div>
         </section>
       </main>
-      
+
       {/* ─── REPORT MODAL (Mobile Only) ─── */}
       {isReportModalOpen && (
         <div className="report-modal">
@@ -620,10 +620,10 @@ export default function Page() {
             </div>
             <div className="footer-col" style={{ minWidth: '220px' }}>
               <h4>운영 시간</h4>
-              <span style={{display: 'block', marginBottom: '6px', fontSize: '13px', color: '#a49cb7'}}>화~금 14:30 - 20:30</span>
-              <span style={{display: 'block', marginBottom: '6px', fontSize: '13px', color: '#a49cb7'}}>토·일 11:15 - 20:15</span>
-              <span style={{display: 'block', marginBottom: '6px', fontSize: '13px', color: '#a49cb7'}}>매주 월요일 정기휴무</span>
-              <span style={{display: 'block', marginTop: '10px', fontSize: '12px', color: '#7f788f'}}>- 단체 이용 시 시간 외 협의 가능</span>
+              <span style={{ display: 'block', marginBottom: '6px', fontSize: '13px', color: '#a49cb7' }}>화~금 14:30 - 20:30</span>
+              <span style={{ display: 'block', marginBottom: '6px', fontSize: '13px', color: '#a49cb7' }}>토·일 11:15 - 20:15</span>
+              <span style={{ display: 'block', marginBottom: '6px', fontSize: '13px', color: '#a49cb7' }}>매주 월요일 정기휴무</span>
+              <span style={{ display: 'block', marginTop: '10px', fontSize: '12px', color: '#7f788f' }}>- 단체 이용 시 시간 외 협의 가능</span>
             </div>
             <div className="footer-col">
               <h4>문의</h4>
@@ -632,7 +632,7 @@ export default function Page() {
             </div>
           </div>
           <div className="footer-bottom">
-            <p>© 2025 R.ACTION. All rights reserved.</p>
+            <p>© 2026 R.ACTION. All rights reserved.</p>
             <div className="social-links">
               <a className="social-link" href="#" aria-label="Instagram"><IconInstagram /></a>
               <a className="social-link" href="#" aria-label="YouTube"><IconYoutube /></a>
