@@ -48,10 +48,10 @@ export default function MobileReport({ params }: { params: Promise<{ token: stri
         <div className="screen" style={{maxWidth: '480px', margin: '0 auto', display: 'flex', flexDirection: 'column', position: 'relative', overflow: 'hidden'}}>
         <style>{`
           .screen {
-            min-height: 590px;
+            min-height: calc(100vh - 28px);
             border-radius: 32px;
             padding: 22px;
-            background: linear-gradient(180deg, #030208, #0a0714);
+            background: transparent;
             border: 1px solid rgba(255,255,255,.08);
           }
           .report-logo {
