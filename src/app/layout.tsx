@@ -1,3 +1,4 @@
+import CustomCursor from "@/components/CustomCursor";
 import type { Metadata } from "next";
 import "./globals.css";
 
@@ -19,6 +20,7 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@600;700;800;900&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
       </head>
       <body>
+        <CustomCursor />
         {children}
       </body>
     </html>
