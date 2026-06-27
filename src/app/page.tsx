@@ -163,12 +163,9 @@ export default function Page() {
           {/* Dark Overlay */}
           <div className="hero-dark-overlay" aria-hidden="true" />
           
-          {/* Scanline Background */}
-          <div className="hero-scanline" aria-hidden="true" />
-          
-          {/* Laser Beams */}
-          <div className="hero-laser-beam pink" aria-hidden="true" />
-          <div className="hero-laser-beam blue" aria-hidden="true" />
+          {/* Tron Grid & Crosshair Background */}
+          <div className="hero-grid" aria-hidden="true" />
+          <div className="hero-crosshair" aria-hidden="true" />
           {/* Layer 4: 텍스트/버튼 */}
           <div id="heroContent" className="wrap hero-content" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
             <div className="hero-badge">
