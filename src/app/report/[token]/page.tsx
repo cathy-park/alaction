@@ -243,14 +243,25 @@ export default function MobileReport({ params }: { params: Promise<{ token: stri
             <circle cx="75" cy="75" r="66" fill="none" stroke="url(#rankRingGrad)" strokeWidth="2" />
           </svg>
 
+          {/* Corner crosshairs */}
+          <div style={{position: 'absolute', top: '-10px', left: '-10px', width: '6px', height: '6px', borderTop: '1px solid rgba(255,255,255,0.2)', borderLeft: '1px solid rgba(255,255,255,0.2)'}}></div>
+          <div style={{position: 'absolute', top: '-10px', right: '-10px', width: '6px', height: '6px', borderTop: '1px solid rgba(255,255,255,0.2)', borderRight: '1px solid rgba(255,255,255,0.2)'}}></div>
+          <div style={{position: 'absolute', bottom: '-10px', left: '-10px', width: '6px', height: '6px', borderBottom: '1px solid rgba(255,255,255,0.2)', borderLeft: '1px solid rgba(255,255,255,0.2)'}}></div>
+          <div style={{position: 'absolute', bottom: '-10px', right: '-10px', width: '6px', height: '6px', borderBottom: '1px solid rgba(255,255,255,0.2)', borderRight: '1px solid rgba(255,255,255,0.2)'}}></div>
+
           {/* Inner dashed ring */}
           <svg width="150" height="150" viewBox="0 0 150 150" style={{position: 'absolute', inset: 0, animation: 'spinReverse 20s linear infinite'}}>
-            <circle cx="75" cy="75" r="54" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="1" strokeDasharray="2 4" />
+            <circle cx="75" cy="75" r="54" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="1" strokeDasharray="2 6" />
+            <circle cx="75" cy="75" r="54" fill="none" stroke="#20c7ff" strokeWidth="2" strokeDasharray="2 6" strokeDashoffset="100" opacity="0.8" style={{strokeDasharray: '30 150'}}/>
           </svg>
-          
-          <div style={{position: 'absolute', top: '50%', left: '-40px', right: '-40px', height: '1px', background: 'linear-gradient(90deg, transparent, rgba(255,53,205,0.5) 30%, rgba(32,199,255,0.5) 70%, transparent)', transform: 'translateY(-50%)'}}></div>
-          <div style={{position: 'absolute', top: '50%', left: '-10px', width: '4px', height: '4px', borderRadius: '50%', background: '#ff35cd', filter: 'blur(1px)', transform: 'translateY(-50%)', boxShadow: '0 0 10px #ff35cd, 0 0 20px #ff35cd'}}></div>
-          <div style={{position: 'absolute', top: '50%', right: '-10px', width: '4px', height: '4px', borderRadius: '50%', background: '#20c7ff', filter: 'blur(1px)', transform: 'translateY(-50%)', boxShadow: '0 0 10px #20c7ff, 0 0 20px #20c7ff'}}></div>
+
+          {/* Cross lines (faint) */}
+          <div style={{position: 'absolute', inset: '0', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+            <div style={{width: '170px', height: '1px', background: 'rgba(255,255,255,0.05)'}}></div>
+          </div>
+          <div style={{position: 'absolute', inset: '0', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+            <div style={{width: '1px', height: '170px', background: 'rgba(255,255,255,0.05)'}}></div>
+          </div>
 
           <div style={{position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
             <small>RANK</small>
