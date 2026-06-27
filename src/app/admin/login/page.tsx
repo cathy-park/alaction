@@ -30,20 +30,20 @@ export default function AdminLogin() {
   };
 
   return (
-    <div style={{minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px'}}>
-      <div className="card" style={{maxWidth: '400px', width: '100%'}}>
-        <div className="card-head" style={{justifyContent: 'center', borderBottom: '0'}}>
-          <div className="brand" style={{marginBottom: 0}}>
-            <img src="/logo.png" alt="Logo" style={{width: '34px', height: '34px', objectFit: 'contain'}} />
+    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}>
+      <div className="card" style={{ maxWidth: '400px', width: '100%' }}>
+        <div className="card-head" style={{ justifyContent: 'center', borderBottom: '0' }}>
+          <div className="brand" style={{ marginBottom: 0 }}>
+            <img src="/logo.png" alt="Logo" style={{ width: '34px', height: '34px', objectFit: 'contain' }} />
             <div>
-              <b>ALACTION</b>
+              <b>R.ACTION</b>
               <span>Admin Authentication</span>
             </div>
           </div>
         </div>
-        
+
         <div className="card-body">
-          <form onSubmit={handleLogin} className="form-grid" style={{gridTemplateColumns: '1fr'}}>
+          <form onSubmit={handleLogin} className="form-grid" style={{ gridTemplateColumns: '1fr' }}>
             <div className="field">
               <label>Admin Email</label>
               <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="admin@alaction.com" />
@@ -53,9 +53,9 @@ export default function AdminLogin() {
               <input type="password" required value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" />
             </div>
             {error && (
-              <div className="note" style={{marginTop: 0}}>{error}</div>
+              <div className="note" style={{ marginTop: 0 }}>{error}</div>
             )}
-            <button type="submit" className="btn primary" disabled={loading} style={{width: '100%', marginTop: '14px', height: '46px'}}>
+            <button type="submit" className="btn primary" disabled={loading} style={{ width: '100%', marginTop: '14px', height: '46px' }}>
               {loading ? 'Authenticating...' : 'Enter System'}
             </button>
           </form>

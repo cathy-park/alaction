@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "ALACTION | 평택 실내 레이저태그",
+  title: "R.ACTION | 평택 실내 레이저태그",
   description: "평택 실내 레이저태그 알액션 — 팀 배틀, QR 슈팅 리포트, 단체 프로그램. 사이버펑크 감성의 실내 슈팅 액티비티.",
 };
 
