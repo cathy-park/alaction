@@ -390,8 +390,10 @@ export default function Page() {
         <section id="gallery">
           <div className="wrap">
             <div className="gallery-head">
-              <div className="section-label anim-fadein">Offline Arena</div>
-              <h2 className="section-title anim-fadein delay-1">매장 &amp; 아레나<br />갤러리</h2>
+              <div>
+                <div className="section-label anim-fadein">Offline Arena</div>
+                <h2 className="section-title anim-fadein delay-1">매장 &amp; 아레나<br />갤러리</h2>
+              </div>
               <p className="section-desc anim-fadein delay-2">직접 방문해 경험하는 압도적인 공간. 어두운 조명, 레이저, 그리고 팀전의 긴장감.</p>
             </div>
             <div className="gallery-grid anim-scale">
@@ -444,9 +446,11 @@ export default function Page() {
               <div>
                 <div className="section-label anim-fadein">✦ SHORT PLAY CLIPS ✦</div>
                 <h2 className="section-title anim-fadein delay-1" style={{ color: '#fff' }}>15초로 보는<br />알액션</h2>
-                <p className="section-desc anim-fadein delay-2">짧은 영상으로 알액션의 분위기와 팀 배틀, QR 리포트를 빠르게 확인해보세요.</p>
               </div>
-              <a className="btn btn-ghost anim-fadein delay-3" href="https://pcmap.place.naver.com/place/1297342503/photo?filterType=%ED%81%B4%EB%A6%BD#" target="_blank" rel="noopener noreferrer">전체 영상 보기 〉</a>
+              <div className="shorts-desc-group">
+                <p className="section-desc anim-fadein delay-2">짧은 영상으로 알액션의 분위기와 팀 배틀, QR 리포트를 빠르게 확인해보세요.</p>
+                <a className="btn btn-ghost anim-fadein delay-3" href="https://pcmap.place.naver.com/place/1297342503/photo?filterType=%ED%81%B4%EB%A6%BD#" target="_blank" rel="noopener noreferrer">전체 영상 보기 〉</a>
+              </div>
             </div>
 
             <div className="shorts-grid anim-scale">
