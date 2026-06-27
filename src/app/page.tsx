@@ -563,23 +563,13 @@ export default function Page() {
           <div className="wrap" style={{ position: 'relative' }}>
             <div className="cinematic-glow" aria-hidden="true" />
             <div className="cinematic-video-wrapper anim-scale">
-              {/* PC용 동영상 */}
               <video 
                 src="/visual_vedio.mp4?v=2" 
                 autoPlay 
                 loop 
                 muted 
                 playsInline 
-                className="cinematic-video pc-only" 
-              />
-              {/* 모바일용 동영상 */}
-              <video 
-                src="/0627.mp4?v=2" 
-                autoPlay 
-                loop 
-                muted 
-                playsInline 
-                className="cinematic-video mobile-only" 
+                className="cinematic-video" 
               />
             </div>
           </div>
