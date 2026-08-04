@@ -259,7 +259,7 @@ export default function Page() {
                 <div className="card-num">03</div>
                 <div className="card-icon"><IconQR /></div>
                 <h3>QR 슈팅<br />리포트</h3>
-                <p>랭킹·점수·정확도를 모바일에서 즉시 확인.</p>
+                <p>랭킹·점수·정확도를 모바일에서 확인.</p>
               </article>
               {/* Group */}
               <article className="bento-card accent-purple col-7 row-2 anim-fadein delay-1">
@@ -278,7 +278,7 @@ export default function Page() {
               {/* Stats strip */}
               <article className="bento-card col-6 row-2 anim-fadein delay-3 stat-strip">
                 <div className="stat-item" style={{ textAlign: 'center' }}>
-                  <b className="stat-num" style={{ background: 'linear-gradient(90deg,var(--pink),var(--blue))', WebkitBackgroundClip: 'text', color: 'transparent' }} data-target={3000}>0</b>
+                  <b className="stat-num" style={{ background: 'linear-gradient(90deg,#FF2A9D,var(--blue))', WebkitBackgroundClip: 'text', color: 'transparent' }} data-target={3000}>0</b>
                   <span>누적 플레이어</span>
                 </div>
                 <div className="stat-divider" />
@@ -288,7 +288,7 @@ export default function Page() {
                 </div>
                 <div className="stat-divider" />
                 <div className="stat-item" style={{ textAlign: 'center' }}>
-                  <b className="stat-num" style={{ background: 'linear-gradient(90deg,var(--blue),var(--pink))', WebkitBackgroundClip: 'text', color: 'transparent' }} data-target={50}>0</b>
+                  <b className="stat-num" style={{ background: 'linear-gradient(90deg,var(--blue),#FF2A9D)', WebkitBackgroundClip: 'text', color: 'transparent' }} data-target={50}>0</b>
                   <span>최대 동시 인원</span>
                 </div>
               </article>
@@ -328,7 +328,7 @@ export default function Page() {
                       <div className="review-stars">★★★★★</div>
                       <p className="review-text">"사격 게임 좋아하는데 실제로 뛰면서 하니까 완전 다른 느낌. 어드레날린 폭발이에요!"</p>
                       <div className="review-author">
-                        <div className="review-avatar" style={{ background: 'linear-gradient(135deg,var(--pink),var(--purple))' }}>C</div>
+                        <div className="review-avatar" style={{ background: 'linear-gradient(135deg,#FF2A9D,var(--purple))' }}>C</div>
                         <div><div className="review-name">Choi D.W.</div><div className="review-meta">개인 방문</div></div>
                       </div>
                     </div>
@@ -368,7 +368,7 @@ export default function Page() {
                       <div className="review-stars">★★★★★</div>
                       <p className="review-text">"처음엔 무서울 것 같았는데 스태프분들이 친절하게 안내해 주셔서 금방 적응했어요. 결과 리포트 보는 재미도 있었습니다."</p>
                       <div className="review-author">
-                        <div className="review-avatar" style={{ background: 'linear-gradient(135deg,var(--pink),var(--cyan))' }}>N</div>
+                        <div className="review-avatar" style={{ background: 'linear-gradient(135deg,#FF2A9D,var(--cyan))' }}>N</div>
                         <div><div className="review-name">Na Y.R.</div><div className="review-meta">친구 4명</div></div>
                       </div>
                     </div>
@@ -486,7 +486,7 @@ export default function Page() {
             <div className="program-grid">
               <div>
                 <div className="section-label anim-fadein">Group Program</div>
-                <h2 className="section-title anim-fadein delay-1">단체 활동에 강한<br /><span style={{ background: 'linear-gradient(90deg,var(--pink),var(--blue))', WebkitBackgroundClip: 'text', color: 'transparent' }}>실내 콘텐츠</span></h2>
+                <h2 className="section-title anim-fadein delay-1">단체 활동에 강한<br /><span style={{ background: 'linear-gradient(90deg,#FF2A9D,var(--blue))', WebkitBackgroundClip: 'text', color: 'transparent' }}>실내 콘텐츠</span></h2>
                 <p className="section-desc anim-fadein delay-2" style={{ marginTop: 16 }}>짧은 시간 안에 분위기를 풀고, 자연스럽게 협업과 경쟁을 경험할 수 있는 프로그램으로 구성합니다.</p>
                 <a className="btn btn-primary anim-fadein delay-3" href="https://talk.naver.com/profile/w4cqwe" target="_blank" rel="noopener noreferrer" style={{ marginTop: 32, width: 'max-content' }}>
                   <span>단체 문의하기</span>
@@ -540,7 +540,7 @@ export default function Page() {
               </div>
               <div>
                 <div className="section-label anim-fadein">Shooting Report</div>
-                <h2 className="section-title anim-fadein delay-1">QR로 확인하는<br /><span style={{ background: 'linear-gradient(90deg,var(--pink),var(--blue))', WebkitBackgroundClip: 'text', color: 'transparent' }}>나만의 결과 리포트</span></h2>
+                <h2 className="section-title anim-fadein delay-1">QR로 확인하는<br /><span style={{ background: 'linear-gradient(90deg,#FF2A9D,var(--blue))', WebkitBackgroundClip: 'text', color: 'transparent' }}>나만의 결과 리포트</span></h2>
                 <p className="section-desc anim-fadein delay-2" style={{ marginTop: 16 }}>게임 종료 후에 QR 코드를 스캔하면 랭킹, 점수, 발사 수, 정확도 등 상세 플레이 데이터를 확인할 수 있습니다.</p>
                 <button
                   className="btn btn-primary mobile-only anim-fadein delay-2"
@@ -613,7 +613,7 @@ export default function Page() {
         <div className="wrap">
           <div className="footer-grid">
             <div>
-              <div className="footer-brand" style={{ background: 'linear-gradient(90deg,#fff,var(--pink))', WebkitBackgroundClip: 'text', color: 'transparent' }}>R.ACTION</div>
+              <div className="footer-brand" style={{ background: 'linear-gradient(90deg,#fff,#FF2A9D)', WebkitBackgroundClip: 'text', color: 'transparent' }}>R.ACTION</div>
               <p className="footer-tagline">평택 실내 레이저태그. 기록으로 남는 특별한 체험, 알액션에서 경험하세요.</p>
             </div>
             <div className="footer-col">
