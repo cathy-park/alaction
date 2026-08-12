@@ -137,12 +137,12 @@ export default function ParticipantReportEdit({ params }: { params: Promise<{ id
     fetchData();
   };
 
-  if (loading) return <div style={{color: '#fff', textAlign: 'center', padding: '40px'}}>LOADING...</div>;
+  if (loading) return <div style={{color: 'var(--admin-p)', textAlign: 'center', padding: '40px'}}>LOADING...</div>;
 
   const taStyle: React.CSSProperties = {
     width: '100%', padding: '10px',
-    background: 'rgba(255,255,255,0.05)', border: '1px solid var(--admin-line)',
-    borderRadius: '8px', color: '#fff', resize: 'vertical'
+    background: 'var(--admin-surface)', border: '1px solid var(--admin-line)',
+    borderRadius: '8px', color: 'var(--admin-ink)', resize: 'vertical'
   };
 
   return (
@@ -221,7 +221,7 @@ export default function ParticipantReportEdit({ params }: { params: Promise<{ id
                 <div className="field"><label>공개 문구 (복사용)</label><textarea rows={4} value={publicComment} onChange={e => setPublicComment(e.target.value)} style={taStyle} /></div>
                 <div className="field">
                   <label>🗒️ 관리자 메모 (내부용, 공개 안됨)</label>
-                  <textarea rows={4} value={adminMemo} onChange={e => setAdminMemo(e.target.value)} style={{...taStyle, borderColor: 'rgba(255,230,107,0.4)', background: 'rgba(255,230,107,0.04)'}} placeholder="특이사항, 내부 메모 등을 자유롭게 기록하세요..." />
+                  <textarea rows={4} value={adminMemo} onChange={e => setAdminMemo(e.target.value)} style={{...taStyle, borderColor: 'color-mix(in srgb, var(--admin-y) 45%, transparent)', background: 'color-mix(in srgb, var(--admin-y) 6%, transparent)'}} placeholder="특이사항, 내부 메모 등을 자유롭게 기록하세요..." />
                 </div>
               </div>
             </div>
@@ -236,17 +236,17 @@ export default function ParticipantReportEdit({ params }: { params: Promise<{ id
           </div>
 
           {/* 공개/비공개 토글 */}
-          <div style={{marginBottom: '14px', padding: '14px 16px', background: 'rgba(255,255,255,0.03)', borderRadius: '12px', border: '1px solid var(--admin-line)', display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+          <div style={{marginBottom: '14px', padding: '14px 16px', background: 'var(--admin-surface)', borderRadius: '12px', border: '1px solid var(--admin-line)', display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
             <span style={{fontSize: '13px', color: 'var(--admin-muted)'}}>리포트 공개 상태</span>
             <div style={{display: 'flex', gap: '8px'}}>
               <button onClick={() => setReportStatus('ready')} style={{padding: '4px 12px', borderRadius: '99px', fontSize: '12px', fontWeight: 700, cursor: 'pointer', border: '1px solid',
-                background: reportStatus === 'ready' ? 'rgba(255,255,255,0.12)' : 'transparent',
-                borderColor: reportStatus === 'ready' ? 'rgba(255,255,255,0.4)' : 'rgba(255,255,255,0.12)',
+                background: reportStatus === 'ready' ? 'var(--admin-ink)' : 'transparent',
+                borderColor: reportStatus === 'ready' ? 'var(--admin-ink)' : 'var(--admin-line)',
                 color: reportStatus === 'ready' ? '#fff' : 'var(--admin-muted)'}}>🔒 비공개</button>
               <button onClick={() => setReportStatus('published')} style={{padding: '4px 12px', borderRadius: '99px', fontSize: '12px', fontWeight: 700, cursor: 'pointer', border: '1px solid',
-                background: reportStatus === 'published' ? 'rgba(186,255,45,0.15)' : 'transparent',
-                borderColor: reportStatus === 'published' ? 'rgba(186,255,45,0.5)' : 'rgba(255,255,255,0.12)',
-                color: reportStatus === 'published' ? '#baff2d' : 'var(--admin-muted)'}}>🌐 공개</button>
+                background: reportStatus === 'published' ? 'color-mix(in srgb, var(--admin-g) 12%, transparent)' : 'transparent',
+                borderColor: reportStatus === 'published' ? 'color-mix(in srgb, var(--admin-g) 45%, transparent)' : 'var(--admin-line)',
+                color: reportStatus === 'published' ? 'var(--admin-g)' : 'var(--admin-muted)'}}>🌐 공개</button>
             </div>
           </div>
 

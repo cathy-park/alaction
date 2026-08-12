@@ -47,13 +47,13 @@ export default function SessionsList() {
             <p>세션별 참여자와 결과를 확인하고 리포트를 발급하세요.</p>
           </div>
           <div style={{display: 'flex', gap: '8px', alignItems: 'center'}}>
-            <select value={filterType} onChange={e => setFilterType(e.target.value)} style={{height: '38px', borderRadius: '8px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', padding: '0 10px'}}>
+            <select value={filterType} onChange={e => setFilterType(e.target.value)} style={{height: '38px', borderRadius: '8px', background: 'var(--admin-surface)', border: '1px solid var(--admin-line)', color: 'var(--admin-ink)', padding: '0 10px'}}>
               <option value="전체">모든 유형</option>
               <option value="일반 이용">일반 이용</option>
               <option value="단체 프로그램">단체 프로그램</option>
               <option value="대회/이벤트">대회/이벤트</option>
             </select>
-            <input type="text" placeholder="세션명 검색" value={searchKeyword} onChange={e => setSearchKeyword(e.target.value)} style={{height: '38px', borderRadius: '8px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', padding: '0 12px'}} />
+            <input type="text" placeholder="세션명 검색" value={searchKeyword} onChange={e => setSearchKeyword(e.target.value)} style={{height: '38px', borderRadius: '8px', background: 'var(--admin-surface)', border: '1px solid var(--admin-line)', color: 'var(--admin-ink)', padding: '0 12px'}} />
           </div>
         </div>
         <div className="card-body">

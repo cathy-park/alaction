@@ -32,14 +32,9 @@ export default function AdminLogin() {
   return (
     <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}>
       <div className="card" style={{ maxWidth: '400px', width: '100%' }}>
-        <div className="card-head" style={{ justifyContent: 'center', borderBottom: '0' }}>
-          <div className="brand" style={{ marginBottom: 0 }}>
-            <img src="/logo.png" alt="Logo" style={{ width: '34px', height: '34px', objectFit: 'contain' }} />
-            <div>
-              <b>R.ACTION</b>
-              <span>Admin Authentication</span>
-            </div>
-          </div>
+        <div className="card-head" style={{ flexDirection: 'column', alignItems: 'center', gap: '8px', justifyContent: 'center', borderBottom: '0', paddingTop: '32px' }}>
+          <img src="/logo_dark.png" alt="R-ACTION" style={{ height: '26px', width: 'auto', objectFit: 'contain' }} />
+          <span style={{ color: 'var(--admin-muted)', fontSize: '12px', fontWeight: 700 }}>Admin Authentication</span>
         </div>
 
         <div className="card-body">

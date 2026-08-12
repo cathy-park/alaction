@@ -197,8 +197,8 @@ export default function SessionDetails({ params }: { params: Promise<{ id: strin
           <Link href="/admin/sessions" style={{color: 'var(--admin-muted)', fontSize: '13px', textDecoration: 'none', display: 'inline-block'}}>← 세션 목록으로</Link>
           {isEditingSession ? (
             <div style={{display: 'flex', gap: '8px', alignItems: 'center', marginTop: '4px'}}>
-              <input type="text" value={editSessionTitle} onChange={e => setEditSessionTitle(e.target.value)} style={{fontSize: '24px', fontWeight: 'bold', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', padding: '4px 12px', borderRadius: '8px', width: '300px'}} />
-              <select value={editSessionType} onChange={e => setEditSessionType(e.target.value)} style={{height: '38px', borderRadius: '8px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', padding: '0 10px', fontSize: '14px', width: '150px'}}>
+              <input type="text" value={editSessionTitle} onChange={e => setEditSessionTitle(e.target.value)} style={{fontSize: '24px', fontWeight: 'bold', background: 'var(--admin-surface)', border: '1px solid var(--admin-line)', color: 'var(--admin-ink)', padding: '4px 12px', borderRadius: '8px', width: '300px'}} />
+              <select value={editSessionType} onChange={e => setEditSessionType(e.target.value)} style={{height: '38px', borderRadius: '8px', background: 'var(--admin-surface)', border: '1px solid var(--admin-line)', color: 'var(--admin-ink)', padding: '0 10px', fontSize: '14px', width: '150px'}}>
                 <option value="일반 이용">일반 이용</option>
                 <option value="단체 프로그램">단체 프로그램</option>
                 <option value="대회/이벤트">대회/이벤트</option>
@@ -211,24 +211,24 @@ export default function SessionDetails({ params }: { params: Promise<{ id: strin
               <h2 style={{margin: '4px 0 0'}}>{session?.title} <span style={{fontSize: '16px', color: 'var(--admin-c)', fontWeight: 'normal', marginLeft: '8px'}}>[{session?.program_type || '일반 이용'}]</span></h2>
               <div style={{display: 'flex', gap: '8px', marginTop: '4px'}}>
                 <button onClick={() => { setEditSessionTitle(session?.title || ''); setEditSessionType(session?.program_type || '일반 이용'); setIsEditingSession(true); }} className="btn" style={{height: '28px', fontSize: '11px', padding: '0 10px'}}>수정</button>
-                <button onClick={handleDeleteSession} className="btn" style={{height: '28px', fontSize: '11px', padding: '0 10px', color: '#ff5f7a', borderColor: 'rgba(255,95,122,0.3)'}}>세션 삭제</button>
+                <button onClick={handleDeleteSession} className="btn" style={{height: '28px', fontSize: '11px', padding: '0 10px', color: 'var(--admin-r)', borderColor: 'color-mix(in srgb, var(--admin-r) 35%, transparent)'}}>세션 삭제</button>
               </div>
             </div>
           )}
           <p>이 세션의 참가자를 추가하고 리포트를 발급/관리합니다.</p>
         </div>
         {/* 세션 공개/비공개 토글 */}
-        <div style={{display:'flex', alignItems:'center', gap:'12px', padding:'14px 18px', background:'rgba(255,255,255,0.03)', borderRadius:'12px', border:'1px solid rgba(255,255,255,0.1)'}}>
+        <div style={{display:'flex', alignItems:'center', gap:'12px', padding:'14px 18px', background:'var(--admin-surface)', borderRadius:'12px', border:'1px solid var(--admin-line)'}}>
           <span style={{fontSize:'13px', color:'var(--admin-muted)', flexShrink:0}}>세션 상태</span>
           <div style={{display:'flex', gap:'8px', marginLeft:'auto'}}>
             <button onClick={() => handleToggleSessionStatus('private')} style={{padding:'5px 14px', borderRadius:'99px', fontSize:'12px', fontWeight:700, cursor:'pointer', border:'1px solid',
-              background: sessionStatus !== 'published' ? 'rgba(255,255,255,0.12)' : 'transparent',
-              borderColor: sessionStatus !== 'published' ? 'rgba(255,255,255,0.4)' : 'rgba(255,255,255,0.12)',
+              background: sessionStatus !== 'published' ? 'var(--admin-ink)' : 'transparent',
+              borderColor: sessionStatus !== 'published' ? 'var(--admin-ink)' : 'var(--admin-line)',
               color: sessionStatus !== 'published' ? '#fff' : 'var(--admin-muted)'}}>🔒 비공개</button>
             <button onClick={() => handleToggleSessionStatus('published')} style={{padding:'5px 14px', borderRadius:'99px', fontSize:'12px', fontWeight:700, cursor:'pointer', border:'1px solid',
-              background: sessionStatus === 'published' ? 'rgba(186,255,45,0.15)' : 'transparent',
-              borderColor: sessionStatus === 'published' ? 'rgba(186,255,45,0.5)' : 'rgba(255,255,255,0.12)',
-              color: sessionStatus === 'published' ? '#baff2d' : 'var(--admin-muted)'}}>🌐 공개</button>
+              background: sessionStatus === 'published' ? 'color-mix(in srgb, var(--admin-g) 12%, transparent)' : 'transparent',
+              borderColor: sessionStatus === 'published' ? 'color-mix(in srgb, var(--admin-g) 45%, transparent)' : 'var(--admin-line)',
+              color: sessionStatus === 'published' ? 'var(--admin-g)' : 'var(--admin-muted)'}}>🌐 공개</button>
           </div>
         </div>
       </div>

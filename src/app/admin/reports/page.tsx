@@ -165,12 +165,12 @@ export default function AllReports() {
               <h3>리포트 통합 목록</h3>
             </div>
             <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-              <select value={filterStatus} onChange={e => setFilterStatus(e.target.value)} style={{ height: '38px', borderRadius: '8px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', padding: '0 10px' }}>
+              <select value={filterStatus} onChange={e => setFilterStatus(e.target.value)} style={{ height: '38px', borderRadius: '8px', background: 'var(--admin-surface)', border: '1px solid var(--admin-line)', color: 'var(--admin-ink)', padding: '0 10px' }}>
                 <option value="전체">모든 상태</option>
                 <option value="ready">준비 중</option>
                 <option value="published">공개</option>
               </select>
-              <input type="text" placeholder="세션명/닉네임 검색" value={searchKeyword} onChange={e => setSearchKeyword(e.target.value)} style={{ height: '38px', borderRadius: '8px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', padding: '0 12px', width: '180px' }} />
+              <input type="text" placeholder="세션명/닉네임 검색" value={searchKeyword} onChange={e => setSearchKeyword(e.target.value)} style={{ height: '38px', borderRadius: '8px', background: 'var(--admin-surface)', border: '1px solid var(--admin-line)', color: 'var(--admin-ink)', padding: '0 12px', width: '180px' }} />
             </div>
           </div>
           <div className="card-body" style={{ overflowX: 'auto' }}>

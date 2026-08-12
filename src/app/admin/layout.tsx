@@ -52,11 +52,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       <div className="app">
         <aside style={{ zIndex: 50, position: 'relative' }}>
           <div className="brand" style={{ marginBottom: '40px' }}>
-            <img src="/logo.png" alt="Logo" style={{ width: '34px', height: '34px', objectFit: 'contain' }} />
-            <div>
-              <b>R,ACTION</b>
-              <span>QR Report Admin</span>
-            </div>
+            <img src="/logo_dark.png" alt="R-ACTION" style={{ height: '22px', width: 'auto', objectFit: 'contain' }} />
+            <span style={{ color: 'var(--admin-muted)', fontSize: '11px', fontWeight: 700 }}>Admin</span>
           </div>
 
           <div className="nav-title">관리 메뉴</div>
@@ -65,7 +62,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <Link href="/admin/sessions/new" className={pathname === '/admin/sessions/new' ? 'active' : ''}>세션 생성</Link>
             <Link href="/admin/sessions" className={pathname === '/admin/sessions' ? 'active' : ''}>세션 목록</Link>
             <Link href="/admin/reports" className={pathname === '/admin/reports' ? 'active' : ''}>리포트 통합 관리</Link>
-            <button onClick={handleLogout} className="text-left bg-transparent border-0 text-[#ff9aa9] font-bold text-sm hover:text-[#ff5f7a] cursor-pointer" style={{ padding: '0 13px', height: '46px', display: 'flex', alignItems: 'center', marginTop: '16px' }}>로그아웃</button>
+            <button onClick={handleLogout} className="text-left bg-transparent border-0 font-bold text-sm cursor-pointer" style={{ padding: '0 13px', height: '46px', display: 'flex', alignItems: 'center', marginTop: '16px', color: 'var(--admin-r)' }}>로그아웃</button>
           </nav>
         </aside>
 
